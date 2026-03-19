@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ehab & Radwa's Wedding · Find Your Table & Share Photos</title>
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fef7f0, #f5e6d3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 30px 50px rgba(139, 69, 19, 0.2);
+            overflow: hidden;
+            border: 1px solid #e8d0b5;
+        }
+
+        /* ===== HEADER SECTION ===== */
+        .header {
+            background: linear-gradient(135deg, #b45f3a, #8b4513);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header h1 span {
+            font-weight: 300;
+            font-size: 2.5rem;
+        }
+
+        .header .date {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-top: 10px;
+        }
+
+        .header .venue {
+            font-size: 1.2rem;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+
+        /* ===== SEARCH SECTION ===== */
+        .search-section {
+            padding: 40px 30px;
+            background: #fff5e6;
+            text-align: center;
+            border-bottom: 2px dashed #d4b99b;
+        }
+
+        .search-section h2 {
+            color: #5e3c28;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            max-width: 700px;
+            margin: 0 auto;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-box input {
+            flex: 2;
+            min-width: 300px;
+            padding: 20px 30px;
+            border: 3px solid #e0c0a0;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: #b45f3a;
+            box-shadow: 0 0 0 3px #f0d0b0;
+        }
+
+        .search-box button {
+            padding: 20px 45px;
+            background: #b45f3a;
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #6b3c24;
+            transition: 0.1s;
+            border: 1px solid #ffd8b0;
+        }
+
+        .search-box button:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #6b3c24;
+        }
+
+        .search-note {
+            margin-top: 20px;
+            color: #8b6f58;
+            font-size: 1.1rem;
+        }
+
+        /* ===== RESULT CARD ===== */
+        .result-card {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 30px;
+            text-align: center;
+            border: 3px solid #e8d0b5;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.05);
+        }
+
+        .welcome-badge {
+            font-size: 2rem;
+            color: #5e3c28;
+            margin-bottom: 20px;
+        }
+
+        .group-badge {
+            background: #fff0e0;
+            padding: 15px 30px;
+            border-radius: 60px;
+            display: inline-block;
+            font-size: 1.5rem;
+            color: #b45f3a;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .table-display {
+            background: #fff5e6;
+            border-radius: 50px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 2px dashed #d4b99b;
+        }
+
+        .table-label {
+            font-size: 1.8rem;
+            color: #5e3c28;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .table-number {
+            font-size: 8rem;
+            font-weight: 800;
+            color: #b45f3a;
+            line-height: 1;
+            text-shadow: 3px 3px 0 #ffe0c0;
+        }
+
+        .table-description {
+            font-size: 2rem;
+            color: #8b5a3c;
+            margin-top: 10px;
+        }
+
+        .family-note {
+            font-size: 1.3rem;
+            color: #6b8e4c;
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        /* ===== PHOTO UPLOAD SECTION ===== */
+        .photo-upload-section {
+            background: linear-gradient(135deg, #f0e0d0, #e8d0b5);
+            border-radius: 40px;
+            padding: 40px;
+            margin: 30px;
+            text-align: center;
+            border: 3px solid #b45f3a;
+        }
+
+        .photo-upload-section h2 {
+            color: #5e3c28;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .upload-area {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px dashed #b45f3a;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload-area:hover {
+            background: #fff5e6;
+            border-color: #8b4513;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 1.3rem;
+            color: #5e3c28;
+            margin-bottom: 10px;
+        }
+
+        .upload-hint {
+            color: #8b6f58;
+            font-size: 1rem;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .upload-button {
+            background: #b45f3a;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            border: 2px solid #8b4513;
+        }
+
+        .upload-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .upload-status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+            border: 2px solid #28a745;
+        }
+
+        .upload-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+            border: 2px solid #dc3545;
+        }
+
+        .upload-status.loading {
+            background: #fff3cd;
+            color: #856404;
+            display: block;
+            border: 2px solid #ffc107;
+        }
+
+        /* ===== PHOTO GALLERY PREVIEW ===== */
+        .photo-gallery {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #fff5e6;
+            border-radius: 20px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* ===== INFO TABS ===== */
+        .info-tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 30px;
+            flex-wrap: wrap;
+        }
+
+        .info-tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: #eddccb;
+            border: none;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 120px;
+        }
+
+        .info-tab-btn.active {
+            background: #b45f3a;
+            color: white;
+        }
+
+        .info-tab-btn:hover {
+            background: #d4b99b;
+        }
+
+        .info-content {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            margin: 0 30px 30px;
+            border: 2px solid #e8d0b5;
+        }
+
+        .info-pane {
+            display: none;
+        }
+
+        .info-pane.active {
+            display: block;
+        }
+
+        /* ===== PROGRAM ITEMS ===== */
+        .program-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px dashed #d4b99b;
+            font-size: 1.2rem;
+        }
+
+        .program-time {
+            font-weight: 700;
+            color: #b45f3a;
+            width: 120px;
+        }
+
+        /* ===== MENU ITEMS ===== */
+        .menu-category {
+            font-weight: 700;
+            color: #b45f3a;
+            font-size: 1.5rem;
+            margin: 25px 0 10px;
+        }
+
+        .menu-item {
+            padding: 10px 0 10px 25px;
+            border-left: 4px solid #e8d0b5;
+            margin: 8px 0;
+            font-size: 1.2rem;
+        }
+
+        /* ===== SONG ITEMS ===== */
+        .song-item {
+            padding: 12px;
+            border-bottom: 1px dashed #e8d0b5;
+            font-size: 1.2rem;
+        }
+
+        /* ===== TABLE MAP ===== */
+        .table-map {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .map-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: 3px solid #e8d0b5;
+        }
+
+        /* ===== PHOTO ALBUM LINK ===== */
+        .photo-album-section {
+            background: #fff5e6;
+            border-radius: 30px;
+            padding: 30px;
+            margin: 30px;
+            text-align: center;
+            border: 2px solid #b45f3a;
+        }
+
+        .photo-album-link {
+            display: inline-block;
+            padding: 20px 50px;
+            background: white;
+            border-radius: 60px;
+            text-decoration: none;
+            color: #b45f3a;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 20px 0;
+            border: 3px solid #b45f3a;
+            transition: 0.2s;
+        }
+
+        .photo-album-link:hover {
+            background: #b45f3a;
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #5e3c28;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 800px) {
+            .header h1 { font-size: 2.5rem; }
+            .table-number { font-size: 5rem; }
+            .search-box input { min-width: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <h1>Ehab <span>&</span> Radwa</h1>
+            <div class="date">April 10, 2026</div>
+            <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
+        </div>
+
+        <!-- ===== SEARCH SECTION ===== -->
+        <div class="search-section">
+            <h2>💕 Find Your Family Table 💕</h2>
+            <div class="search-box">
+                <input type="text" id="guestName" placeholder="Enter your full name (e.g., Ahmed Hassan)">
+                <button id="findTableBtn">Find My Table</button>
+            </div>
+            <div class="search-note">
+                ✨ Families sit together! Enter your name to see which table your family is at.
+            </div>
+        </div>
+
+        <!-- ===== RESULT DISPLAY ===== -->
+        <div class="result-card" id="resultCard">
+            <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
+            <div class="group-badge" id="groupName">—</div>
+            
+            <div class="table-display">
+                <div class="table-label">Your Table</div>
+                <div class="table-number" id="tableNumber">—</div>
+                <div class="table-description" id="tableDescription">Please see the host for seating</div>
+            </div>
+            
+            <div class="family-note" id="familyNote">
+                ✦ Your whole family sits together at this table ✦
+            </div>
+        </div>
+
+        <!-- ===== PHOTO UPLOAD SECTION ===== -->
+        <div class="photo-upload-section">
+            <h2>📸 Share Your Photos</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px; color: #5e3c28;">
+                Take pictures tonight and upload them directly to our wedding album!
+            </p>
+            
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📷</div>
+                <div class="upload-text">Click here to upload photos</div>
+                <div class="upload-hint">Select one or multiple photos from your phone</div>
+            </div>
+            
+            <input type="file" id="fileInput" multiple accept="image/*">
+            
+            <button class="upload-button" id="uploadBtn" onclick="document.getElementById('fileInput').click()">
+                Choose Photos
+            </button>
+            
+            <div id="uploadStatus" class="upload-status"></div>
+            
+            <div id="photoGallery" class="photo-gallery"></div>
+            
+            <p style="margin-top: 20px; color: #8b6f58; font-size: 1rem;">
+                ✨ All photos will be saved to Ehab & Radwa's wedding album ✨
+            </p>
+        </div>
+
+        <!-- ===== INFO TABS ===== -->
+        <div class="info-tabs">
+            <button class="info-tab-btn active" onclick="showInfoTab('program')">📋 Program</button>
+            <button class="info-tab-btn" onclick="showInfoTab('menu')">🍽️ Menu</button>
+            <button class="info-tab-btn" onclick="showInfoTab('songs')">🎶 Song List</button>
+            <button class="info-tab-btn" onclick="showInfoTab('map')">🗺️ Table Map</button>
+        </div>
+
+        <div class="info-content">
+            <!-- Program Pane -->
+            <div id="program-pane" class="info-pane active">
+                <h2 style="color: #b45f3a; margin-bottom: 20px;">Wedding Program</h2>
+                <div class="program-item"><span class="program-time">2:30 PM</span> Guest Arrival & Welcome Drinks</div>
+                <div class="program-item"><span class="program-time">3:30 PM</span> Sunset Ceremony</div>
+                <div class="program-item"><span class="program-time">4:30 PM</span> Cocktail Hour</div>
+                <div class="program-item"><span class="program-time">5:30 PM</span> Dinner Served</div>
+                <div class="program-item"><span class="program-time">7:00 PM</span> First Dance (Ehab & Radwa)</div>
+                <div class="program-item"><span class="program-time">8:00 PM</span> Cake Cutting & Dancing</div>
+                <div class="program-item"><span class="program-time">10:30 PM</span> Sparkler Send-Off</div>
+            </div>
+
+            <!-- Menu Pane -->
+            <div id="menu-pane" class="info-pane">
+                <h2 style="color: #b45f3a; margin-bottom: 20px;">Dinner Menu</h2>
+                
+                <div class="menu-category">🥗 Appetizers</div>
+                <div class="menu-item">Roasted Pumpkin & Feta Salad (Vegetarian)</div>
+                <div class="menu-item">Stuffed Grape Leaves with Rice & Herbs</div>
+                
+                <div class="menu-category">🍖 Main Course</div>
+                <div class="menu-item">Slow-Cooked Lamb Shank with Rosemary & Garlic</div>
+                <div class="menu-item">Sea Bass Fillet with Lemon Butter Sauce (Gluten-Free)</div>
+                <div class="menu-item">Stuffed Bell Pepper with Quinoa & Pine Nuts (Vegan)</div>
+                
+                <div class="menu-category">🍰 Desserts</div>
+                <div class="menu-item">Wedding Cake - Vanilla & Chocolate Layers</div>
+                <div class="menu-item">Seasonal Fruit Tart with Mint</div>
+                <div class="menu-item">Egyptian Basbousa (Semolina Cake)</div>
+            </div>
+
+            <!-- Songs Pane -->
+            <div id="songs-pane" class="info-pane">
+                <h2 style="color: #b45f3a; margin-bottom: 20px;">Wedding Playlist</h2>
+                
+                <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis Presley</div>
+                <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
+                <div class="song-item">🎵 "Marry You" – Bruno Mars</div>
+                <div class="song-item">🎵 "Perfect" – Ed Sheeran</div>
+                <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
+                <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
+                <div class="song-item">🎵 "Awedony" – Amr Diab</div>
+                <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
+                
+                <p style="margin-top: 20px; font-style: italic; color: #8b6f58;">
+                    ...and more Arabic & Western hits! Request your favorite from the DJ.
+                </p>
+            </div>
+
+            <!-- Map Pane -->
+            <div id="map-pane" class="info-pane">
+                <h2 style="color: #b45f3a; margin-bottom: 20px;">Table Layout</h2>
+                <div class="table-map">
+                    <img src="images/table-map.jpg" alt="Wedding Table Layout" class="map-image" onclick="window.open(this.src)">
+                    <p style="margin-top: 10px;">Click map to enlarge</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PHOTO ALBUM LINK ===== -->
+        <div class="photo-album-section">
+            <h2 style="color: #5e3c28;">📸 Wedding Photo Album</h2>
+            <p style="font-size: 1.2rem; margin: 20px 0;">View all photos shared by guests</p>
+            <!-- REPLACE WITH YOUR GOOGLE DRIVE LINK -->
+            <a href="YOUR_GOOGLE_DRIVE_ALBUM_LINK" target="_blank" class="photo-album-link">
+                Open Photo Album
+            </a>
+            <p style="margin-top: 20px; color: #8b6f58;">
+                Click above to see all uploaded photos in Google Drive
+            </p>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            <p>Ehab & Radwa · April 10, 2026 · Sunset Wedding Garden</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Thank you for celebrating with us! 💖</p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // STEP 1: PASTE YOUR GUEST LIST HERE
+        // ============================================
+        const guestDatabase = {
+            // Replace this with your converted guest list from Step 4.3
+            "ahmed hassan": { group: "Bride Family", table: "2" },
+            "fatma ali": { group: "Bride Family", table: "2" },
+            "mohamed elsayed": { group: "Bride Family", table: "2" },
+            "nadia omar": { group: "Groom Family", table: "3" },
+            "karim abdelrahman": { group: "Groom Family", table: "3" },
+            "yasmin fouad": { group: "Friends", table: "5" },
+            "omar sherif": { group: "Friends", table: "5" },
+            "samira ibrahim": { group: "Friends", table: "5" },
+            "reem galal": { group: "Colleagues", table: "7" },
+            "khaled diab": { group: "Colleagues", table: "7" }
+        };
+
+        // Table descriptions (customize these)
+        const tableDescriptions = {
+            "2": "Bride's Family Table",
+            "3": "Groom's Family Table", 
+            "5": "Friends & Close Pals",
+            "7": "Colleagues & Work Friends"
+        };
+
+        // ============================================
+        // STEP 2: PASTE YOUR GOOGLE APPS SCRIPT URL
+        // ============================================
+        const GOOGLE_DRIVE_UPLOAD_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
+        // ============================================
+        // FIND GUEST FUNCTION
+        // ============================================
+        function findGuestTable() {
+            const input = document.getElementById('guestName');
+            const name = input.value.trim().toLowerCase();
+            
+            if (name === "") {
+                alert("Please enter your name");
+                return;
+            }
+            
+            const guest = guestDatabase[name];
+            
+            const welcomeEl = document.getElementById('welcomeMessage');
+            const groupEl = document.getElementById('groupName');
+            const tableEl = document.getElementById('tableNumber');
+            const descEl = document.getElementById('tableDescription');
+            const noteEl = document.getElementById('familyNote');
+            
+            if (guest) {
+                welcomeEl.textContent = `Welcome, ${input.value.trim()}!`;
+                groupEl.textContent = guest.group;
+                tableEl.textContent = guest.table;
+                descEl.textContent = tableDescriptions[guest.table] || `Table ${guest.table}`;
+                noteEl.innerHTML = `✦ Your whole ${guest.group} sits together at Table ${guest.table} ✦`;
+            } else {
+                welcomeEl.textContent = `Welcome, ${input.value.trim()}!`;
+                groupEl.textContent = "Not found in list";
+                tableEl.textContent = "?";
+                descEl.textContent = "Please see the host desk";
+                noteEl.innerHTML = "✦ The host will help you find your table ✦";
+            }
+        }
+
+        // ============================================
+        // PHOTO UPLOAD FUNCTIONS
+        // ============================================
+        function setupPhotoUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const photoGallery = document.getElementById('photoGallery');
+            
+            // Load existing photos from localStorage (demo)
+            loadGallery();
+            
+            fileInput.addEventListener('change', function(e) {
+                const files = e.target.files;
+                
+                if (files.length === 0) return;
+                
+                uploadStatus.className = 'upload-status loading';
+                uploadStatus.textContent = `Preparing ${files.length} photo(s)...`;
+                
+                // Process each file
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    // Check file size (max 10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        uploadStatus.className = 'upload-status error';
+                        uploadStatus.textContent = `❌ ${file.name} is too large (max 10MB)`;
+                        continue;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        // Get guest name for attribution
+                        const guestName = document.getElementById('guestName').value.trim() || 'Guest';
+                        
+                        // Save to localStorage for preview (demo)
+                        const photoData = {
+                            id: Date.now() + i,
+                            name: file.name,
+                            data: event.target.result,
+                            timestamp: new Date().toISOString(),
+                            guestName: guestName
+                        };
+                        
+                        let photos = JSON.parse(localStorage.getItem('weddingPhotos') || '[]');
+                        photos.push(photoData);
+                        localStorage.setItem('weddingPhotos', JSON.stringify(photos));
+                        
+                        // Add to gallery
+                        addImageToGallery(photoData);
+                        
+                        // Try to upload to Google Drive if URL is configured
+                        if (GOOGLE_DRIVE_UPLOAD_URL !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+                            uploadToGoogleDrive(file, guestName);
+                        }
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+                
+                uploadStatus.className = 'upload-status success';
+                uploadStatus.textContent = `✅ Successfully added ${files.length} photo(s)!`;
+                
+                fileInput.value = '';
+                
+                setTimeout(() => {
+                    uploadStatus.style.display = 'none';
+                    uploadStatus.className = 'upload-status';
+                }, 3000);
+            });
+            
+            function addImageToGallery(photo) {
+                const img = document.createElement('img');
+                img.src = photo.data;
+                img.className = 'gallery-image';
+                img.alt = 'Wedding photo';
+                photoGallery.appendChild(img);
+            }
+            
+            function loadGallery() {
+                const photos = JSON.parse(localStorage.getItem('weddingPhotos') || '[]');
+                photoGallery.innerHTML = '';
+                photos.forEach(photo => {
+                    addImageToGallery(photo);
+                });
+            }
+        }
+
+        // ============================================
+        // GOOGLE DRIVE UPLOAD FUNCTION
+        // ============================================
+        function uploadToGoogleDrive(file, guestName) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const base64Data = e.target.result.split(',')[1]; // Remove data URL prefix
+                
+                const payload = {
+                    fileName: file.name,
+                    fileData: base64Data,
+                    mimeType: file.type,
+                    guestName: guestName
+                };
+                
+                fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // This is needed for CORS issues with Apps Script
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                }).catch(error => {
+                    console.log('Upload to Drive (background):', error);
+                });
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        // ============================================
+        // TAB SWITCHING FUNCTION
+        // ============================================
+        function showInfoTab(tabName) {
+            // Hide all panes
+            document.querySelectorAll('.info-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            
+            // Show selected pane
+            document.getElementById(tabName + '-pane').classList.add('active');
+            
+            // Update buttons
+            document.querySelectorAll('.info-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // ============================================
+        // INITIALIZE EVERYTHING
+        // ============================================
+        window.onload = function() {
+            // Set example guest
+            document.getElementById('guestName').value = "Ahmed Hassan";
+            findGuestTable();
+            
+            // Setup photo upload
+            setupPhotoUpload();
+        };
+
+        // Event listeners
+        document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
+        document.getElementById('guestName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                findGuestTable();
+            }
+        });
+    </script>
+</body>
+</html>
