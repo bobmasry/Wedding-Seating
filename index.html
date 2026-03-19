@@ -5,241 +5,239 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ehab & Radwa · Find Your Table & Share Photos</title>
     <style>
-        /* ===== SAME FONTS AS YOUR INVITATION SITE ===== */
+        /* ===== COLORS FROM YOUR INVITATION SITE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background: #f8faf7;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
+            align-items: center;
             justify-content: center;
             padding: 20px;
-            color: #1e2a1e;
         }
 
-        .container {
+        .wedding-app {
             max-width: 1200px;
             width: 100%;
             background: white;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px -12px rgba(80, 100, 80, 0.25);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 40, 0, 0.2);
             overflow: hidden;
+            border: 1px solid #e0e8d5;
         }
 
         /* ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== */
-        .header {
+        .couple-header {
             text-align: center;
-            padding: 70px 30px 40px;
-            background: linear-gradient(135deg, #ffffff 0%, #f9fff9 100%);
-            border-bottom: 2px solid #e2f0e2;
+            padding: 60px 30px 40px;
+            border-bottom: 2px solid #d4af37;
+            background: linear-gradient(135deg, #ffffff 0%, #fafff0 100%);
         }
 
-        .header h1 {
+        .couple-header h1 {
             font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 5rem;
+            font-size: 4.5rem;
             font-weight: 400;
             letter-spacing: 3px;
-            color: #1a2e1a;
+            color: #1a3a1a;
             margin-bottom: 15px;
-            line-height: 1.2;
+            text-shadow: 1px 1px 0 #f8f0d0;
         }
 
-        .header h1 span {
+        .couple-header h1 span {
             font-weight: 300;
-            font-size: 3.5rem;
-            color: #5a7a5a;
+            font-size: 3.2rem;
+            color: #d4af37;
         }
 
-        .header .date {
-            font-size: 1.5rem;
-            color: #5a735a;
-            font-weight: 300;
-            margin-top: 15px;
-            letter-spacing: 2px;
+        .wedding-date {
+            font-size: 1.4rem;
+            color: #2a5a2a;
+            font-weight: 400;
+            margin-top: 10px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
-        .header .venue {
+        .venue {
             font-size: 1.2rem;
-            color: #7a927a;
-            margin-top: 8px;
+            color: #4a6a4a;
+            margin-top: 5px;
             font-weight: 300;
-            font-style: italic;
         }
 
-        /* ===== SEARCH SECTION - FRESH GREEN ===== */
-        .search-section {
-            padding: 50px 30px;
+        /* ===== GUEST LOOKUP - GREEN AND GOLD ACCENTS ===== */
+        .guest-lookup {
+            background: #f8fff5;
+            border-radius: 40px;
+            padding: 40px;
+            margin: 30px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 8px 0 #c5a031;
+        }
+
+        .greeting {
             text-align: center;
-            background: #f0f9f0;
-            margin: 25px;
-            border-radius: 30px;
-            border: 2px solid #d0e8d0;
+            font-size: 1.3rem;
+            color: #1a3a1a;
+            margin-bottom: 25px;
+            font-style: italic;
+            font-weight: 400;
         }
 
-        .search-section h2 {
-            font-size: 2.2rem;
-            font-weight: 300;
-            color: #1a2e1a;
-            margin-bottom: 30px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .search-box {
+        .name-search {
             display: flex;
-            max-width: 650px;
-            margin: 0 auto;
             gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        .search-box input {
-            flex: 2;
-            min-width: 300px;
+        .name-search input {
+            flex: 2 1 300px;
             padding: 18px 28px;
-            border: 2px solid #c5ddc5;
             border-radius: 60px;
+            border: 2px solid #d4af37;
             font-size: 1.1rem;
             outline: none;
-            transition: all 0.3s;
             background: white;
+            color: #1a3a1a;
         }
 
-        .search-box input:focus {
-            border-color: #7aa87a;
-            box-shadow: 0 0 0 4px #e0f0e0;
+        .name-search input:focus {
+            border-color: #2a5a2a;
+            box-shadow: 0 0 0 3px #f0e6c5;
         }
 
-        .search-box button {
-            padding: 18px 40px;
-            background: #5a8f5a;
+        .name-search button {
+            background: #2a5a2a;
             color: white;
-            border: none;
+            padding: 18px 45px;
             border-radius: 60px;
-            font-size: 1.2rem;
-            font-weight: 400;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 0 #3a5e3a;
-            border: 1px solid #7ab07a;
+            border: 2px solid #d4af37;
+            box-shadow: 0 4px 0 #1a3a1a;
         }
 
-        .search-box button:hover {
-            background: #6da06d;
+        .name-search button:hover {
+            background: #1a3a1a;
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #3a5e3a;
+            box-shadow: 0 6px 0 #0a2a0a;
         }
 
-        .search-box button:active {
+        .name-search button:active {
             transform: translateY(4px);
-            box-shadow: 0 2px 0 #3a5e3a;
+            box-shadow: 0 2px 0 #1a3a1a;
         }
 
-        .search-note {
-            margin-top: 20px;
-            color: #5a7a5a;
+        .search-hint {
+            text-align: center;
+            color: #4a6a4a;
             font-size: 1rem;
+            margin-top: 15px;
             font-weight: 300;
         }
 
-        /* ===== RESULT CARD - CHEERFUL AND BRIGHT ===== */
+        /* ===== RESULT CARD - WITH GOLD ACCENTS ===== */
         .result-card {
-            text-align: center;
-            padding: 50px 30px;
-            margin: 25px;
             background: white;
-            border: 2px solid #d0e8d0;
             border-radius: 40px;
-            box-shadow: 0 10px 25px -5px #c0d5c0;
+            padding: 40px;
+            margin: 30px;
+            text-align: center;
+            border: 2px solid #d4af37;
+            box-shadow: 0 10px 0 #c5a031;
         }
 
         .welcome-badge {
             font-size: 2.2rem;
-            color: #1a2e1a;
-            margin-bottom: 25px;
+            color: #1a3a1a;
+            margin-bottom: 20px;
             font-weight: 300;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         .group-badge {
-            background: #e0f0e0;
+            background: #f8fff5;
             padding: 15px 35px;
             border-radius: 60px;
             display: inline-block;
             font-size: 1.4rem;
-            color: #2a4a2a;
-            font-weight: 400;
+            color: #2a5a2a;
+            font-weight: 500;
             margin: 20px 0;
-            letter-spacing: 1px;
-            border: 2px solid #b8d8b8;
+            border: 2px solid #d4af37;
         }
 
         .table-display {
-            background: #f5fff5;
-            border-radius: 40px;
-            padding: 50px 40px;
+            background: #fafff0;
+            border-radius: 50px;
+            padding: 40px;
             margin: 30px 0;
-            border: 3px dashed #b8d8b8;
+            border: 3px dashed #d4af37;
         }
 
         .table-label {
-            font-size: 1.2rem;
-            color: #5a7a5a;
+            font-size: 1.3rem;
+            color: #4a6a4a;
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-weight: 300;
+            font-weight: 400;
             margin-bottom: 15px;
         }
 
         .table-number {
-            font-size: 9rem;
+            font-size: 8rem;
             font-weight: 400;
-            color: #1a3e1a;
+            color: #1a3a1a;
             line-height: 1;
             font-family: Georgia, 'Times New Roman', Times, serif;
-            text-shadow: 2px 2px 0 #e0f0e0;
+            text-shadow: 2px 2px 0 #f8e6b0;
         }
 
         .table-description {
             font-size: 2.2rem;
-            color: #3a633a;
+            color: #d4af37;
             margin-top: 15px;
-            font-weight: 300;
+            font-weight: 400;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         .family-note {
             font-size: 1.3rem;
-            color: #5a7a5a;
+            color: #2a5a2a;
             margin: 20px 0;
             font-style: italic;
             font-weight: 300;
-            background: #f0f9f0;
+            background: #f8fff5;
             padding: 20px;
             border-radius: 60px;
+            border: 1px solid #d4af37;
         }
 
-        /* ===== PHOTO UPLOAD - FRESH GREEN ACCENTS ===== */
+        /* ===== PHOTO UPLOAD - GREEN AND GOLD ===== */
         .photo-upload-section {
-            background: #f0f9f0;
+            background: #f8fff5;
             border-radius: 40px;
-            padding: 50px;
-            margin: 25px;
+            padding: 40px;
+            margin: 30px;
             text-align: center;
-            border: 2px solid #b8d8b8;
+            border: 2px solid #d4af37;
+            box-shadow: 0 8px 0 #c5a031;
         }
 
         .photo-upload-section h2 {
             font-size: 2.5rem;
             font-weight: 300;
-            color: #1a2e1a;
+            color: #1a3a1a;
             margin-bottom: 20px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
@@ -247,34 +245,33 @@
         .upload-area {
             background: white;
             border-radius: 35px;
-            padding: 50px;
+            padding: 40px;
             margin: 30px 0;
-            border: 3px dashed #a0c8a0;
+            border: 3px dashed #d4af37;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .upload-area:hover {
-            background: #f8fff8;
-            border-color: #5a8f5a;
-            transform: scale(1.01);
+            background: #fafff0;
+            border-color: #2a5a2a;
         }
 
         .upload-icon {
             font-size: 4rem;
             margin-bottom: 15px;
-            opacity: 0.8;
+            color: #d4af37;
         }
 
         .upload-text {
-            font-size: 1.5rem;
-            color: #2a4a2a;
+            font-size: 1.4rem;
+            color: #1a3a1a;
             margin-bottom: 10px;
             font-weight: 300;
         }
 
         .upload-hint {
-            color: #6a8f6a;
+            color: #4a6a4a;
             font-size: 1rem;
         }
 
@@ -283,21 +280,28 @@
         }
 
         .upload-button {
-            background: white;
-            color: #2a4a2a;
-            border: 2px solid #7aa87a;
+            background: #2a5a2a;
+            color: white;
+            border: 2px solid #d4af37;
             padding: 16px 45px;
             border-radius: 60px;
             font-size: 1.1rem;
-            font-weight: 400;
+            font-weight: 500;
             cursor: pointer;
             margin-top: 20px;
             transition: 0.2s;
+            box-shadow: 0 4px 0 #1a3a1a;
         }
 
         .upload-button:hover {
-            background: #7aa87a;
-            color: white;
+            background: #1a3a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #0a2a0a;
+        }
+
+        .upload-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1a3a1a;
         }
 
         .upload-status {
@@ -309,24 +313,10 @@
         }
 
         .upload-status.success {
-            background: #e0f5e0;
-            color: #1e4a1e;
+            background: #e8f5e8;
+            color: #1a4a1a;
             display: block;
-            border: 2px solid #7aa87a;
-        }
-
-        .upload-status.error {
-            background: #fff0f0;
-            color: #8b3a3a;
-            display: block;
-            border: 2px solid #f0c0c0;
-        }
-
-        .upload-status.loading {
-            background: #f0f0f0;
-            color: #4a6a4a;
-            display: block;
-            border: 2px solid #b8d8b8;
+            border: 2px solid #2a5a2a;
         }
 
         /* ===== PHOTO GALLERY ===== */
@@ -340,7 +330,7 @@
             padding: 20px;
             background: white;
             border-radius: 30px;
-            border: 2px solid #d0e8d0;
+            border: 2px solid #d4af37;
         }
 
         .gallery-image {
@@ -348,21 +338,14 @@
             height: 150px;
             object-fit: cover;
             border-radius: 20px;
-            border: 3px solid white;
-            box-shadow: 0 4px 10px rgba(60, 100, 60, 0.1);
-            transition: 0.2s;
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 15px rgba(60, 100, 60, 0.2);
+            border: 3px solid #f8e6b0;
         }
 
         /* ===== INFO TABS ===== */
         .info-tabs {
             display: flex;
             gap: 12px;
-            margin: 25px 25px 15px;
+            margin: 20px 30px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -370,34 +353,33 @@
         .info-tab-btn {
             padding: 15px 35px;
             background: transparent;
-            border: 2px solid #c5ddc5;
+            border: 2px solid #d4af37;
             border-radius: 60px;
             font-size: 1.1rem;
-            font-weight: 300;
+            font-weight: 400;
             cursor: pointer;
             transition: 0.2s;
-            color: #2a4a2a;
+            color: #1a3a1a;
         }
 
         .info-tab-btn.active {
-            background: #5a8f5a;
+            background: #2a5a2a;
             color: white;
-            border-color: #3a6a3a;
+            border-color: #d4af37;
         }
 
         .info-tab-btn:hover {
-            background: #e0f0e0;
-            border-color: #7aa87a;
+            background: #f8fff5;
+            border-color: #2a5a2a;
         }
 
         .info-content {
             background: white;
             border-radius: 40px;
             padding: 40px;
-            margin: 25px;
-            border: 2px solid #d0e8d0;
+            margin: 30px;
+            border: 2px solid #d4af37;
             min-height: 450px;
-            box-shadow: inset 0 2px 10px #f0f7f0;
         }
 
         .info-pane {
@@ -412,9 +394,9 @@
             font-family: Georgia, 'Times New Roman', Times, serif;
             font-size: 2.5rem;
             font-weight: 300;
-            color: #1a3e1a;
+            color: #1a3a1a;
             margin-bottom: 30px;
-            border-bottom: 2px solid #d0e8d0;
+            border-bottom: 2px solid #d4af37;
             padding-bottom: 20px;
         }
 
@@ -422,22 +404,21 @@
         .program-item {
             display: flex;
             padding: 18px 0;
-            border-bottom: 1px solid #e0f0e0;
+            border-bottom: 1px solid #f0e6c5;
             font-size: 1.2rem;
-            color: #1e3a1e;
+            color: #1a3a1a;
         }
 
         .program-time {
-            font-weight: 400;
-            color: #2a5a2a;
+            font-weight: 600;
+            color: #d4af37;
             width: 130px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         /* ===== MENU ITEMS ===== */
         .menu-category {
-            font-weight: 400;
-            color: #1a4a1a;
+            font-weight: 600;
+            color: #1a3a1a;
             font-size: 1.6rem;
             margin: 35px 0 15px;
             font-family: Georgia, 'Times New Roman', Times, serif;
@@ -445,22 +426,22 @@
 
         .menu-item {
             padding: 12px 0 12px 25px;
-            border-left: 3px solid #b8d8b8;
+            border-left: 3px solid #d4af37;
             margin: 10px 0;
             font-size: 1.2rem;
-            color: #2a4a2a;
+            color: #2a5a2a;
         }
 
         /* ===== SONG ITEMS ===== */
         .song-item {
             padding: 16px;
-            border-bottom: 1px solid #e0f0e0;
+            border-bottom: 1px solid #f0e6c5;
             font-size: 1.2rem;
-            color: #2a4a2a;
+            color: #1a3a1a;
         }
 
         .song-item:hover {
-            background: #f8fff8;
+            background: #f8fff5;
         }
 
         /* ===== TABLE MAP ===== */
@@ -472,117 +453,105 @@
             max-width: 100%;
             max-height: 500px;
             border-radius: 30px;
-            border: 3px solid #d0e8d0;
+            border: 3px solid #d4af37;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(60, 100, 60, 0.1);
-        }
-
-        .map-image:hover {
-            opacity: 0.95;
-            transform: scale(1.01);
-            box-shadow: 0 15px 30px rgba(60, 100, 60, 0.15);
         }
 
         /* ===== PHOTO ALBUM SECTION ===== */
         .photo-album-section {
-            background: #f0f9f0;
+            background: #f8fff5;
             border-radius: 40px;
             padding: 50px;
-            margin: 25px;
+            margin: 30px;
             text-align: center;
-            border: 2px solid #b8d8b8;
+            border: 2px solid #d4af37;
+            box-shadow: 0 8px 0 #c5a031;
         }
 
         .photo-album-section h2 {
             font-family: Georgia, 'Times New Roman', Times, serif;
             font-size: 2.5rem;
             font-weight: 300;
-            color: #1a2e1a;
+            color: #1a3a1a;
             margin-bottom: 15px;
         }
 
         .photo-album-link {
             display: inline-block;
             padding: 18px 55px;
-            background: #5a8f5a;
+            background: #2a5a2a;
             color: white;
             border-radius: 60px;
             text-decoration: none;
             font-size: 1.2rem;
             margin: 30px 0;
-            transition: 0.2s;
-            border: 2px solid #3a6a3a;
-            box-shadow: 0 4px 0 #3a5e3a;
+            border: 2px solid #d4af37;
+            box-shadow: 0 4px 0 #1a3a1a;
         }
 
         .photo-album-link:hover {
-            background: #6da06d;
+            background: #1a3a1a;
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 #3a5e3a;
+            box-shadow: 0 6px 0 #0a2a0a;
         }
 
         .photo-album-link:active {
             transform: translateY(4px);
-            box-shadow: 0 2px 0 #3a5e3a;
+            box-shadow: 0 2px 0 #1a3a1a;
         }
 
-        /* ===== FOOTER - MATCHING YOUR INVITATION ===== */
+        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
             padding: 50px 20px 60px;
-            color: #5a735a;
+            color: #4a6a4a;
             font-size: 1rem;
-            font-weight: 300;
-            border-top: 2px solid #e0f0e0;
-            margin-top: 25px;
-            background: #fafffa;
+            border-top: 2px solid #d4af37;
+            margin-top: 20px;
+            background: #ffffff;
         }
 
         .footer p {
             margin: 8px 0;
-            font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
-        /* ===== COUNTDOWN STYLE FROM YOUR INVITATION ===== */
+        /* ===== COUNTDOWN STYLE ===== */
         .countdown-note {
             margin-top: 20px;
-            color: #5a8f5a;
-            font-size: 1.1rem;
-            font-style: italic;
+            color: #d4af37;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
-            .header h1 { font-size: 3.2rem; }
-            .header h1 span { font-size: 2.2rem; }
-            .table-number { font-size: 6rem; }
+            .couple-header h1 { font-size: 3rem; }
+            .couple-header h1 span { font-size: 2.2rem; }
+            .table-number { font-size: 5rem; }
             .table-description { font-size: 1.6rem; }
-            .info-tabs { gap: 8px; }
-            .info-tab-btn { padding: 12px 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="wedding-app">
         <!-- ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== -->
-        <div class="header">
+        <div class="couple-header">
             <h1>Ehab <span>&</span> Radwa</h1>
-            <div class="date">April 10, 2026</div>
+            <div class="wedding-date">April 10, 2026</div>
             <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
         </div>
 
         <!-- ===== SEARCH SECTION ===== -->
-        <div class="search-section">
-            <h2>✨ Find your table ✨</h2>
-            <div class="search-box">
-                <input type="text" id="guestName" placeholder="Enter your full name">
+        <div class="guest-lookup">
+            <div class="greeting">💕 Please enter your name to find your table 💕</div>
+            <div class="name-search">
+                <input type="text" id="guestName" placeholder="e.g., Ahmed Hassan" value="Ahmed Hassan">
                 <button id="findTableBtn">Find my table</button>
             </div>
-            <div class="search-note">🌸 Families and groups sit together at the same table</div>
+            <div class="search-hint">Families and groups sit together at the same table</div>
         </div>
 
-        <!-- ===== RESULT DISPLAY ===== -->
+        <!-- ===== RESULT CARD ===== -->
         <div class="result-card" id="resultCard">
             <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
             <div class="group-badge" id="groupName">—</div>
@@ -599,7 +568,7 @@
         <!-- ===== PHOTO UPLOAD ===== -->
         <div class="photo-upload-section">
             <h2>📸 Share your photos</h2>
-            <p style="color: #4a6e4a; margin-bottom: 20px; font-size: 1.2rem;">Upload your photos from tonight</p>
+            <p style="color: #2a5a2a; margin-bottom: 20px; font-size: 1.2rem;">Upload your photos from tonight</p>
             
             <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
                 <div class="upload-icon">📷</div>
@@ -617,7 +586,7 @@
             
             <div id="photoGallery" class="photo-gallery"></div>
             
-            <p class="countdown-note">✨ Your photos will appear in the wedding album ✨</p>
+            <p class="countdown-note">✨ Your photos will be added to the wedding album ✨</p>
         </div>
 
         <!-- ===== INFO TABS ===== -->
@@ -672,9 +641,8 @@
                 <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
                 <div class="song-item">🎵 "Awedony" – Amr Diab</div>
                 <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
-                <div class="song-item">🎵 "Dance With Me Tonight" – Olly Murs</div>
                 
-                <p style="margin-top: 25px; color: #5a735a; font-style: italic;">...and more Arabic & Western hits!</p>
+                <p style="margin-top: 25px; color: #4a6a4a; font-style: italic;">...and more Arabic & Western hits!</p>
             </div>
 
             <!-- Map Pane -->
@@ -682,7 +650,7 @@
                 <h2>Table Layout</h2>
                 <div class="table-map">
                     <img src="images/table-map.jpg" alt="Wedding table layout" class="map-image" onclick="window.open(this.src)">
-                    <p style="margin-top: 20px; color: #5a735a;">Click map to enlarge</p>
+                    <p style="margin-top: 20px; color: #4a6a4a;">Click map to enlarge</p>
                 </div>
             </div>
         </div>
@@ -690,11 +658,11 @@
         <!-- ===== PHOTO ALBUM ===== -->
         <div class="photo-album-section">
             <h2>📸 Wedding Photo Album</h2>
-            <p style="color: #4a6e4a; font-size: 1.2rem;">View all photos shared by guests</p>
+            <p style="color: #2a5a2a; font-size: 1.2rem;">View all photos shared by guests</p>
             <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">
                 Open photo album
             </a>
-            <p style="color: #5a735a;">Scan the QR code at the venue to upload your photos</p>
+            <p style="color: #4a6a4a;">Scan the QR code at the venue to upload your photos</p>
         </div>
 
         <!-- ===== FOOTER ===== -->
@@ -702,7 +670,7 @@
             <p>Ehab & Radwa · April 10, 2026</p>
             <p>Sunset Wedding Garden · Abou Rawash, Giza</p>
             <p style="margin-top: 20px;">With great joy, we invite you to celebrate our wedding. Your presence means the world to us.</p>
-            <p class="countdown-note">⏳ 22 days, 8 hours, 30 minutes to go</p>
+            <p class="countdown-note">⏳ 22 days, 8 hours, 15 minutes to go</p>
         </div>
     </div>
 
@@ -746,12 +714,12 @@
                 document.getElementById('groupName').textContent = guest.group;
                 document.getElementById('tableNumber').textContent = guest.table;
                 document.getElementById('tableDescription').textContent = tableDescriptions[guest.table] || `Table ${guest.table}`;
-                document.getElementById('familyNote').textContent = `🌸 Your whole ${guest.group} sits together at Table ${guest.table} 🌸`;
+                document.getElementById('familyNote').textContent = `✨ Your whole ${guest.group} sits together at Table ${guest.table} ✨`;
             } else {
                 document.getElementById('groupName').textContent = "Not found in list";
                 document.getElementById('tableNumber').textContent = "?";
                 document.getElementById('tableDescription').textContent = "Please see the host desk";
-                document.getElementById('familyNote').textContent = "✨ The host will help you find your table ✨";
+                document.getElementById('familyNote').textContent = "🌸 The host will help you find your table 🌸";
             }
         }
 
@@ -779,7 +747,7 @@
                 
                 if (files.length === 0) return;
                 
-                uploadStatus.className = 'upload-status loading';
+                uploadStatus.className = 'upload-status success';
                 uploadStatus.textContent = `✨ Adding ${files.length} photo(s)... ✨`;
                 
                 for (let i = 0; i < files.length; i++) {
@@ -796,7 +764,6 @@
                     reader.readAsDataURL(files[i]);
                 }
                 
-                uploadStatus.className = 'upload-status success';
                 uploadStatus.textContent = `✅ Successfully added ${files.length} photo(s)!`;
                 
                 fileInput.value = '';
