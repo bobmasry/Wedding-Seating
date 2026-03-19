@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ehab & Radwa · Find Your Table & Share Photos</title>
+    <style>
+        /* ===== SAME FONTS AS YOUR INVITATION SITE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03), 0 8px 16px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+        }
+
+        /* ===== HEADER - MATCHING YOUR INVITATION STYLE ===== */
+        .header {
+            text-align: center;
+            padding: 60px 30px 30px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .header h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 4rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .header h1 span {
+            font-weight: 300;
+            font-size: 2.8rem;
+            color: #444444;
+        }
+
+        .header .date {
+            font-size: 1.3rem;
+            color: #666666;
+            font-weight: 300;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        .header .venue {
+            font-size: 1.1rem;
+            color: #888888;
+            margin-top: 5px;
+            font-weight: 300;
+        }
+
+        /* ===== SEARCH SECTION - CLEAN AND MINIMAL ===== */
+        .search-section {
+            padding: 40px 30px;
+            text-align: center;
+            background: #fafafa;
+            margin: 20px;
+            border-radius: 24px;
+        }
+
+        .search-section h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #000000;
+            margin-bottom: 25px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .search-box input {
+            flex: 2;
+            min-width: 280px;
+            padding: 16px 24px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .search-box input:focus {
+            border-color: #999999;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.02);
+        }
+
+        .search-box button {
+            padding: 16px 32px;
+            background: #000000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .search-box button:hover {
+            background: #333333;
+        }
+
+        .search-note {
+            margin-top: 16px;
+            color: #888888;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        /* ===== RESULT CARD - ELEGANT AND AIRY ===== */
+        .result-card {
+            text-align: center;
+            padding: 40px 30px;
+            margin: 20px;
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 32px;
+        }
+
+        .welcome-badge {
+            font-size: 1.8rem;
+            color: #000000;
+            margin-bottom: 20px;
+            font-weight: 300;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .group-badge {
+            background: #f5f5f5;
+            padding: 12px 28px;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 1.2rem;
+            color: #333333;
+            font-weight: 400;
+            margin: 15px 0;
+            letter-spacing: 0.5px;
+        }
+
+        .table-display {
+            background: #fafafa;
+            border-radius: 32px;
+            padding: 40px;
+            margin: 25px 0;
+            border: 1px solid #f0f0f0;
+        }
+
+        .table-label {
+            font-size: 1rem;
+            color: #888888;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .table-number {
+            font-size: 8rem;
+            font-weight: 300;
+            color: #000000;
+            line-height: 1;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .table-description {
+            font-size: 1.8rem;
+            color: #333333;
+            margin-top: 10px;
+            font-weight: 300;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .family-note {
+            font-size: 1.2rem;
+            color: #666666;
+            margin: 20px 0;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* ===== PHOTO UPLOAD - MODERN AND CLEAN ===== */
+        .photo-upload-section {
+            background: #fafafa;
+            border-radius: 32px;
+            padding: 40px;
+            margin: 20px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .photo-upload-section h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #000000;
+            margin-bottom: 20px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .upload-area {
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            margin: 25px 0;
+            border: 2px dashed #e0e0e0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #999999;
+            background: #ffffff;
+        }
+
+        .upload-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .upload-text {
+            font-size: 1.3rem;
+            color: #333333;
+            margin-bottom: 8px;
+            font-weight: 300;
+        }
+
+        .upload-hint {
+            color: #999999;
+            font-size: 0.95rem;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .upload-button {
+            background: transparent;
+            color: #333333;
+            border: 1px solid #cccccc;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 300;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.2s;
+        }
+
+        .upload-button:hover {
+            background: #f5f5f5;
+            border-color: #999999;
+        }
+
+        .upload-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 1rem;
+            display: none;
+            background: #f5f5f5;
+        }
+
+        .upload-status.success {
+            background: #f0f7f0;
+            color: #2a5a2a;
+            display: block;
+            border: 1px solid #c0dcc0;
+        }
+
+        .upload-status.error {
+            background: #fdf0f0;
+            color: #8b3a3a;
+            display: block;
+            border: 1px solid #f0c0c0;
+        }
+
+        .upload-status.loading {
+            background: #f8f8f8;
+            color: #666666;
+            display: block;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* ===== PHOTO GALLERY ===== */
+        .photo-gallery {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 24px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid #f0f0f0;
+            transition: 0.2s;
+        }
+
+        .gallery-image:hover {
+            opacity: 0.9;
+        }
+
+        /* ===== INFO TABS ===== */
+        .info-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 20px 20px 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-tab-btn {
+            padding: 12px 28px;
+            background: transparent;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 300;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #666666;
+        }
+
+        .info-tab-btn.active {
+            background: #000000;
+            color: white;
+            border-color: #000000;
+        }
+
+        .info-tab-btn:hover {
+            border-color: #999999;
+            color: #333333;
+        }
+
+        .info-content {
+            background: white;
+            border-radius: 32px;
+            padding: 30px;
+            margin: 20px;
+            border: 1px solid #f0f0f0;
+            min-height: 400px;
+        }
+
+        .info-pane {
+            display: none;
+        }
+
+        .info-pane.active {
+            display: block;
+        }
+
+        .info-pane h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #000000;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        /* ===== PROGRAM ITEMS ===== */
+        .program-item {
+            display: flex;
+            padding: 16px 0;
+            border-bottom: 1px solid #f8f8f8;
+            font-size: 1.1rem;
+            color: #333333;
+        }
+
+        .program-time {
+            font-weight: 400;
+            color: #000000;
+            width: 120px;
+        }
+
+        /* ===== MENU ITEMS ===== */
+        .menu-category {
+            font-weight: 400;
+            color: #000000;
+            font-size: 1.4rem;
+            margin: 30px 0 12px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+
+        .menu-item {
+            padding: 10px 0 10px 20px;
+            border-left: 2px solid #f0f0f0;
+            margin: 8px 0;
+            font-size: 1.1rem;
+            color: #444444;
+        }
+
+        /* ===== SONG ITEMS ===== */
+        .song-item {
+            padding: 14px;
+            border-bottom: 1px solid #f8f8f8;
+            font-size: 1.1rem;
+            color: #444444;
+        }
+
+        /* ===== TABLE MAP ===== */
+        .table-map {
+            text-align: center;
+        }
+
+        .map-image {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 24px;
+            border: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .map-image:hover {
+            opacity: 0.95;
+        }
+
+        /* ===== PHOTO ALBUM SECTION ===== */
+        .photo-album-section {
+            background: #fafafa;
+            border-radius: 32px;
+            padding: 40px;
+            margin: 20px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .photo-album-section h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .photo-album-link {
+            display: inline-block;
+            padding: 16px 48px;
+            background: transparent;
+            border: 1px solid #cccccc;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #333333;
+            font-size: 1.1rem;
+            margin: 25px 0;
+            transition: 0.2s;
+        }
+
+        .photo-album-link:hover {
+            background: #f5f5f5;
+            border-color: #999999;
+        }
+
+        /* ===== FOOTER - MATCHING YOUR INVITATION ===== */
+        .footer {
+            text-align: center;
+            padding: 40px 20px 50px;
+            color: #888888;
+            font-size: 0.95rem;
+            font-weight: 300;
+            border-top: 1px solid #f8f8f8;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .header h1 { font-size: 2.8rem; }
+            .header h1 span { font-size: 2rem; }
+            .table-number { font-size: 5rem; }
+            .table-description { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== -->
+        <div class="header">
+            <h1>Ehab <span>&</span> Radwa</h1>
+            <div class="date">April 10, 2026</div>
+            <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
+        </div>
+
+        <!-- ===== SEARCH SECTION ===== -->
+        <div class="search-section">
+            <h2>Find your table</h2>
+            <div class="search-box">
+                <input type="text" id="guestName" placeholder="Enter your full name">
+                <button id="findTableBtn">Search</button>
+            </div>
+            <div class="search-note">✨ Families sit together at the same table</div>
+        </div>
+
+        <!-- ===== RESULT DISPLAY ===== -->
+        <div class="result-card" id="resultCard">
+            <div class="welcome-badge" id="welcomeMessage">Welcome</div>
+            <div class="group-badge" id="groupName">—</div>
+            
+            <div class="table-display">
+                <div class="table-label">Your Table</div>
+                <div class="table-number" id="tableNumber">—</div>
+                <div class="table-description" id="tableDescription"></div>
+            </div>
+            
+            <div class="family-note" id="familyNote"></div>
+        </div>
+
+        <!-- ===== PHOTO UPLOAD ===== -->
+        <div class="photo-upload-section">
+            <h2>Share your photos</h2>
+            <p style="color: #666666; margin-bottom: 20px;">Upload your photos from tonight</p>
+            
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📸</div>
+                <div class="upload-text">Click to select photos</div>
+                <div class="upload-hint">Choose one or multiple photos</div>
+            </div>
+            
+            <input type="file" id="fileInput" multiple accept="image/*">
+            
+            <button class="upload-button" id="uploadBtn" onclick="document.getElementById('fileInput').click()">
+                Browse photos
+            </button>
+            
+            <div id="uploadStatus" class="upload-status"></div>
+            
+            <div id="photoGallery" class="photo-gallery"></div>
+        </div>
+
+        <!-- ===== INFO TABS ===== -->
+        <div class="info-tabs">
+            <button class="info-tab-btn active" onclick="showInfoTab('program')">Program</button>
+            <button class="info-tab-btn" onclick="showInfoTab('menu')">Menu</button>
+            <button class="info-tab-btn" onclick="showInfoTab('songs')">Song list</button>
+            <button class="info-tab-btn" onclick="showInfoTab('map')">Table map</button>
+        </div>
+
+        <div class="info-content">
+            <!-- Program Pane -->
+            <div id="program-pane" class="info-pane active">
+                <h2>Program</h2>
+                <div class="program-item"><span class="program-time">2:30 PM</span> Guest arrival</div>
+                <div class="program-item"><span class="program-time">3:30 PM</span> Sunset ceremony</div>
+                <div class="program-item"><span class="program-time">4:30 PM</span> Cocktail hour</div>
+                <div class="program-item"><span class="program-time">5:30 PM</span> Dinner served</div>
+                <div class="program-item"><span class="program-time">7:00 PM</span> First dance</div>
+                <div class="program-item"><span class="program-time">8:00 PM</span> Cake & dancing</div>
+                <div class="program-item"><span class="program-time">10:30 PM</span> Send-off</div>
+            </div>
+
+            <!-- Menu Pane -->
+            <div id="menu-pane" class="info-pane">
+                <h2>Menu</h2>
+                
+                <div class="menu-category">Appetizers</div>
+                <div class="menu-item">Roasted pumpkin & feta salad</div>
+                <div class="menu-item">Stuffed grape leaves</div>
+                
+                <div class="menu-category">Main course</div>
+                <div class="menu-item">Slow-cooked lamb shank</div>
+                <div class="menu-item">Sea bass with lemon butter</div>
+                <div class="menu-item">Stuffed bell pepper (vegan)</div>
+                
+                <div class="menu-category">Desserts</div>
+                <div class="menu-item">Wedding cake</div>
+                <div class="menu-item">Seasonal fruit tart</div>
+                <div class="menu-item">Egyptian basbousa</div>
+            </div>
+
+            <!-- Songs Pane -->
+            <div id="songs-pane" class="info-pane">
+                <h2>Song list</h2>
+                
+                <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis</div>
+                <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
+                <div class="song-item">🎵 "Marry You" – Bruno Mars</div>
+                <div class="song-item">🎵 "Perfect" – Ed Sheeran</div>
+                <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
+                <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
+                <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
+            </div>
+
+            <!-- Map Pane -->
+            <div id="map-pane" class="info-pane">
+                <h2>Table map</h2>
+                <div class="table-map">
+                    <img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)">
+                    <p style="margin-top: 15px; color: #888888;">Click to enlarge</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PHOTO ALBUM ===== -->
+        <div class="photo-album-section">
+            <h2>Photo album</h2>
+            <p style="color: #666666;">View all photos shared by guests</p>
+            <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">
+                Open album
+            </a>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            <p>Ehab & Radwa · April 10, 2026</p>
+            <p>Sunset Wedding Garden · Abou Rawash, Giza</p>
+            <p style="margin-top: 15px;">Thank you for celebrating with us</p>
+        </div>
+    </div>
+
+    <script>
+        // ===== YOUR GUEST LIST - REPLACE WITH YOUR ACTUAL GUESTS =====
+        const guestDatabase = {
+            "ahmed hassan": { group: "Bride Family", table: "2" },
+            "fatma ali": { group: "Bride Family", table: "2" },
+            "mohamed elsayed": { group: "Bride Family", table: "2" },
+            "nadia omar": { group: "Groom Family", table: "3" },
+            "karim abdelrahman": { group: "Groom Family", table: "3" },
+            "yasmin fouad": { group: "Friends", table: "5" },
+            "omar sherif": { group: "Friends", table: "5" },
+            "samira ibrahim": { group: "Friends", table: "5" },
+            "reem galal": { group: "Colleagues", table: "7" },
+            "khaled diab": { group: "Colleagues", table: "7" }
+        };
+
+        const tableDescriptions = {
+            "2": "Bride's family",
+            "3": "Groom's family",
+            "5": "Friends",
+            "7": "Colleagues"
+        };
+
+        // ===== FIND GUEST FUNCTION =====
+        function findGuestTable() {
+            const input = document.getElementById('guestName');
+            const name = input.value.trim().toLowerCase();
+            
+            if (name === "") {
+                alert("Please enter your name");
+                return;
+            }
+            
+            const guest = guestDatabase[name];
+            
+            document.getElementById('welcomeMessage').textContent = `Welcome, ${input.value.trim()}`;
+            
+            if (guest) {
+                document.getElementById('groupName').textContent = guest.group;
+                document.getElementById('tableNumber').textContent = guest.table;
+                document.getElementById('tableDescription').textContent = tableDescriptions[guest.table] || `Table ${guest.table}`;
+                document.getElementById('familyNote').textContent = `Your whole ${guest.group} sits together at Table ${guest.table}`;
+            } else {
+                document.getElementById('groupName').textContent = "Not found";
+                document.getElementById('tableNumber').textContent = "?";
+                document.getElementById('tableDescription').textContent = "Please see the host";
+                document.getElementById('familyNote').textContent = "The host will help you find your table";
+            }
+        }
+
+        // ===== TAB SWITCHING =====
+        function showInfoTab(tabName) {
+            document.querySelectorAll('.info-pane').forEach(pane => {
+                pane.classList.remove('active');
+            });
+            document.getElementById(tabName + '-pane').classList.add('active');
+            
+            document.querySelectorAll('.info-tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // ===== PHOTO UPLOAD (SIMPLE VERSION) =====
+        function setupPhotoUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const photoGallery = document.getElementById('photoGallery');
+            
+            fileInput.addEventListener('change', function(e) {
+                const files = e.target.files;
+                
+                if (files.length === 0) return;
+                
+                uploadStatus.className = 'upload-status loading';
+                uploadStatus.textContent = `Adding ${files.length} photo(s)...`;
+                
+                for (let i = 0; i < files.length; i++) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.className = 'gallery-image';
+                        photoGallery.appendChild(img);
+                    };
+                    
+                    reader.readAsDataURL(files[i]);
+                }
+                
+                uploadStatus.className = 'upload-status success';
+                uploadStatus.textContent = `✅ Added ${files.length} photo(s)`;
+                
+                fileInput.value = '';
+                
+                setTimeout(() => {
+                    uploadStatus.style.display = 'none';
+                    uploadStatus.className = 'upload-status';
+                }, 3000);
+            });
+        }
+
+        // ===== INITIALIZE =====
+        window.onload = function() {
+            document.getElementById('guestName').value = "Ahmed Hassan";
+            findGuestTable();
+            setupPhotoUpload();
+        };
+
+        document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
+        document.getElementById('guestName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') findGuestTable();
+        });
+    </script>
+</body>
+</html>
