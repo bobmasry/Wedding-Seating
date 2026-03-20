@@ -48,10 +48,10 @@
             z-index: 2;
         }
 
-        .heart-container {
+       .heart-container {
     position: absolute;
-    bottom: 1100 px;
-    left: 60.35%;
+    bottom: 25vh;
+    left: 65%;
     transform: translateX(-50%);
     z-index: 10;
     animation: bounce 1.5s ease-in-out infinite;
@@ -59,6 +59,21 @@
     background: transparent;
     padding: 0;
     transition: transform 0.2s;
+}
+
+/* Adjust for smaller mobile screens */
+@media (max-width: 600px) {
+    .heart-container {
+        bottom: 18vh;
+        left: 62%;
+    }
+}
+
+/* Adjust for very tall mobile screens */
+@media (max-height: 700px) {
+    .heart-container {
+        bottom: 15vh;
+    }
 }
 
         .heart-container:hover {
