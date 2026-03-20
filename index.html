@@ -18,41 +18,41 @@
         }
 
         /* ===== HERO SECTION - FULL SCREEN WITH BOUNCING HEART ===== */
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 600px;
-            overflow: hidden;
-            cursor: pointer;
-        }
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+    cursor: pointer;
+}
 
-        .hero-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-            z-index: 2;
-        }
-
-       .heart-container {
+.hero-image {
     position: absolute;
-    bottom: 25vh;
-    left: 65%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+    z-index: 2;
+}
+
+/* Bouncing Heart Animation - Positioned over faces */
+.heart-container {
+    position: absolute;
+    top: 35%;
+    right: 25%;
     z-index: 10;
     animation: bounce 1.5s ease-in-out infinite;
     cursor: pointer;
@@ -61,47 +61,43 @@
     transition: transform 0.2s;
 }
 
-/* Adjust for smaller mobile screens */
-@media (max-width: 600px) {
+/* Mobile adjustments */
+@media (max-width: 768px) {
     .heart-container {
-        bottom: 18vh;
-        left: 62%;
+        top: 38%;
+        right: 20%;
     }
 }
 
-/* Adjust for very tall mobile screens */
-@media (max-height: 700px) {
+@media (max-width: 480px) {
     .heart-container {
-        bottom: 15vh;
+        top: 42%;
+        right: 15%;
     }
 }
 
-        .heart-container:hover {
-            transform: translateX(-50%) scale(1.1);
-        }
-
-        .heart {
-    font-size: 4 rem;
+.heart {
+    font-size: 4.35rem;
     display: inline-block;
     animation: heartbeat 1s ease-in-out infinite;
 }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-20px);
-            }
-        }
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
 
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }       
         }
 
         .scroll-hint {
