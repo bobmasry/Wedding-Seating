@@ -18,86 +18,87 @@
         }
 
         /* ===== HERO SECTION - FULL SCREEN WITH BOUNCING HEART ===== */
-.hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 600px;
-    overflow: hidden;
-    cursor: pointer;
-}
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            cursor: pointer;
+        }
 
-.hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-    z-index: 1;
-}
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            z-index: 1;
+        }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-    z-index: 2;
-}
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: 2;
+        }
 
-/* Bouncing Heart Animation - Positioned over faces */
-.heart-container {
-    position: absolute;
-    top: 35%;
-    right: 40%;
-    z-index: 10;
-    animation: bounce 1.5s ease-in-out infinite;
-    cursor: pointer;
-    background: transparent;
-    padding: 0;
-    transition: transform 0.2s;
-}
+        /* Bouncing Heart - SMALLER SIZE & MOVED LEFT */
+        .heart-container {
+            position: absolute;
+            top: 35%;
+            right: 35%;
+            z-index: 10;
+            animation: bounce 1.5s ease-in-out infinite;
+            cursor: pointer;
+            background: transparent;
+            padding: 0;
+            transition: transform 0.2s;
+        }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-    .heart-container {
-        top: 38%;
-        right: 35%;
-    }
-}
+        /* Mobile adjustments - smaller heart on phones */
+        @media (max-width: 768px) {
+            .heart-container {
+                top: 38%;
+                right: 30%;
+            }
+        }
 
-@media (max-width: 480px) {
-    .heart-container {
-        top: 42%;
-        right: 30%;
-    }
-}
+        @media (max-width: 480px) {
+            .heart-container {
+                top: 42%;
+                right: 25%;
+            }
+        }
 
-.heart {
-    font-size: 2.5rem;
-    display: inline-block;
-    animation: heartbeat 1s ease-in-out infinite;
-}
+        /* HEART SIZE - SMALLER (3rem instead of 4.35rem) */
+        .heart {
+            font-size: 3rem;
+            display: inline-block;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
 
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-}
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
 
-@keyframes heartbeat {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.2);
-    }       
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
         }
 
         .scroll-hint {
@@ -116,7 +117,7 @@
             white-space: nowrap;
         }
 
-        /* ===== MAIN CONTENT - YOUR ORIGINAL BRILLIANT SETUP ===== */
+        /* ===== MAIN CONTENT ===== */
         .main-content {
             background: white;
             border-radius: 40px 40px 0 0;
@@ -135,7 +136,6 @@
             overflow: hidden;
         }
 
-        /* ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== */
         .couple-header {
             text-align: center;
             padding: 60px 30px 40px;
@@ -171,7 +171,6 @@
             margin-top: 5px;
         }
 
-        /* ===== GUEST LOOKUP ===== */
         .guest-lookup {
             background: #f8fff5;
             border-radius: 40px;
@@ -238,7 +237,6 @@
             margin-top: 15px;
         }
 
-        /* ===== RESULT CARD ===== */
         .result-card {
             background: white;
             border-radius: 40px;
@@ -308,7 +306,6 @@
             border-radius: 60px;
         }
 
-        /* ===== PHOTO UPLOAD ===== */
         .photo-upload-section {
             background: #f8fff5;
             border-radius: 40px;
@@ -407,7 +404,6 @@
             border: 2px solid #f8e6b0;
         }
 
-        /* ===== INFO TABS ===== */
         .info-tabs {
             display: flex;
             gap: 10px;
@@ -539,19 +535,17 @@
             .couple-header h1 span { font-size: 2.2rem; }
             .table-number { font-size: 5rem; }
             .table-description { font-size: 1.4rem; }
-            .heart { font-size: 2.5rem; }
-            .heart-container { bottom: 70px; padding: 12px; }
         }
     </style>
 </head>
 <body>
     <!-- ===== HERO SECTION WITH COUPLE IMAGE ===== -->
     <div class="hero" id="heroSection">
-        <!-- REPLACE 'your-couple-photo.jpg' with your actual image path -->
-        <img src="Phone_app.png" alt="Ehab & Radwa" class="hero-image" id="heroImage">
+        <!-- REPLACE WITH YOUR IMAGE FILENAME -->
+        <img src="couple.png" alt="Ehab & Radwa" class="hero-image" id="heroImage">
         <div class="hero-overlay"></div>
         
-        <!-- Bouncing Heart -->
+        <!-- Bouncing Heart - Smaller size, moved left -->
         <div class="heart-container" id="heartBtn">
             <span class="heart">❤️</span>
         </div>
@@ -562,14 +556,12 @@
     <!-- ===== MAIN CONTENT ===== -->
     <div class="main-content" id="mainContent">
         <div class="wedding-app">
-            <!-- Header -->
             <div class="couple-header">
                 <h1>Ehab <span>&</span> Radwa</h1>
                 <div class="wedding-date">April 10, 2026</div>
                 <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
             </div>
 
-            <!-- Search Section -->
             <div class="guest-lookup">
                 <div class="greeting">💕 Please enter your name to find your table 💕</div>
                 <div class="name-search">
@@ -579,7 +571,6 @@
                 <div class="search-hint">Families and groups sit together at the same table</div>
             </div>
 
-            <!-- Result Card -->
             <div class="result-card">
                 <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
                 <div class="group-badge" id="groupName">—</div>
@@ -591,7 +582,6 @@
                 <div class="family-note" id="familyNote"></div>
             </div>
 
-            <!-- Photo Upload -->
             <div class="photo-upload-section">
                 <h2>📸 Share your photos</h2>
                 <p style="color: #2a5a2a; margin-bottom: 15px;">Upload your photos from tonight</p>
@@ -606,7 +596,6 @@
                 <div id="photoGallery" class="photo-gallery"></div>
             </div>
 
-            <!-- Info Tabs -->
             <div class="info-tabs">
                 <button class="info-tab-btn active" onclick="showInfoTab('program')">📋 Program</button>
                 <button class="info-tab-btn" onclick="showInfoTab('menu')">🍽️ Menu</button>
@@ -658,14 +647,12 @@
                 </div>
             </div>
 
-            <!-- Photo Album -->
             <div class="photo-album-section">
                 <h2>📸 Wedding Photo Album</h2>
                 <p style="color: #2a5a2a;">View all photos shared by guests</p>
                 <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">Open photo album</a>
             </div>
 
-            <!-- Footer -->
             <div class="footer">
                 <p>Ehab & Radwa · April 10, 2026</p>
                 <p>Sunset Wedding Garden · Abou Rawash, Giza</p>
@@ -693,7 +680,6 @@
             "5": "Friends"
         };
 
-        // Find Guest
         function findGuestTable() {
             const input = document.getElementById('guestName');
             const name = input.value.trim().toLowerCase();
@@ -714,7 +700,6 @@
             }
         }
 
-        // Tab Switching
         function showInfoTab(tabName) {
             document.querySelectorAll('.info-pane').forEach(pane => pane.classList.remove('active'));
             document.getElementById(tabName + '-pane').classList.add('active');
@@ -722,7 +707,6 @@
             event.target.classList.add('active');
         }
 
-        // Photo Upload
         function setupPhotoUpload() {
             const fileInput = document.getElementById('fileInput');
             const uploadStatus = document.getElementById('uploadStatus');
@@ -755,20 +739,16 @@
             });
         }
 
-        // Scroll to main content
         function scrollToMain() {
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Initialize
         window.onload = function() {
             document.getElementById('guestName').value = "Ahmed Hassan";
             findGuestTable();
             setupPhotoUpload();
             
-            // Click heart to scroll
             document.getElementById('heartBtn').addEventListener('click', scrollToMain);
-            // Click hero image to scroll
             document.getElementById('heroSection').addEventListener('click', scrollToMain);
         };
 
