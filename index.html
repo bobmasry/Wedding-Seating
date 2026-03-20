@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Ehab & Radwa · Find Your Table & Share Photos</title>
-    <!-- Version: v2.1 - Heart size and position fixed for mobile -->
+    <!-- Version: v3.0 - Heart position at 60% from left, size fixed -->
     <style>
         * {
             margin: 0;
@@ -79,11 +79,12 @@
             text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
         }
 
-        /* ===== HEART STYLES - DEFAULT (DESKTOP) ===== */
+        /* ===== HEART STYLES - DESKTOP ===== */
         .heart-container {
             position: absolute;
             top: 35%;
-            right: 35%;
+            left: 60%;
+            transform: translateX(-50%);
             z-index: 10;
             animation: bounce 1.5s ease-in-out infinite;
             cursor: pointer;
@@ -98,29 +99,30 @@
             animation: heartbeat 1s ease-in-out infinite;
         }
 
-        /* ===== MOBILE SPECIFIC - 5% LEFT & 20% SMALLER ===== */
+        /* ===== MOBILE SPECIFIC - 60% from left, 20% smaller ===== */
         @media (max-width: 768px) {
             .heart-container {
                 top: 38% !important;
-                right: 40% !important;
+                left: 60% !important;
+                transform: translateX(-50%) !important;
             }
             .heart {
                 font-size: 2.4rem !important;
             }
         }
 
-        /* Smaller phones */
+        /* Smaller phones - adjust if needed */
         @media (max-width: 480px) {
             .heart-container {
                 top: 42% !important;
-                right: 45% !important;
+                left: 60% !important;
             }
             .heart {
                 font-size: 2.4rem !important;
             }
         }
 
-        /* Desktop styles for text */
+        /* Mobile text adjustments */
         @media (max-width: 768px) {
             .couple-names {
                 font-size: 2.2rem;
@@ -148,10 +150,10 @@
 
         @keyframes bounce {
             0%, 100% {
-                transform: translateY(0);
+                transform: translateX(-50%) translateY(0);
             }
             50% {
-                transform: translateY(-20px);
+                transform: translateX(-50%) translateY(-20px);
             }
         }
 
@@ -180,7 +182,7 @@
             white-space: nowrap;
         }
 
-        /* ===== MAIN CONTENT (unchanged) ===== */
+        /* ===== MAIN CONTENT ===== */
         .main-content {
             background: white;
             border-radius: 40px 40px 0 0;
