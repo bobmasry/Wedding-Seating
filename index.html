@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Ehab & Radwa · Find Your Table & Share Photos</title>
     <style>
-        /* ===== COLORS FROM YOUR INVITATION SITE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -16,20 +15,117 @@
         body {
             background: #ffffff;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+        }
+
+        /* ===== HERO SECTION - FULL SCREEN WITH BOUNCING HEART ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+            z-index: 2;
+        }
+
+        /* Bouncing Heart Animation */
+        .heart-container {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: bounce 1.5s ease-in-out infinite;
+            cursor: pointer;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s;
+        }
+
+        .heart-container:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        .heart {
+            font-size: 3rem;
+            display: inline-block;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.8rem;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+
+        /* ===== MAIN CONTENT - YOUR ORIGINAL BRILLIANT SETUP ===== */
+        .main-content {
+            background: white;
+            border-radius: 40px 40px 0 0;
+            margin-top: -30px;
+            position: relative;
+            z-index: 20;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
         }
 
         .wedding-app {
             max-width: 1200px;
             width: 100%;
+            margin: 0 auto;
             background: white;
             border-radius: 60px 60px 40px 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 40, 0, 0.2);
             overflow: hidden;
-            border: 1px solid #e0e8d5;
         }
 
         /* ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== */
@@ -42,36 +138,33 @@
 
         .couple-header h1 {
             font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 4.5rem;
+            font-size: 4rem;
             font-weight: 400;
             letter-spacing: 3px;
             color: #1a3a1a;
             margin-bottom: 15px;
-            text-shadow: 1px 1px 0 #f8f0d0;
         }
 
         .couple-header h1 span {
             font-weight: 300;
-            font-size: 3.2rem;
+            font-size: 3rem;
             color: #d4af37;
         }
 
         .wedding-date {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #2a5a2a;
             font-weight: 400;
             margin-top: 10px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         .venue {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #4a6a4a;
             margin-top: 5px;
-            font-weight: 300;
         }
 
-        /* ===== GUEST LOOKUP - GREEN AND GOLD ACCENTS ===== */
+        /* ===== GUEST LOOKUP ===== */
         .guest-lookup {
             background: #f8fff5;
             border-radius: 40px;
@@ -83,11 +176,10 @@
 
         .greeting {
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #1a3a1a;
             margin-bottom: 25px;
             font-style: italic;
-            font-weight: 400;
         }
 
         .name-search {
@@ -105,7 +197,6 @@
             font-size: 1.1rem;
             outline: none;
             background: white;
-            color: #1a3a1a;
         }
 
         .name-search input:focus {
@@ -133,20 +224,14 @@
             box-shadow: 0 6px 0 #0a2a0a;
         }
 
-        .name-search button:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #1a3a1a;
-        }
-
         .search-hint {
             text-align: center;
             color: #4a6a4a;
-            font-size: 1rem;
+            font-size: 0.9rem;
             margin-top: 15px;
-            font-weight: 300;
         }
 
-        /* ===== RESULT CARD - WITH GOLD ACCENTS ===== */
+        /* ===== RESULT CARD ===== */
         .result-card {
             background: white;
             border-radius: 40px;
@@ -158,22 +243,21 @@
         }
 
         .welcome-badge {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: #1a3a1a;
             margin-bottom: 20px;
-            font-weight: 300;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         .group-badge {
             background: #f8fff5;
-            padding: 15px 35px;
+            padding: 12px 30px;
             border-radius: 60px;
             display: inline-block;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #2a5a2a;
             font-weight: 500;
-            margin: 20px 0;
+            margin: 15px 0;
             border: 2px solid #d4af37;
         }
 
@@ -181,49 +265,43 @@
             background: #fafff0;
             border-radius: 50px;
             padding: 40px;
-            margin: 30px 0;
+            margin: 25px 0;
             border: 3px dashed #d4af37;
         }
 
         .table-label {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #4a6a4a;
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-weight: 400;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .table-number {
-            font-size: 8rem;
+            font-size: 7rem;
             font-weight: 400;
             color: #1a3a1a;
             line-height: 1;
             font-family: Georgia, 'Times New Roman', Times, serif;
-            text-shadow: 2px 2px 0 #f8e6b0;
         }
 
         .table-description {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #d4af37;
-            margin-top: 15px;
-            font-weight: 400;
-            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-top: 10px;
         }
 
         .family-note {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #2a5a2a;
-            margin: 20px 0;
+            margin: 15px 0;
             font-style: italic;
-            font-weight: 300;
             background: #f8fff5;
-            padding: 20px;
+            padding: 15px;
             border-radius: 60px;
-            border: 1px solid #d4af37;
         }
 
-        /* ===== PHOTO UPLOAD - GREEN AND GOLD ===== */
+        /* ===== PHOTO UPLOAD ===== */
         .photo-upload-section {
             background: #f8fff5;
             border-radius: 40px;
@@ -235,10 +313,9 @@
         }
 
         .photo-upload-section h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 300;
             color: #1a3a1a;
-            margin-bottom: 20px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
@@ -246,7 +323,7 @@
             background: white;
             border-radius: 35px;
             padding: 40px;
-            margin: 30px 0;
+            margin: 25px 0;
             border: 3px dashed #d4af37;
             cursor: pointer;
             transition: 0.3s;
@@ -258,21 +335,19 @@
         }
 
         .upload-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
             color: #d4af37;
         }
 
         .upload-text {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: #1a3a1a;
-            margin-bottom: 10px;
-            font-weight: 300;
         }
 
         .upload-hint {
             color: #4a6a4a;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         #fileInput {
@@ -283,32 +358,18 @@
             background: #2a5a2a;
             color: white;
             border: 2px solid #d4af37;
-            padding: 16px 45px;
+            padding: 14px 40px;
             border-radius: 60px;
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-size: 1rem;
             cursor: pointer;
-            margin-top: 20px;
-            transition: 0.2s;
+            margin-top: 15px;
             box-shadow: 0 4px 0 #1a3a1a;
         }
 
-        .upload-button:hover {
-            background: #1a3a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #0a2a0a;
-        }
-
-        .upload-button:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #1a3a1a;
-        }
-
         .upload-status {
-            margin-top: 25px;
-            padding: 15px;
+            margin-top: 20px;
+            padding: 12px;
             border-radius: 60px;
-            font-size: 1.1rem;
             display: none;
         }
 
@@ -316,18 +377,16 @@
             background: #e8f5e8;
             color: #1a4a1a;
             display: block;
-            border: 2px solid #2a5a2a;
         }
 
-        /* ===== PHOTO GALLERY ===== */
         .photo-gallery {
-            margin-top: 35px;
+            margin-top: 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            max-height: 350px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            max-height: 300px;
             overflow-y: auto;
-            padding: 20px;
+            padding: 15px;
             background: white;
             border-radius: 30px;
             border: 2px solid #d4af37;
@@ -335,30 +394,28 @@
 
         .gallery-image {
             width: 100%;
-            height: 150px;
+            height: 130px;
             object-fit: cover;
-            border-radius: 20px;
-            border: 3px solid #f8e6b0;
+            border-radius: 16px;
+            border: 2px solid #f8e6b0;
         }
 
         /* ===== INFO TABS ===== */
         .info-tabs {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin: 20px 30px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .info-tab-btn {
-            padding: 15px 35px;
+            padding: 12px 30px;
             background: transparent;
             border: 2px solid #d4af37;
             border-radius: 60px;
-            font-size: 1.1rem;
-            font-weight: 400;
+            font-size: 1rem;
             cursor: pointer;
-            transition: 0.2s;
             color: #1a3a1a;
         }
 
@@ -368,18 +425,12 @@
             border-color: #d4af37;
         }
 
-        .info-tab-btn:hover {
-            background: #f8fff5;
-            border-color: #2a5a2a;
-        }
-
         .info-content {
             background: white;
             border-radius: 40px;
-            padding: 40px;
+            padding: 35px;
             margin: 30px;
             border: 2px solid #d4af37;
-            min-height: 450px;
         }
 
         .info-pane {
@@ -392,290 +443,233 @@
 
         .info-pane h2 {
             font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: 2rem;
             color: #1a3a1a;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 2px solid #d4af37;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
-        /* ===== PROGRAM ITEMS ===== */
         .program-item {
             display: flex;
-            padding: 18px 0;
+            padding: 14px 0;
             border-bottom: 1px solid #f0e6c5;
-            font-size: 1.2rem;
-            color: #1a3a1a;
+            font-size: 1.1rem;
         }
 
         .program-time {
             font-weight: 600;
             color: #d4af37;
-            width: 130px;
+            width: 110px;
         }
 
-        /* ===== MENU ITEMS ===== */
         .menu-category {
             font-weight: 600;
             color: #1a3a1a;
-            font-size: 1.6rem;
-            margin: 35px 0 15px;
+            font-size: 1.4rem;
+            margin: 30px 0 12px;
             font-family: Georgia, 'Times New Roman', Times, serif;
         }
 
         .menu-item {
-            padding: 12px 0 12px 25px;
+            padding: 10px 0 10px 20px;
             border-left: 3px solid #d4af37;
-            margin: 10px 0;
-            font-size: 1.2rem;
-            color: #2a5a2a;
+            margin: 8px 0;
+            font-size: 1.1rem;
         }
 
-        /* ===== SONG ITEMS ===== */
         .song-item {
-            padding: 16px;
+            padding: 14px;
             border-bottom: 1px solid #f0e6c5;
-            font-size: 1.2rem;
-            color: #1a3a1a;
-        }
-
-        .song-item:hover {
-            background: #f8fff5;
-        }
-
-        /* ===== TABLE MAP ===== */
-        .table-map {
-            text-align: center;
+            font-size: 1.1rem;
         }
 
         .map-image {
             max-width: 100%;
-            max-height: 500px;
-            border-radius: 30px;
+            border-radius: 24px;
             border: 3px solid #d4af37;
             cursor: pointer;
         }
 
-        /* ===== PHOTO ALBUM SECTION ===== */
         .photo-album-section {
             background: #f8fff5;
             border-radius: 40px;
-            padding: 50px;
+            padding: 40px;
             margin: 30px;
             text-align: center;
             border: 2px solid #d4af37;
             box-shadow: 0 8px 0 #c5a031;
         }
 
-        .photo-album-section h2 {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #1a3a1a;
-            margin-bottom: 15px;
-        }
-
         .photo-album-link {
             display: inline-block;
-            padding: 18px 55px;
+            padding: 14px 45px;
             background: #2a5a2a;
             color: white;
             border-radius: 60px;
             text-decoration: none;
-            font-size: 1.2rem;
-            margin: 30px 0;
+            margin: 20px 0;
             border: 2px solid #d4af37;
             box-shadow: 0 4px 0 #1a3a1a;
         }
 
-        .photo-album-link:hover {
-            background: #1a3a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #0a2a0a;
-        }
-
-        .photo-album-link:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #1a3a1a;
-        }
-
-        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
-            padding: 50px 20px 60px;
+            padding: 40px 20px 50px;
             color: #4a6a4a;
-            font-size: 1rem;
             border-top: 2px solid #d4af37;
-            margin-top: 20px;
-            background: #ffffff;
+            background: white;
         }
 
-        .footer p {
-            margin: 8px 0;
-        }
-
-        /* ===== COUNTDOWN STYLE ===== */
         .countdown-note {
-            margin-top: 20px;
+            margin-top: 15px;
             color: #d4af37;
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.1rem;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 700px) {
-            .couple-header h1 { font-size: 3rem; }
+            .couple-header h1 { font-size: 2.8rem; }
             .couple-header h1 span { font-size: 2.2rem; }
             .table-number { font-size: 5rem; }
-            .table-description { font-size: 1.6rem; }
+            .table-description { font-size: 1.4rem; }
+            .heart { font-size: 2.5rem; }
+            .heart-container { bottom: 70px; padding: 12px; }
         }
     </style>
 </head>
 <body>
-    <div class="wedding-app">
-        <!-- ===== HEADER - EXACT MATCH TO YOUR INVITATION ===== -->
-        <div class="couple-header">
-            <h1>Ehab <span>&</span> Radwa</h1>
-            <div class="wedding-date">April 10, 2026</div>
-            <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
+    <!-- ===== HERO SECTION WITH COUPLE IMAGE ===== -->
+    <div class="hero" id="heroSection">
+        <!-- REPLACE 'your-couple-photo.jpg' with your actual image path -->
+        <img src="your-couple-photo.jpg" alt="Ehab & Radwa" class="hero-image" id="heroImage">
+        <div class="hero-overlay"></div>
+        
+        <!-- Bouncing Heart -->
+        <div class="heart-container" id="heartBtn">
+            <span class="heart">❤️</span>
         </div>
+        
+        <div class="scroll-hint">👇 Scroll down for more</div>
+    </div>
 
-        <!-- ===== SEARCH SECTION ===== -->
-        <div class="guest-lookup">
-            <div class="greeting">💕 Please enter your name to find your table 💕</div>
-            <div class="name-search">
-                <input type="text" id="guestName" placeholder="e.g., Ahmed Hassan" value="Ahmed Hassan">
-                <button id="findTableBtn">Find my table</button>
-            </div>
-            <div class="search-hint">Families and groups sit together at the same table</div>
-        </div>
-
-        <!-- ===== RESULT CARD ===== -->
-        <div class="result-card" id="resultCard">
-            <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
-            <div class="group-badge" id="groupName">—</div>
-            
-            <div class="table-display">
-                <div class="table-label">Your table</div>
-                <div class="table-number" id="tableNumber">—</div>
-                <div class="table-description" id="tableDescription"></div>
-            </div>
-            
-            <div class="family-note" id="familyNote"></div>
-        </div>
-
-        <!-- ===== PHOTO UPLOAD ===== -->
-        <div class="photo-upload-section">
-            <h2>📸 Share your photos</h2>
-            <p style="color: #2a5a2a; margin-bottom: 20px; font-size: 1.2rem;">Upload your photos from tonight</p>
-            
-            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
-                <div class="upload-icon">📷</div>
-                <div class="upload-text">Click here to upload photos</div>
-                <div class="upload-hint">Select one or multiple photos</div>
-            </div>
-            
-            <input type="file" id="fileInput" multiple accept="image/*">
-            
-            <button class="upload-button" id="uploadBtn" onclick="document.getElementById('fileInput').click()">
-                Choose photos
-            </button>
-            
-            <div id="uploadStatus" class="upload-status"></div>
-            
-            <div id="photoGallery" class="photo-gallery"></div>
-            
-            <p class="countdown-note">✨ Your photos will be added to the wedding album ✨</p>
-        </div>
-
-        <!-- ===== INFO TABS ===== -->
-        <div class="info-tabs">
-            <button class="info-tab-btn active" onclick="showInfoTab('program')">📋 Program</button>
-            <button class="info-tab-btn" onclick="showInfoTab('menu')">🍽️ Menu</button>
-            <button class="info-tab-btn" onclick="showInfoTab('songs')">🎶 Song list</button>
-            <button class="info-tab-btn" onclick="showInfoTab('map')">🗺️ Table map</button>
-        </div>
-
-        <div class="info-content">
-            <!-- Program Pane -->
-            <div id="program-pane" class="info-pane active">
-                <h2>Wedding Program</h2>
-                <div class="program-item"><span class="program-time">2:30 PM</span> Guest arrival & welcome drinks</div>
-                <div class="program-item"><span class="program-time">3:30 PM</span> Sunset ceremony</div>
-                <div class="program-item"><span class="program-time">4:30 PM</span> Cocktail hour</div>
-                <div class="program-item"><span class="program-time">5:30 PM</span> Dinner served</div>
-                <div class="program-item"><span class="program-time">7:00 PM</span> First dance (Ehab & Radwa)</div>
-                <div class="program-item"><span class="program-time">8:00 PM</span> Cake cutting & dancing</div>
-                <div class="program-item"><span class="program-time">10:30 PM</span> Sparkler send-off</div>
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="main-content" id="mainContent">
+        <div class="wedding-app">
+            <!-- Header -->
+            <div class="couple-header">
+                <h1>Ehab <span>&</span> Radwa</h1>
+                <div class="wedding-date">April 10, 2026</div>
+                <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
             </div>
 
-            <!-- Menu Pane -->
-            <div id="menu-pane" class="info-pane">
-                <h2>Dinner Menu</h2>
-                
-                <div class="menu-category">Appetizers</div>
-                <div class="menu-item">🥗 Roasted pumpkin & feta salad (vegetarian)</div>
-                <div class="menu-item">🧆 Stuffed grape leaves with rice & herbs</div>
-                
-                <div class="menu-category">Main course</div>
-                <div class="menu-item">🍖 Slow-cooked lamb shank with rosemary & garlic</div>
-                <div class="menu-item">🐟 Sea bass fillet with lemon butter sauce (gluten-free)</div>
-                <div class="menu-item">🍆 Stuffed bell pepper with quinoa & pine nuts (vegan)</div>
-                
-                <div class="menu-category">Desserts</div>
-                <div class="menu-item">🍰 Wedding cake - vanilla & chocolate layers</div>
-                <div class="menu-item">🍮 Seasonal fruit tart with mint</div>
-                <div class="menu-item">🍯 Egyptian basbousa (semolina cake)</div>
+            <!-- Search Section -->
+            <div class="guest-lookup">
+                <div class="greeting">💕 Please enter your name to find your table 💕</div>
+                <div class="name-search">
+                    <input type="text" id="guestName" placeholder="e.g., Ahmed Hassan" value="Ahmed Hassan">
+                    <button id="findTableBtn">Find my table</button>
+                </div>
+                <div class="search-hint">Families and groups sit together at the same table</div>
             </div>
 
-            <!-- Songs Pane -->
-            <div id="songs-pane" class="info-pane">
-                <h2>Song List</h2>
-                
-                <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis Presley</div>
-                <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
-                <div class="song-item">🎵 "Marry You" – Bruno Mars</div>
-                <div class="song-item">🎵 "Perfect" – Ed Sheeran</div>
-                <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
-                <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
-                <div class="song-item">🎵 "Awedony" – Amr Diab</div>
-                <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
-                
-                <p style="margin-top: 25px; color: #4a6a4a; font-style: italic;">...and more Arabic & Western hits!</p>
+            <!-- Result Card -->
+            <div class="result-card">
+                <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
+                <div class="group-badge" id="groupName">—</div>
+                <div class="table-display">
+                    <div class="table-label">Your table</div>
+                    <div class="table-number" id="tableNumber">—</div>
+                    <div class="table-description" id="tableDescription"></div>
+                </div>
+                <div class="family-note" id="familyNote"></div>
             </div>
 
-            <!-- Map Pane -->
-            <div id="map-pane" class="info-pane">
-                <h2>Table Layout</h2>
-                <div class="table-map">
-                    <img src="images/table-map.jpg" alt="Wedding table layout" class="map-image" onclick="window.open(this.src)">
-                    <p style="margin-top: 20px; color: #4a6a4a;">Click map to enlarge</p>
+            <!-- Photo Upload -->
+            <div class="photo-upload-section">
+                <h2>📸 Share your photos</h2>
+                <p style="color: #2a5a2a; margin-bottom: 15px;">Upload your photos from tonight</p>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Click here to upload photos</div>
+                    <div class="upload-hint">Select one or multiple photos</div>
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*">
+                <button class="upload-button" onclick="document.getElementById('fileInput').click()">Choose photos</button>
+                <div id="uploadStatus" class="upload-status"></div>
+                <div id="photoGallery" class="photo-gallery"></div>
+            </div>
+
+            <!-- Info Tabs -->
+            <div class="info-tabs">
+                <button class="info-tab-btn active" onclick="showInfoTab('program')">📋 Program</button>
+                <button class="info-tab-btn" onclick="showInfoTab('menu')">🍽️ Menu</button>
+                <button class="info-tab-btn" onclick="showInfoTab('songs')">🎶 Song list</button>
+                <button class="info-tab-btn" onclick="showInfoTab('map')">🗺️ Table map</button>
+            </div>
+
+            <div class="info-content">
+                <div id="program-pane" class="info-pane active">
+                    <h2>Wedding Program</h2>
+                    <div class="program-item"><span class="program-time">2:30 PM</span> Guest arrival & welcome drinks</div>
+                    <div class="program-item"><span class="program-time">3:30 PM</span> Sunset ceremony</div>
+                    <div class="program-item"><span class="program-time">4:30 PM</span> Cocktail hour</div>
+                    <div class="program-item"><span class="program-time">5:30 PM</span> Dinner served</div>
+                    <div class="program-item"><span class="program-time">7:00 PM</span> First dance</div>
+                    <div class="program-item"><span class="program-time">8:00 PM</span> Cake & dancing</div>
+                    <div class="program-item"><span class="program-time">10:30 PM</span> Sparkler send-off</div>
+                </div>
+
+                <div id="menu-pane" class="info-pane">
+                    <h2>Dinner Menu</h2>
+                    <div class="menu-category">Appetizers</div>
+                    <div class="menu-item">🥗 Roasted pumpkin & feta salad</div>
+                    <div class="menu-item">🧆 Stuffed grape leaves</div>
+                    <div class="menu-category">Main course</div>
+                    <div class="menu-item">🍖 Slow-cooked lamb shank</div>
+                    <div class="menu-item">🐟 Sea bass with lemon butter</div>
+                    <div class="menu-item">🍆 Stuffed bell pepper (vegan)</div>
+                    <div class="menu-category">Desserts</div>
+                    <div class="menu-item">🍰 Wedding cake</div>
+                    <div class="menu-item">🍮 Egyptian basbousa</div>
+                </div>
+
+                <div id="songs-pane" class="info-pane">
+                    <h2>Song List</h2>
+                    <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis</div>
+                    <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
+                    <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
+                    <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
+                    <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
+                </div>
+
+                <div id="map-pane" class="info-pane">
+                    <h2>Table Layout</h2>
+                    <div class="table-map">
+                        <img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)">
+                        <p style="margin-top: 15px; color: #4a6a4a;">Click map to enlarge</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ===== PHOTO ALBUM ===== -->
-        <div class="photo-album-section">
-            <h2>📸 Wedding Photo Album</h2>
-            <p style="color: #2a5a2a; font-size: 1.2rem;">View all photos shared by guests</p>
-            <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">
-                Open photo album
-            </a>
-            <p style="color: #4a6a4a;">Scan the QR code at the venue to upload your photos</p>
-        </div>
+            <!-- Photo Album -->
+            <div class="photo-album-section">
+                <h2>📸 Wedding Photo Album</h2>
+                <p style="color: #2a5a2a;">View all photos shared by guests</p>
+                <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">Open photo album</a>
+            </div>
 
-        <!-- ===== FOOTER ===== -->
-        <div class="footer">
-            <p>Ehab & Radwa · April 10, 2026</p>
-            <p>Sunset Wedding Garden · Abou Rawash, Giza</p>
-            <p style="margin-top: 20px;">With great joy, we invite you to celebrate our wedding. Your presence means the world to us.</p>
-            <p class="countdown-note">⏳ 22 days, 8 hours, 15 minutes to go</p>
+            <!-- Footer -->
+            <div class="footer">
+                <p>Ehab & Radwa · April 10, 2026</p>
+                <p>Sunset Wedding Garden · Abou Rawash, Giza</p>
+                <p style="margin-top: 15px;">With great joy, we invite you to celebrate our wedding.</p>
+                <p class="countdown-note">⏳ 22 days to go</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // ===== YOUR GUEST LIST - REPLACE WITH YOUR ACTUAL GUESTS =====
+        // Guest Database - REPLACE WITH YOUR GUESTS
         const guestDatabase = {
             "ahmed hassan": { group: "Bride Family", table: "2" },
             "fatma ali": { group: "Bride Family", table: "2" },
@@ -683,29 +677,19 @@
             "nadia omar": { group: "Groom Family", table: "3" },
             "karim abdelrahman": { group: "Groom Family", table: "3" },
             "yasmin fouad": { group: "Friends", table: "5" },
-            "omar sherif": { group: "Friends", table: "5" },
-            "samira ibrahim": { group: "Friends", table: "5" },
-            "reem galal": { group: "Colleagues", table: "7" },
-            "khaled diab": { group: "Colleagues", table: "7" }
+            "omar sherif": { group: "Friends", table: "5" }
         };
 
         const tableDescriptions = {
             "2": "Bride's family",
             "3": "Groom's family",
-            "5": "Friends",
-            "7": "Colleagues"
+            "5": "Friends"
         };
 
-        // ===== FIND GUEST FUNCTION =====
+        // Find Guest
         function findGuestTable() {
             const input = document.getElementById('guestName');
             const name = input.value.trim().toLowerCase();
-            
-            if (name === "") {
-                alert("Please enter your name");
-                return;
-            }
-            
             const guest = guestDatabase[name];
             
             document.getElementById('welcomeMessage').textContent = `Welcome, ${input.value.trim()}!`;
@@ -716,27 +700,22 @@
                 document.getElementById('tableDescription').textContent = tableDescriptions[guest.table] || `Table ${guest.table}`;
                 document.getElementById('familyNote').textContent = `✨ Your whole ${guest.group} sits together at Table ${guest.table} ✨`;
             } else {
-                document.getElementById('groupName').textContent = "Not found in list";
+                document.getElementById('groupName').textContent = "Not found";
                 document.getElementById('tableNumber').textContent = "?";
-                document.getElementById('tableDescription').textContent = "Please see the host desk";
+                document.getElementById('tableDescription').textContent = "Please see host";
                 document.getElementById('familyNote').textContent = "🌸 The host will help you find your table 🌸";
             }
         }
 
-        // ===== TAB SWITCHING =====
+        // Tab Switching
         function showInfoTab(tabName) {
-            document.querySelectorAll('.info-pane').forEach(pane => {
-                pane.classList.remove('active');
-            });
+            document.querySelectorAll('.info-pane').forEach(pane => pane.classList.remove('active'));
             document.getElementById(tabName + '-pane').classList.add('active');
-            
-            document.querySelectorAll('.info-tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.info-tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
         }
 
-        // ===== PHOTO UPLOAD =====
+        // Photo Upload
         function setupPhotoUpload() {
             const fileInput = document.getElementById('fileInput');
             const uploadStatus = document.getElementById('uploadStatus');
@@ -744,7 +723,6 @@
             
             fileInput.addEventListener('change', function(e) {
                 const files = e.target.files;
-                
                 if (files.length === 0) return;
                 
                 uploadStatus.className = 'upload-status success';
@@ -752,22 +730,17 @@
                 
                 for (let i = 0; i < files.length; i++) {
                     const reader = new FileReader();
-                    
                     reader.onload = function(event) {
                         const img = document.createElement('img');
                         img.src = event.target.result;
                         img.className = 'gallery-image';
-                        img.alt = 'Wedding photo';
                         photoGallery.appendChild(img);
                     };
-                    
                     reader.readAsDataURL(files[i]);
                 }
                 
-                uploadStatus.textContent = `✅ Successfully added ${files.length} photo(s)!`;
-                
+                uploadStatus.textContent = `✅ Added ${files.length} photo(s)!`;
                 fileInput.value = '';
-                
                 setTimeout(() => {
                     uploadStatus.style.display = 'none';
                     uploadStatus.className = 'upload-status';
@@ -775,11 +748,21 @@
             });
         }
 
-        // ===== INITIALIZE =====
+        // Scroll to main content
+        function scrollToMain() {
+            document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
         window.onload = function() {
             document.getElementById('guestName').value = "Ahmed Hassan";
             findGuestTable();
             setupPhotoUpload();
+            
+            // Click heart to scroll
+            document.getElementById('heartBtn').addEventListener('click', scrollToMain);
+            // Click hero image to scroll
+            document.getElementById('heroSection').addEventListener('click', scrollToMain);
         };
 
         document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
