@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Ehab & Radwa · Find Your Table & Share Photos</title>
-    <!-- Version: v3.0 - Heart position at 60% from left, size fixed -->
     <style>
         * {
             margin: 0;
@@ -79,7 +78,7 @@
             text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
         }
 
-        /* ===== HEART STYLES - DESKTOP ===== */
+        /* ===== HEART STYLES ===== */
         .heart-container {
             position: absolute;
             top: 35%;
@@ -99,7 +98,6 @@
             animation: heartbeat 1s ease-in-out infinite;
         }
 
-        /* ===== MOBILE SPECIFIC - 60% from left, 20% smaller ===== */
         @media (max-width: 768px) {
             .heart-container {
                 top: 42% !important;
@@ -111,7 +109,6 @@
             }
         }
 
-        /* Smaller phones - adjust if needed */
         @media (max-width: 480px) {
             .heart-container {
                 top: 46% !important;
@@ -122,7 +119,6 @@
             }
         }
 
-        /* Mobile text adjustments */
         @media (max-width: 768px) {
             .couple-names {
                 font-size: 2.2rem;
@@ -718,7 +714,7 @@
             <div class="photo-album-section">
                 <h2>📸 Wedding Photo Album</h2>
                 <p style="color: #2a5a2a;">View all photos shared by guests</p>
-                <a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank" class="photo-album-link">Open photo album</a>
+                <a href="https://drive.google.com/drive/folders/1H9yzH26nqtfYw0g_T499LZfQX3Fb5Oxt" target="_blank" class="photo-album-link">Open photo album</a>
             </div>
 
             <div class="footer">
@@ -731,6 +727,9 @@
     </div>
 
     <script>
+        // ============================================
+        // GUEST DATABASE - REPLACE WITH YOUR GUESTS
+        // ============================================
         const guestDatabase = {
             "ahmed hassan": { group: "Bride Family", table: "2" },
             "fatma ali": { group: "Bride Family", table: "2" },
@@ -747,6 +746,44 @@
             "5": "Friends"
         };
 
+        // ============================================
+        // GOOGLE DRIVE UPLOAD SETUP - YOUR URL IS ADDED
+        // ============================================
+        const GOOGLE_DRIVE_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbyfCYEo_X_NfxpsGovQL8EzkUkFPZSJ-_pM7PMz74T_-ZJgQbGLFqqF41uCoakLAoO6/exec";
+
+        async function uploadToDrive(file, guestName) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const base64Data = e.target.result.split(',')[1];
+                    
+                    const payload = {
+                        fileName: file.name,
+                        fileData: base64Data,
+                        mimeType: file.type,
+                        guestName: guestName
+                    };
+                    
+                    try {
+                        await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        resolve(true);
+                    } catch(error) {
+                        console.error('Upload error:', error);
+                        reject(error);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ============================================
+        // FIND GUEST FUNCTION
+        // ============================================
         function findGuestTable() {
             const input = document.getElementById('guestName');
             const name = input.value.trim().toLowerCase();
@@ -767,6 +804,9 @@
             }
         }
 
+        // ============================================
+        // TAB SWITCHING
+        // ============================================
         function showInfoTab(tabName) {
             document.querySelectorAll('.info-pane').forEach(pane => pane.classList.remove('active'));
             document.getElementById(tabName + '-pane').classList.add('active');
@@ -774,19 +814,27 @@
             event.target.classList.add('active');
         }
 
+        // ============================================
+        // PHOTO UPLOAD SETUP
+        // ============================================
         function setupPhotoUpload() {
             const fileInput = document.getElementById('fileInput');
             const uploadStatus = document.getElementById('uploadStatus');
             const photoGallery = document.getElementById('photoGallery');
             
-            fileInput.addEventListener('change', function(e) {
+            fileInput.addEventListener('change', async function(e) {
                 const files = e.target.files;
                 if (files.length === 0) return;
                 
+                const guestName = document.getElementById('guestName').value.trim() || 'Guest';
+                
                 uploadStatus.className = 'upload-status success';
-                uploadStatus.textContent = `✨ Adding ${files.length} photo(s)... ✨`;
+                uploadStatus.textContent = `✨ Uploading ${files.length} photo(s)... ✨`;
                 
                 for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    
+                    // Show preview
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         const img = document.createElement('img');
@@ -794,10 +842,17 @@
                         img.className = 'gallery-image';
                         photoGallery.appendChild(img);
                     };
-                    reader.readAsDataURL(files[i]);
+                    reader.readAsDataURL(file);
+                    
+                    // Upload to Google Drive
+                    try {
+                        await uploadToDrive(file, guestName);
+                    } catch(error) {
+                        console.log('Upload note:', error);
+                    }
                 }
                 
-                uploadStatus.textContent = `✅ Added ${files.length} photo(s)!`;
+                uploadStatus.textContent = `✅ Added ${files.length} photo(s) to album!`;
                 fileInput.value = '';
                 setTimeout(() => {
                     uploadStatus.style.display = 'none';
@@ -806,10 +861,16 @@
             });
         }
 
+        // ============================================
+        // SCROLL FUNCTION
+        // ============================================
         function scrollToMain() {
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // ============================================
+        // INITIALIZE ON PAGE LOAD
+        // ============================================
         window.onload = function() {
             document.getElementById('guestName').value = "Ahmed Hassan";
             findGuestTable();
