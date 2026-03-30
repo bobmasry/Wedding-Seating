@@ -17,7 +17,6 @@
             min-height: 100vh;
         }
 
-        /* ===== HERO SECTION ===== */
         .hero {
             position: relative;
             width: 100%;
@@ -48,7 +47,6 @@
             z-index: 2;
         }
 
-        /* ===== LANGUAGE SWITCHER WITH FLAGS ===== */
         .language-switcher {
             position: absolute;
             top: 20px;
@@ -89,7 +87,6 @@
             font-size: 1.2rem;
         }
 
-        /* ===== WEDDING NAMES AT TOP ===== */
         .hero-text {
             position: absolute;
             top: 15%;
@@ -119,7 +116,6 @@
             text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
         }
 
-        /* ===== HEART STYLES ===== */
         .heart-container {
             position: absolute;
             top: 35%;
@@ -130,7 +126,6 @@
             cursor: pointer;
             background: transparent;
             padding: 0;
-            transition: transform 0.2s;
         }
 
         .heart {
@@ -157,19 +152,6 @@
                 padding: 4px 12px;
                 font-size: 0.8rem;
             }
-        }
-
-        @media (max-width: 480px) {
-            .heart-container {
-                top: 46% !important;
-                left: 60% !important;
-            }
-            .heart {
-                font-size: 2.4rem !important;
-            }
-        }
-
-        @media (max-width: 768px) {
             .couple-names {
                 font-size: 2.2rem;
                 letter-spacing: 2px;
@@ -183,6 +165,10 @@
         }
 
         @media (max-width: 480px) {
+            .heart-container {
+                top: 46% !important;
+                left: 60% !important;
+            }
             .couple-names {
                 font-size: 1.8rem;
             }
@@ -228,7 +214,6 @@
             white-space: nowrap;
         }
 
-        /* ===== MAIN CONTENT ===== */
         .main-content {
             background: white;
             border-radius: 40px 40px 0 0;
@@ -648,20 +633,13 @@
             .table-number { font-size: 5rem; }
             .table-description { font-size: 1.4rem; }
         }
-
-        /* Arabic text support */
-        [lang="ar"] {
-            font-family: 'Segoe UI', 'Tahoma', 'Traditional Arabic', 'Amiri', serif;
-        }
     </style>
 </head>
 <body>
-    <!-- ===== HERO SECTION ===== -->
     <div class="hero" id="heroSection">
         <img src="Phone_app.png" alt="Ehab & Radwa" class="hero-image" id="heroImage">
         <div class="hero-overlay"></div>
         
-        <!-- Language Switcher with Flags -->
         <div class="language-switcher">
             <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')">
                 <span class="flag">🇬🇧</span> English
@@ -683,7 +661,6 @@
         <div class="scroll-hint" id="scrollHint">👇 Scroll down for more</div>
     </div>
 
-    <!-- ===== MAIN CONTENT ===== -->
     <div class="main-content" id="mainContent">
         <div class="wedding-app">
             <div class="couple-header">
@@ -695,8 +672,8 @@
             <div class="guest-lookup">
                 <div class="greeting" id="greetingText">💕 Please enter your name to find your table 💕</div>
                 <div class="name-search">
-                    <input type="text" id="guestName" placeholder="e.g., Ahmed Hassan" value="Ahmed Hassan">
-                    <button id="findTableBtn" id="findBtn">Find my table</button>
+                    <input type="text" id="guestName" placeholder="e.g., Ahmed Hassan">
+                    <button id="findTableBtn">Find my table</button>
                 </div>
                 <div class="search-hint" id="searchHint">Families and groups sit together at the same table</div>
             </div>
@@ -794,33 +771,247 @@
 
     <script>
         // ============================================
-        // GUEST DATABASE - REPLACE WITH YOUR REAL GUESTS
-        // Format: "name" : { group: "Group Name", table: "Table Number", arabicName: "الاسم بالعربية" }
+        // COMPLETE GUEST DATABASE - FROM YOUR GROUPS
         // ============================================
         const guestDatabase = {
-            // ===== REPLACE THESE WITH YOUR REAL GUESTS =====
-            // Example format:
-            // "ahmed hassan": { group: "Bride Family", table: "2", arabicName: "أحمد حسن" },
-            // "fatma ali": { group: "Bride Family", table: "2", arabicName: "فاطمة علي" },
+            // Table 1 - Soulmate
+            "ehab": { group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab", "Radwa"] },
+            "radwa": { group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab", "Radwa"] },
             
-            // Demo guest (remove when you add real guests)
-            "ahmed hassan": { group: "Bride Family", table: "2", arabicName: "أحمد حسن" },
-            "fatma ali": { group: "Bride Family", table: "2", arabicName: "فاطمة علي" },
-            "mohamed elsayed": { group: "Groom Family", table: "3", arabicName: "محمد السيد" },
-            "nadia omar": { group: "Friends", table: "5", arabicName: "نادية عمر" }
-        };
-
-        const tableDescriptions = {
-            en: {
-                "2": "Bride's family",
-                "3": "Groom's family",
-                "5": "Friends"
-            },
-            ar: {
-                "2": "عائلة العروس",
-                "3": "عائلة العريس",
-                "5": "الأصدقاء"
-            }
+            // Table 1 - Mostafa El-Fayoumy Family
+            "mostafa el-fayoumy": { group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy"] },
+            "laila el-kady": { group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy"] },
+            "menna el-fayoumy": { group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy"] },
+            "mohamed el-fayoumy": { group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy"] },
+            
+            // Table 1 - Ahmed El-Masry Family
+            "ahmed el-masry": { group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry"] },
+            "hoda kanswa": { group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry"] },
+            "mohamed el-masry": { group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry"] },
+            "amir el-masry": { group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry"] },
+            
+            // Table 1 - Raghda El-Kady
+            "raghda el-kady": { group: "Family", table: "1", groupName: "Raghda El-Kady", members: ["Raghda El-Kady"] },
+            
+            // Table 2 - نورا محمد الفيومي Family
+            "نورا محمد الفيومي": { group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            "ايهاب": { group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            "جني": { group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            "محمد": { group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            "ادم": { group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            
+            // Table 2 - زينب الفيومى
+            "زينب الفيومى": { group: "Family", table: "2", groupName: "زينب الفيومى", members: ["زينب الفيومى"] },
+            
+            // Table 2 - فوقيه & مصطفي
+            "فوقيه": { group: "Family", table: "2", groupName: "فوقيه & مصطفي", members: ["فوقيه", "مصطفي"] },
+            "مصطفي": { group: "Family", table: "2", groupName: "فوقيه & مصطفي", members: ["فوقيه", "مصطفي"] },
+            
+            // Table 2 - Ingy Fahmy & Mada Khaled
+            "ingy fahmy": { group: "Family", table: "2", groupName: "Ingy Fahmy & Mada Khaled", members: ["Ingy Fahmy", "Mada Khaled"] },
+            "mada khaled": { group: "Family", table: "2", groupName: "Ingy Fahmy & Mada Khaled", members: ["Ingy Fahmy", "Mada Khaled"] },
+            
+            // Table 2 - شيرين الفيومي Family
+            "شيرين الفيومي": { group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            "عمرو": { group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            "يوسف": { group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            "ياسين": { group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            "اسيا": { group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            
+            // Table 2 - Mohammed Amin Assaad Family
+            "mohammed amin assaad": { group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
+            "maysa yehia": { group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
+            "menna amin": { group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
+            
+            // Table 2 - Zeina & Amir
+            "zeina": { group: "Partner", table: "2", groupName: "Zeina & Amir", members: ["Zeina", "Amir"] },
+            "amir": { group: "Partner", table: "2", groupName: "Zeina & Amir", members: ["Zeina", "Amir"] },
+            
+            // Table 2 - Merna & Mohamed Fayoumy
+            "merna": { group: "Partner", table: "2", groupName: "Merna & Mohamed Fayoumy", members: ["Merna", "Mohamed Fayoumy"] },
+            "mohamed fayoumy": { group: "Partner", table: "2", groupName: "Merna & Mohamed Fayoumy", members: ["Merna", "Mohamed Fayoumy"] },
+            
+            // Table 2 - Yasmin Rahmy & Mohamed EL-Masry
+            "yasmin rahmy": { group: "Partner", table: "2", groupName: "Yasmin Rahmy & Mohamed EL-Masry", members: ["Yasmin Rahmy", "Mohamed EL-Masry"] },
+            
+            // Table 3 - Omnia karam Family
+            "omnia karam": { group: "Family", table: "3", groupName: "Omnia Karam Family", members: ["Omnia karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
+            "tamer mostafa": { group: "Family", table: "3", groupName: "Omnia Karam Family", members: ["Omnia karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
+            "leila tamer": { group: "Family", table: "3", groupName: "Omnia Karam Family", members: ["Omnia karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
+            "younis tamer": { group: "Family", table: "3", groupName: "Omnia Karam Family", members: ["Omnia karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
+            
+            // Table 3 - Rana swelam Family
+            "rana swelam": { group: "Family", table: "3", groupName: "Rana Swelam Family", members: ["Rana swelam", "Saeed", "Farida"] },
+            "saeed": { group: "Family", table: "3", groupName: "Rana Swelam Family", members: ["Rana swelam", "Saeed", "Farida"] },
+            "farida": { group: "Family", table: "3", groupName: "Rana Swelam Family", members: ["Rana swelam", "Saeed", "Farida"] },
+            
+            // Table 3 - Nesrien Almokadem Family
+            "nesrien almokadem": { group: "Family", table: "3", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
+            "maram": { group: "Family", table: "3", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
+            "ucif": { group: "Family", table: "3", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
+            
+            // Table 3 - Samar Hamed
+            "samar hamed": { group: "Friends", table: "3", groupName: "Samar Hamed", members: ["Samar Hamed"] },
+            
+            // Table 3 - Amr El kadi Family
+            "amr el kadi": { group: "Family", table: "3", groupName: "Amr El Kadi Family", members: ["Amr El kadi", "Shaymaa abdalla", "Eman Gabr", "Karma", "Celia"] },
+            "shaymaa abdalla": { group: "Family", table: "3", groupName: "Amr El Kadi Family", members: ["Amr El kadi", "Shaymaa abdalla", "Eman Gabr", "Karma", "Celia"] },
+            "eman gabr": { group: "Family", table: "3", groupName: "Amr El Kadi Family", members: ["Amr El kadi", "Shaymaa abdalla", "Eman Gabr", "Karma", "Celia"] },
+            "karma": { group: "Family", table: "3", groupName: "Amr El Kadi Family", members: ["Amr El kadi", "Shaymaa abdalla", "Eman Gabr", "Karma", "Celia"] },
+            "celia": { group: "Family", table: "3", groupName: "Amr El Kadi Family", members: ["Amr El kadi", "Shaymaa abdalla", "Eman Gabr", "Karma", "Celia"] },
+            
+            // Table 3 - Mona nofal & Mostafa Nazir
+            "mona nofal": { group: "Partner", table: "3", groupName: "Mona Nofal & Mostafa Nazir", members: ["Mona nofal", "Mostafa Nazir"] },
+            "mostafa nazir": { group: "Partner", table: "3", groupName: "Mona Nofal & Mostafa Nazir", members: ["Mona nofal", "Mostafa Nazir"] },
+            
+            // Table 3 - Nadia Mohasseb & Marwan Kabbani
+            "nadia mohasseb": { group: "Partner", table: "3", groupName: "Nadia Mohasseb & Marwan Kabbani", members: ["Nadia Mohasseb", "Marwan Kabbani"] },
+            "marwan kabbani": { group: "Partner", table: "3", groupName: "Nadia Mohasseb & Marwan Kabbani", members: ["Nadia Mohasseb", "Marwan Kabbani"] },
+            
+            // Table 3 - Maather Gomaa Family
+            "maather gomaa": { group: "Family", table: "3", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
+            "khadija": { group: "Family", table: "3", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
+            "amena": { group: "Family", table: "3", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
+            
+            // Table 3 - Ahmed Said Family
+            "ahmed said": { group: "Family", table: "3", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
+            "sue": { group: "Family", table: "3", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
+            "mariam": { group: "Family", table: "3", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
+            "kenzi": { group: "Family", table: "3", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
+            
+            // Table 3 - Sherif El Kadi
+            "sherif el kadi": { group: "Partner", table: "3", groupName: "Sherif El Kadi & Plus One", members: ["Sherif El Kadi", "Plus one"] },
+            
+            // Table 3 - Shaza Saeed Family
+            "shaza saeed": { group: "Family", table: "3", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed abo bakr", "Khadija Ahmed"] },
+            "ahmed abo bakr": { group: "Family", table: "3", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed abo bakr", "Khadija Ahmed"] },
+            "khadija ahmed": { group: "Family", table: "3", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed abo bakr", "Khadija Ahmed"] },
+            
+            // Table 4 - Devika Chowgule Family
+            "devika chowgule": { group: "Family", table: "4", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
+            "viral doshi": { group: "Family", table: "4", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
+            "rheyaan doshi": { group: "Family", table: "4", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
+            "saira doshi": { group: "Family", table: "4", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
+            
+            // Table 4 - Jose F Ramon Prados Family
+            "jose f ramon prados": { group: "Family", table: "4", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
+            "raquel baumela": { group: "Family", table: "4", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
+            "emma ramon baumela": { group: "Family", table: "4", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
+            
+            // Table 4 - MARIA ANDREA DIAZ USME & DANIEL MENDOZA
+            "maria andrea diaz usme": { group: "Partner", table: "4", groupName: "Maria Andrea & Daniel", members: ["MARIA ANDREA DIAZ USME", "DANIEL MENDOZA"] },
+            "daniel mendoza": { group: "Partner", table: "4", groupName: "Maria Andrea & Daniel", members: ["MARIA ANDREA DIAZ USME", "DANIEL MENDOZA"] },
+            
+            // Table 4 - Elena Granados Mansilla & Connor Barron
+            "elena granados mansilla": { group: "Partner", table: "4", groupName: "Elena & Connor", members: ["Elena Granados Mansilla", "Connor Barron"] },
+            "connor barron": { group: "Partner", table: "4", groupName: "Elena & Connor", members: ["Elena Granados Mansilla", "Connor Barron"] },
+            
+            // Table 4 - Karim Mohamed
+            "karim mohamed": { group: "Friends", table: "4", groupName: "Karim Mohamed", members: ["Karim Mohamed"] },
+            
+            // Table 5 - Bella Micheletto Lima & Ashkan Ashki
+            "bella micheletto lima": { group: "Partner", table: "5", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
+            "ashkan ashki": { group: "Partner", table: "5", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
+            
+            // Table 5 - Elena Jimenez Rodriguez & Maxine Davis
+            "elena jimenez rodriguez": { group: "Friend", table: "5", groupName: "Elena & Maxine", members: ["Elena Jimenez Rodriguez", "Maxine Davis"] },
+            "maxine davis": { group: "Friend", table: "5", groupName: "Elena & Maxine", members: ["Elena Jimenez Rodriguez", "Maxine Davis"] },
+            
+            // Table 5 - Diana Medina Family
+            "diana medina": { group: "Family", table: "5", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
+            "rafael": { group: "Family", table: "5", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
+            "regina": { group: "Family", table: "5", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
+            
+            // Table 5 - Chrissa Stamatopoulou & Andreas Lostrom
+            "chrissa stamatopoulou": { group: "Partner", table: "5", groupName: "Chrissa & Andreas", members: ["Chrissa Stamatopoulou", "Andreas Lostrom"] },
+            "andreas lostrom": { group: "Partner", table: "5", groupName: "Chrissa & Andreas", members: ["Chrissa Stamatopoulou", "Andreas Lostrom"] },
+            
+            // Table 5 - Lorenzo Simón Santillana & MaMa
+            "lorenzo simón santillana": { group: "Family", table: "5", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
+            "mama": { group: "Family", table: "5", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
+            
+            // Table 6 - علاء المصري Family
+            "علاء المصري": { group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "برلنتي": { group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "ندى": { group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "نورهان": { group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            
+            // Table 6 - ثناء نجم Family
+            "ثناء نجم": { group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "نورا المصري": { group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "احمد محمد المصري": { group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "جني المصري": { group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "لمي المصري": { group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            
+            // Table 7 - Raghda Elmohandes & معتز المهندس
+            "raghda elmohandes": { group: "Partner", table: "7", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
+            "معتز المهندس": { group: "Partner", table: "7", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
+            
+            // Table 7 - محمد النجدي & هند الصنعاني
+            "محمد النجدي": { group: "Partner", table: "7", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
+            "هند الصنعاني": { group: "Partner", table: "7", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
+            
+            // Table 8 - أحمد الباز Family
+            "أحمد الباز": { group: "Family", table: "8", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "هبة الله": { group: "Family", table: "8", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "مريم أحمد": { group: "Family", table: "8", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "ملك أحمد": { group: "Family", table: "8", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "أحمد أحمد": { group: "Family", table: "8", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            
+            // Table 8 - Omar EL-Masry & Hanan
+            "omar el-masry": { group: "Partner", table: "8", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
+            "hanan": { group: "Partner", table: "8", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
+            
+            // Table 9 - Hassan Metwally Family
+            "hassan metwally": { group: "Family", table: "9", groupName: "Hassan Metwally Family", members: ["Hassan Metwally", "Dr Lamyia", "Sherif metwally", "aya metwally", "ahmed metwally"] },
+            "dr lamyia": { group: "Family", table: "9", groupName: "Hassan Metwally Family", members: ["Hassan Metwally", "Dr Lamyia", "Sherif metwally", "aya metwally", "ahmed metwally"] },
+            "sherif metwally": { group: "Family", table: "9", groupName: "Hassan Metwally Family", members: ["Hassan Metwally", "Dr Lamyia", "Sherif metwally", "aya metwally", "ahmed metwally"] },
+            "aya metwally": { group: "Family", table: "9", groupName: "Hassan Metwally Family", members: ["Hassan Metwally", "Dr Lamyia", "Sherif metwally", "aya metwally", "ahmed metwally"] },
+            "ahmed metwally": { group: "Family", table: "9", groupName: "Hassan Metwally Family", members: ["Hassan Metwally", "Dr Lamyia", "Sherif metwally", "aya metwally", "ahmed metwally"] },
+            
+            // Table 9 - اللواء وائل أمين
+            "اللواء وائل أمين": { group: "Family", table: "9", groupName: "Wael Amin & Plus One", members: ["اللواء وائل أمين", "Plus one"] },
+            
+            // Table 10 - Rizan EL-Masry Family
+            "rizan el-masry": { group: "Family", table: "10", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "mohmed helmey": { group: "Family", table: "10", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "ahmed helmey": { group: "Family", table: "10", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "amr helmey": { group: "Family", table: "10", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "hla helmey": { group: "Family", table: "10", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            
+            // Table 10 - مروة الباز Family
+            "مروة الباز": { group: "Family", table: "10", groupName: "Marwa El-Baz Family", members: ["مروة الباز", "خالد", "ياسين", "+2 sisters"] },
+            "خالد": { group: "Family", table: "10", groupName: "Marwa El-Baz Family", members: ["مروة الباز", "خالد", "ياسين", "+2 sisters"] },
+            "ياسين": { group: "Family", table: "10", groupName: "Marwa El-Baz Family", members: ["مروة الباز", "خالد", "ياسين", "+2 sisters"] },
+            
+            // Table 11 - Hazem EL-Masry Family
+            "hazem el-masry": { group: "Family", table: "11", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "yara elrashedi": { group: "Family", table: "11", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "mona el-masry": { group: "Family", table: "11", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "leen el-masry": { group: "Family", table: "11", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "lojian el-masry": { group: "Family", table: "11", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            
+            // Table 12 - محمد كمال Family
+            "محمد كمال": { group: "Family", table: "12", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "منال محمد": { group: "Family", table: "12", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هدي محمد": { group: "Family", table: "12", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هاجر محمد": { group: "Family", table: "12", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هناء محمد": { group: "Family", table: "12", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            
+            // Table 12 - ايمان كمال & احمد الوسيمي
+            "ايمان كمال": { group: "Partner", table: "12", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
+            "احمد الوسيمي": { group: "Partner", table: "12", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
+            
+            // Table 13 - ماجدة توفيق قنصوة Family
+            "ماجدة توفيق قنصوة": { group: "Family", table: "13", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "ياسمين عبدالعزيزي وادي": { group: "Family", table: "13", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "دينا عبدالعزيز وادي": { group: "Family", table: "13", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "غزل": { group: "Family", table: "13", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            
+            // Table 13 - سارة عبدالعزيز وادي Family
+            "سارة عبدالعزيز وادي": { group: "Family", table: "13", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
+            "ثروت": { group: "Family", table: "13", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
+            "رحمه رابح": { group: "Family", table: "13", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] }
         };
 
         // ===== GOOGLE DRIVE UPLOAD =====
@@ -864,15 +1055,8 @@
                 searchPlaceholder: "e.g., Ahmed Hassan",
                 findButton: "Find my table",
                 searchHint: "Families and groups sit together at the same table",
-                welcomePrefix: "Welcome, ",
-                welcomeSuffix: "!",
-                groupPrefix: "",
-                groupSuffix: "",
                 tableLabel: "Your table",
                 notFoundMessage: "Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!",
-                familyNotePrefix: "✨ Your whole ",
-                familyNoteMiddle: " sits together at Table ",
-                familyNoteSuffix: " ✨",
                 uploadTitle: "📸 Share your photos",
                 uploadSubtitle: "Upload your photos from tonight",
                 uploadText: "Click here to upload photos",
@@ -916,15 +1100,8 @@
                 searchPlaceholder: "مثال: أحمد حسن",
                 findButton: "ابحث عن طاولتي",
                 searchHint: "العائلات والمجموعات تجلس معاً على نفس الطاولة",
-                welcomePrefix: "أهلاً وسهلاً، ",
-                welcomeSuffix: "!",
-                groupPrefix: "",
-                groupSuffix: "",
                 tableLabel: "طاولتك",
-                notFoundMessage: "مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورضوى! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!",
-                familyNotePrefix: "✨ عائلتك ",
-                familyNoteMiddle: " تجلس معاً على طاولة رقم ",
-                familyNoteSuffix: " ✨",
+                notFoundMessage: "مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورحاب! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!",
                 uploadTitle: "📸 شارك صورك",
                 uploadSubtitle: "حمّل صورك من الليلة",
                 uploadText: "اضغط هنا لرفع الصور",
@@ -968,11 +1145,9 @@
             currentLang = lang;
             document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
             
-            // Update buttons
             document.getElementById('btnEnglish').classList.toggle('active', lang === 'en');
             document.getElementById('btnArabic').classList.toggle('active', lang === 'ar');
             
-            // Update all text elements
             const t = translations[lang];
             document.getElementById('scrollHint').textContent = t.scrollHint;
             document.getElementById('greetingText').textContent = t.greeting;
@@ -1017,46 +1192,40 @@
             document.getElementById('footerMessage').textContent = t.footerMessage;
             document.getElementById('countdown').textContent = t.countdown;
             
-            // Refresh the current search result
             findGuestTable();
         }
 
-        // ===== FIND GUEST FUNCTION (Bilingual) =====
+        // ===== FIND GUEST FUNCTION =====
         function findGuestTable() {
             const input = document.getElementById('guestName');
             const name = input.value.trim().toLowerCase();
             
-            // Try to find by English name first, then by Arabic name
-            let guest = guestDatabase[name];
-            
-            if (!guest) {
-                // Search by Arabic name
-                for (const [key, value] of Object.entries(guestDatabase)) {
-                    if (value.arabicName && value.arabicName.toLowerCase() === name) {
-                        guest = value;
-                        break;
-                    }
-                }
-            }
+            const guest = guestDatabase[name];
+            const t = translations[currentLang];
             
             const welcomeEl = document.getElementById('welcomeMessage');
             const groupEl = document.getElementById('groupName');
             const tableEl = document.getElementById('tableNumber');
             const descEl = document.getElementById('tableDescription');
             const noteEl = document.getElementById('familyNote');
-            const t = translations[currentLang];
             
             if (guest) {
-                const displayName = currentLang === 'ar' && guest.arabicName ? guest.arabicName : input.value.trim();
-                welcomeEl.textContent = `${t.welcomePrefix}${displayName}${t.welcomeSuffix}`;
+                const displayName = input.value.trim();
+                welcomeEl.textContent = `Welcome, ${displayName}! 💖`;
                 groupEl.textContent = guest.group;
                 tableEl.textContent = guest.table;
-                const tableDesc = tableDescriptions[currentLang][guest.table] || (currentLang === 'ar' ? `طاولة ${guest.table}` : `Table ${guest.table}`);
-                descEl.textContent = tableDesc;
-                noteEl.textContent = `${t.familyNotePrefix}${guest.group}${t.familyNoteMiddle}${guest.table}${t.familyNoteSuffix}`;
+                descEl.textContent = guest.groupName;
+                
+                // Create list of other members
+                const otherMembers = guest.members.filter(m => m.toLowerCase() !== name);
+                if (otherMembers.length > 0) {
+                    let membersText = otherMembers.join(', ');
+                    noteEl.textContent = `✨ Your ${guest.group === 'Soulmate' ? 'soulmate' : guest.group === 'Partner' ? 'partner' : guest.group === 'Friend' ? 'friend' : 'family'} (${membersText}) sits with you at Table ${guest.table} ✨`;
+                } else {
+                    noteEl.textContent = `✨ You're at Table ${guest.table} with your ${guest.group === 'Soulmate' ? 'soulmate' : guest.group === 'Partner' ? 'partner' : guest.group === 'Friend' ? 'friends' : 'family'} ✨`;
+                }
             } else {
-                const displayName = input.value.trim() || (currentLang === 'ar' ? 'ضيفنا العزيز' : 'Dear Guest');
-                welcomeEl.textContent = `${t.welcomePrefix}${displayName}${t.welcomeSuffix}`;
+                welcomeEl.textContent = `Welcome, ${input.value.trim() || 'Guest'}! 💖`;
                 groupEl.textContent = currentLang === 'ar' ? 'مرحباً بك' : 'Welcome';
                 tableEl.textContent = '?';
                 descEl.textContent = currentLang === 'ar' ? 'طاولة العائلة' : 'Family Table';
@@ -1083,10 +1252,9 @@
                 if (files.length === 0) return;
                 
                 const guestName = document.getElementById('guestName').value.trim() || 'Guest';
-                const t = translations[currentLang];
                 
                 uploadStatus.className = 'upload-status success';
-                uploadStatus.textContent = `✨ ${files.length} ${currentLang === 'ar' ? 'صورة جاري رفعها...' : 'photo(s) uploading...'} ✨`;
+                uploadStatus.textContent = `✨ Uploading ${files.length} photo(s)... ✨`;
                 
                 for (let i = 0; i < files.length; i++) {
                     const file = files[i];
@@ -1107,7 +1275,7 @@
                     }
                 }
                 
-                uploadStatus.textContent = `✅ ${files.length} ${currentLang === 'ar' ? 'صورة تمت إضافتها إلى الألبوم!' : 'photo(s) added to album!'}`;
+                uploadStatus.textContent = `✅ Added ${files.length} photo(s) to album!`;
                 fileInput.value = '';
                 setTimeout(() => {
                     uploadStatus.style.display = 'none';
@@ -1121,10 +1289,7 @@
         }
 
         window.onload = function() {
-            document.getElementById('guestName').value = "Ahmed Hassan";
-            findGuestTable();
             setupPhotoUpload();
-            
             document.getElementById('heartBtn').addEventListener('click', scrollToMain);
             document.getElementById('heroSection').addEventListener('click', scrollToMain);
         };
