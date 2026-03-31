@@ -47,46 +47,6 @@
             z-index: 2;
         }
 
-        .language-switcher {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 20;
-            display: flex;
-            gap: 10px;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 16px;
-            border-radius: 50px;
-            backdrop-filter: blur(8px);
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .lang-btn.active {
-            background: #d4af37;
-            color: #1a3a1a;
-        }
-
-        .lang-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .flag {
-            font-size: 1.2rem;
-        }
-
         .hero-text {
             position: absolute;
             top: 15%;
@@ -142,15 +102,6 @@
             }
             .heart {
                 font-size: 2.4rem !important;
-            }
-            .language-switcher {
-                top: 10px;
-                right: 10px;
-                padding: 5px 12px;
-            }
-            .lang-btn {
-                padding: 4px 12px;
-                font-size: 0.8rem;
             }
             .couple-names {
                 font-size: 2.2rem;
@@ -265,6 +216,45 @@
             font-size: 1.1rem;
             color: #4a6a4a;
             margin-top: 5px;
+        }
+
+        /* Language Switcher - Now below venue */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto 0;
+            background: rgba(0,0,0,0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            width: fit-content;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #1a3a1a;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-btn.active {
+            background: #d4af37;
+            color: #1a3a1a;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .flag {
+            font-size: 1.2rem;
         }
 
         .guest-lookup {
@@ -671,6 +661,8 @@
             .couple-header h1 span { font-size: 2.2rem; }
             .table-number { font-size: 5rem; }
             .table-description { font-size: 1.4rem; }
+            .language-switcher { margin-top: 15px; padding: 5px 12px; }
+            .lang-btn { padding: 4px 12px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -678,15 +670,6 @@
     <div class="hero" id="heroSection">
         <img src="Phone_app.png" alt="Ehab & Radwa" class="hero-image" id="heroImage">
         <div class="hero-overlay"></div>
-        
-        <div class="language-switcher">
-            <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')">
-                <span class="flag">🇬🇧</span> English
-            </button>
-            <button class="lang-btn" id="btnArabic" onclick="setLanguage('ar')">
-                <span class="flag">🇪🇬</span> العربية
-            </button>
-        </div>
         
         <div class="hero-text">
             <div class="couple-names">Ehab & Radwa</div>
@@ -706,6 +689,16 @@
                 <h1>Ehab <span>&</span> Radwa</h1>
                 <div class="wedding-date">April 10, 2026</div>
                 <div class="venue">Sunset Wedding Garden · Abou Rawash, Giza</div>
+                
+                <!-- Language Switcher - Moved below venue -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')">
+                        <span class="flag">🇬🇧</span> English
+                    </button>
+                    <button class="lang-btn" id="btnArabic" onclick="setLanguage('ar')">
+                        <span class="flag">🇪🇬</span> العربية
+                    </button>
+                </div>
             </div>
 
             <div class="guest-lookup">
@@ -813,30 +806,32 @@
 
     <script>
         // ============================================
-        // COMPLETE GUEST DATABASE - BILINGUAL
-        // Includes Ahmed Mohamed El-Masry, Nora, Lama, Jana in ثناء نجم Family (Table 6)
+        // COMPLETE GUEST DATABASE - ALL CORRECTIONS APPLIED
         // ============================================
         const guestDatabase = {
             // === TABLE 1 - MAIN FAMILY TABLE ===
-            "ehab": { displayName: "Ehab", arabicName: "إيهاب", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab", "Radwa"] },
-            "radwa": { displayName: "Radwa", arabicName: "رحاب", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab", "Radwa"] },
+            // Ehab El-Masry (Soulmate of Radwa) - Corrected with full name
+            "ehab el-masry": { displayName: "Ehab El-Masry", arabicName: "إيهاب المصري", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
+            "radwa": { displayName: "Radwa", arabicName: "رضوى", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
 
-            "mostafa el-fayoumy": { displayName: "Mostafa El-Fayoumy", arabicName: "مصطفى الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "laila el-kady": { displayName: "Laila El-Kady", arabicName: "ليلى القاضي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "menna el-fayoumy": { displayName: "Menna El-Fayoumy", arabicName: "منا الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "mohamed el-fayoumy": { displayName: "Mohamed El-Fayoumy", arabicName: "محمد الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "merna": { displayName: "Merna", arabicName: "ميرنا", group: "Partner", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
+            // Eng. Mostafa El-Fayoumy Family + Merna
+            "eng mostafa el-fayoumy": { displayName: "Eng. Mostafa El-Fayoumy", arabicName: "م. مصطفى الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
+            "laila el-kady": { displayName: "Laila El-Kady", arabicName: "ليلى القاضي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
+            "menna el-fayoumy": { displayName: "Menna El-Fayoumy", arabicName: "منا الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
+            "mohamed el-fayoumy": { displayName: "Mohamed El-Fayoumy", arabicName: "محمد الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
+            "merna": { displayName: "Merna", arabicName: "ميرنا", group: "Partner", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
 
-            "ahmed el-masry": { displayName: "Ahmed El-Masry", arabicName: "أحمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "hoda kanswa": { displayName: "Hoda Kanswa", arabicName: "هدى قنصوة", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "mohamed el-masry": { displayName: "Mohamed EL-Masry", arabicName: "محمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "amir el-masry": { displayName: "Amir EL-Masry", arabicName: "أمير المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "yasmin rahmy": { displayName: "Yasmin Rahmy", arabicName: "ياسمين رحمي", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "zeina": { displayName: "Zeina", arabicName: "زينة", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            // Dr. Ahmed El-Masry Family + Yasmin + Zeina
+            "dr ahmed el-masry": { displayName: "Dr. Ahmed El-Masry", arabicName: "د. أحمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "hoda kanswa": { displayName: "Hoda Kanswa", arabicName: "هدى قنصوة", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "mohamed el-masry": { displayName: "Mohamed EL-Masry", arabicName: "محمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "amir el-masry": { displayName: "Amir EL-Masry", arabicName: "أمير المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "yasmin rahmy": { displayName: "Yasmin Rahmy", arabicName: "ياسمين رحمي", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "zeina": { displayName: "Zeina", arabicName: "زينة", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
 
             "raghda el-kady": { displayName: "Raghda El-Kady", arabicName: "رغدة القاضي", group: "Family", table: "1", groupName: "Raghda El-Kady", members: ["Raghda El-Kady"] },
 
-            // === TABLE 2 ===
+            // === TABLE 2 - نورا محمد الفيومي Family ===
             "نورا محمد الفيومي": { displayName: "Noura Mohamed El-Fayoumy", arabicName: "نورا محمد الفيومي", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
             "ايهاب": { displayName: "Ehab", arabicName: "ايهاب", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
             "جني": { displayName: "Genny", arabicName: "جني", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
@@ -939,7 +934,7 @@
             "lorenzo simón santillana": { displayName: "Lorenzo Simón Santillana", arabicName: "لورينزو سيمون سانتيلانا", group: "Family", table: "5", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
             "mama": { displayName: "MaMa", arabicName: "ماما", group: "Family", table: "5", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
             
-            // === TABLE 6 (Updated with Ahmed Mohamed El-Masry, Nora, Lama, Jana) ===
+            // === TABLE 6 ===
             "علاء المصري": { displayName: "Alaa El-Masry", arabicName: "علاء المصري", group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
             "برلنتي": { displayName: "Berlenti", arabicName: "برلنتي", group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
             "ندى": { displayName: "Nada", arabicName: "ندى", group: "Family", table: "6", groupName: "علاء المصري Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
@@ -953,7 +948,7 @@
             "أحمد محمد المصري": { displayName: "Ahmed Mohamed El-Masry", arabicName: "أحمد محمد المصري", group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري", "أحمد محمد المصري", "نورا", "لمى", "جنى"] },
             "نورا": { displayName: "Nora", arabicName: "نورا", group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري", "أحمد محمد المصري", "نورا", "لمى", "جنى"] },
             "لمى": { displayName: "Lama", arabicName: "لمى", group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري", "أحمد محمد المصري", "نورا", "لمى", "جنى"] },
-            "جنى": { displayName: "Jana", arabicName: "جنى", group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري", "أحمد محمد المصري", "نورا", "لمى", "جنى"] },
+            "جنى": { displayName: "Jana El-Masry", arabicName: "جنى المصري", group: "Family", table: "6", groupName: "ثناء نجم Family", members: ["ثناء نجم", "نورا المصري", "احمد محمد المصري", "جني المصري", "لمي المصري", "أحمد محمد المصري", "نورا", "لمى", "جنى"] },
             
             // === TABLE 7 ===
             "raghda elmohandes": { displayName: "Raghda Elmohandes", arabicName: "رغدة المهندس", group: "Partner", table: "7", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
