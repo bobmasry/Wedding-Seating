@@ -5,1314 +5,473 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Ehab & Radwa · Find Your Table & Share Photos</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background: #ffffff;
-            min-height: 100vh;
-        }
-
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            min-height: 600px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .hero-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 30%;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
-            z-index: 2;
-        }
-
-        .hero-text {
-            position: absolute;
-            top: 15%;
-            left: 0;
-            width: 100%;
-            text-align: center;
-            z-index: 15;
-            pointer-events: none;
-        }
-
-        .couple-names {
-            font-family: 'Georgia', 'Times New Roman', 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 400;
-            color: #000000;
-            letter-spacing: 4px;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
-            margin-bottom: 10px;
-        }
-
-        .wedding-date-top {
-            font-family: 'Georgia', 'Times New Roman', 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: #000000;
-            letter-spacing: 2px;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
-        }
-
-        .heart-container {
-            position: absolute;
-            top: 35%;
-            left: 62%;
-            transform: translateX(-50%);
-            z-index: 10;
-            animation: bounce 1.5s ease-in-out infinite;
-            cursor: pointer;
-            background: transparent;
-            padding: 0;
-        }
-
-        .heart {
-            font-size: 2rem;
-            display: inline-block;
-            animation: heartbeat 1s ease-in-out infinite;
-        }
-
-        @media (max-width: 768px) {
-            .heart-container {
-                top: 42% !important;
-                left: 60% !important;
-                transform: translateX(-50%) !important;
-            }
-            .heart {
-                font-size: 2.4rem !important;
-            }
-            .couple-names {
-                font-size: 2.2rem;
-                letter-spacing: 2px;
-            }
-            .wedding-date-top {
-                font-size: 1rem;
-            }
-            .hero-text {
-                top: 12%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .heart-container {
-                top: 46% !important;
-                left: 60% !important;
-            }
-            .couple-names {
-                font-size: 1.8rem;
-            }
-            .wedding-date-top {
-                font-size: 0.9rem;
-            }
-            .hero-text {
-                top: 10%;
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            50% {
-                transform: translateX(-50%) translateY(-20px);
-            }
-        }
-
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 0.8rem;
-            z-index: 10;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            background: rgba(0,0,0,0.5);
-            padding: 8px 16px;
-            border-radius: 30px;
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
-        }
-
-        .main-content {
-            background: white;
-            border-radius: 40px 40px 0 0;
-            margin-top: -30px;
-            position: relative;
-            z-index: 20;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
-        }
-
-        .wedding-app {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            background: white;
-            border-radius: 60px 60px 40px 40px;
-            overflow: hidden;
-        }
-
-        .couple-header {
-            text-align: center;
-            padding: 60px 30px 40px;
-            border-bottom: 2px solid #d4af37;
-            background: linear-gradient(135deg, #ffffff 0%, #fafff0 100%);
-        }
-
-        .couple-header h1 {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 4rem;
-            font-weight: 400;
-            letter-spacing: 3px;
-            color: #1a3a1a;
-            margin-bottom: 15px;
-        }
-
-        .couple-header h1 span {
-            font-weight: 300;
-            font-size: 3rem;
-            color: #d4af37;
-        }
-
-        .wedding-date {
-            font-size: 1.3rem;
-            color: #2a5a2a;
-            font-weight: 400;
-            margin-top: 10px;
-        }
-
-        .venue {
-            font-size: 1.1rem;
-            color: #4a6a4a;
-            margin-top: 5px;
-        }
-
-        .language-switcher {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px auto 0;
-            background: rgba(0,0,0,0.05);
-            padding: 8px 16px;
-            border-radius: 50px;
-            width: fit-content;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: #1a3a1a;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .lang-btn.active {
-            background: #d4af37;
-            color: #1a3a1a;
-        }
-
-        .lang-btn:hover {
-            background: rgba(0,0,0,0.1);
-        }
-
-        .flag {
-            font-size: 1.2rem;
-        }
-
-        .guest-lookup {
-            background: #f8fff5;
-            border-radius: 40px;
-            padding: 40px;
-            margin: 30px;
-            border: 2px solid #d4af37;
-            box-shadow: 0 8px 0 #c5a031;
-            position: relative;
-        }
-
-        .greeting {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #1a3a1a;
-            margin-bottom: 25px;
-            font-style: italic;
-        }
-
-        .search-container {
-            position: relative;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .search-input-wrapper {
-            flex: 2 1 300px;
-            position: relative;
-        }
-
-        .name-search {
-            width: 100%;
-            padding: 18px 28px;
-            border-radius: 60px;
-            border: 2px solid #d4af37;
-            font-size: 1.1rem;
-            outline: none;
-            background: white;
-        }
-
-        .name-search:focus {
-            border-color: #2a5a2a;
-            box-shadow: 0 0 0 3px #f0e6c5;
-        }
-
-        .autocomplete-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 2px solid #d4af37;
-            border-top: none;
-            border-radius: 0 0 30px 30px;
-            max-height: 250px;
-            overflow-y: auto;
-            z-index: 100;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .autocomplete-item {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            border-bottom: 1px solid #f0e6c5;
-        }
-
-        .autocomplete-item:hover {
-            background: #f8fff5;
-            color: #2a5a2a;
-        }
-
-        .autocomplete-item:last-child {
-            border-bottom: none;
-        }
-
-        .search-container button {
-            background: #2a5a2a;
-            color: white;
-            padding: 18px 45px;
-            border-radius: 60px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 2px solid #d4af37;
-            box-shadow: 0 4px 0 #1a3a1a;
-        }
-
-        .search-container button:hover {
-            background: #1a3a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #0a2a0a;
-        }
-
-        .search-hint {
-            text-align: center;
-            color: #4a6a4a;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        .result-card {
-            background: white;
-            border-radius: 40px;
-            padding: 40px;
-            margin: 30px;
-            text-align: center;
-            border: 2px solid #d4af37;
-            box-shadow: 0 10px 0 #c5a031;
-        }
-
-        .welcome-badge {
-            font-size: 2rem;
-            color: #1a3a1a;
-            margin-bottom: 20px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .group-badge {
-            background: #f8fff5;
-            padding: 12px 30px;
-            border-radius: 60px;
-            display: inline-block;
-            font-size: 1.3rem;
-            color: #2a5a2a;
-            font-weight: 500;
-            margin: 15px 0;
-            border: 2px solid #d4af37;
-        }
-
-        .table-display {
-            background: #fafff0;
-            border-radius: 50px;
-            padding: 40px;
-            margin: 25px 0;
-            border: 3px dashed #d4af37;
-        }
-
-        .table-label {
-            font-size: 1.2rem;
-            color: #4a6a4a;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-        }
-
-        .table-number {
-            font-size: 7rem;
-            font-weight: 400;
-            color: #1a3a1a;
-            line-height: 1;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .table-description {
-            font-size: 1.8rem;
-            color: #d4af37;
-            margin-top: 10px;
-        }
-
-        .family-note {
-            font-size: 1.2rem;
-            color: #2a5a2a;
-            margin: 15px 0;
-            font-style: italic;
-            background: #f8fff5;
-            padding: 15px;
-            border-radius: 60px;
-        }
-
-        .photo-upload-section {
-            background: #f8fff5;
-            border-radius: 40px;
-            padding: 40px;
-            margin: 30px;
-            text-align: center;
-            border: 2px solid #d4af37;
-            box-shadow: 0 8px 0 #c5a031;
-        }
-
-        .photo-upload-section h2 {
-            font-size: 2.2rem;
-            font-weight: 300;
-            color: #1a3a1a;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
-
-        .upload-area {
-            background: white;
-            border-radius: 35px;
-            padding: 40px;
-            margin: 25px 0;
-            border: 3px dashed #d4af37;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .upload-area:hover {
-            background: #fafff0;
-            border-color: #2a5a2a;
-        }
-
-        .upload-icon {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            color: #d4af37;
-        }
-
-        .upload-text {
-            font-size: 1.3rem;
-            color: #1a3a1a;
-        }
-
-        .upload-hint {
-            color: #4a6a4a;
-            font-size: 0.9rem;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .upload-button {
-            background: #2a5a2a;
-            color: white;
-            border: 2px solid #d4af37;
-            padding: 14px 40px;
-            border-radius: 60px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 15px;
-            box-shadow: 0 4px 0 #1a3a1a;
-        }
-
-        .upload-status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 60px;
-            display: none;
-        }
-
-        .upload-status.success {
-            background: #e8f5e8;
-            color: #1a4a1a;
-            display: block;
-        }
-
-        .photo-gallery {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-            background: white;
-            border-radius: 30px;
-            border: 2px solid #d4af37;
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 2px solid #f8e6b0;
-        }
-
-        .info-tabs {
-            display: flex;
-            gap: 10px;
-            margin: 20px 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .info-tab-btn {
-            padding: 12px 30px;
-            background: transparent;
-            border: 2px solid #d4af37;
-            border-radius: 60px;
-            font-size: 1rem;
-            cursor: pointer;
-            color: #1a3a1a;
-            transition: 0.2s;
-        }
-
-        .info-tab-btn.active {
-            background: #2a5a2a;
-            color: white;
-            border-color: #d4af37;
-        }
-
-        .info-content {
-            background: white;
-            border-radius: 40px;
-            padding: 35px;
-            margin: 30px;
-            border: 2px solid #d4af37;
-        }
-
-        .info-pane {
-            display: none;
-        }
-
-        .info-pane.active {
-            display: block;
-        }
-
-        .info-pane h2 {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-size: 2rem;
-            color: #1a3a1a;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #d4af37;
-            padding-bottom: 15px;
-        }
-
-        .program-item {
-            display: flex;
-            padding: 14px 0;
-            border-bottom: 1px solid #f0e6c5;
-            font-size: 1.1rem;
-        }
-
-        .program-time {
-            font-weight: 600;
-            color: #d4af37;
-            width: 110px;
-        }
-
-        .menu-category {
-            font-weight: 600;
-            color: #1a3a1a;
-            font-size: 1.5rem;
-            margin: 25px 0 15px;
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            border-bottom: 2px solid #d4af37;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .menu-section {
-            margin-bottom: 25px;
-        }
-
-        .menu-item {
-            padding: 8px 0 8px 25px;
-            border-left: 3px solid #d4af37;
-            margin: 5px 0;
-            font-size: 1.1rem;
-            color: #1a3a1a;
-        }
-
-        .song-item {
-            padding: 14px;
-            border-bottom: 1px solid #f0e6c5;
-            font-size: 1.1rem;
-        }
-
-        .map-image {
-            max-width: 100%;
-            border-radius: 24px;
-            border: 3px solid #d4af37;
-            cursor: pointer;
-        }
-
-        .photo-album-section {
-            background: #f8fff5;
-            border-radius: 40px;
-            padding: 40px;
-            margin: 30px;
-            text-align: center;
-            border: 2px solid #d4af37;
-            box-shadow: 0 8px 0 #c5a031;
-        }
-
-        .photo-album-link {
-            display: inline-block;
-            padding: 14px 45px;
-            background: #2a5a2a;
-            color: white;
-            border-radius: 60px;
-            text-decoration: none;
-            margin: 20px 0;
-            border: 2px solid #d4af37;
-            box-shadow: 0 4px 0 #1a3a1a;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 40px 20px 50px;
-            color: #4a6a4a;
-            border-top: 2px solid #d4af37;
-            background: white;
-        }
-
-        .countdown-note {
-            margin-top: 15px;
-            color: #d4af37;
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 700px) {
-            .couple-header h1 { font-size: 2.8rem; }
-            .couple-header h1 span { font-size: 2.2rem; }
-            .table-number { font-size: 5rem; }
-            .table-description { font-size: 1.4rem; }
-            .language-switcher { margin-top: 15px; padding: 5px 12px; }
-            .lang-btn { padding: 4px 12px; font-size: 0.8rem; }
-            .menu-item { padding-left: 15px; font-size: 1rem; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+        body{background:#fff;min-height:100vh}
+        .hero{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;cursor:pointer}
+        .hero-image{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:1}
+        .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(0,0,0,0.2),rgba(0,0,0,0.1));z-index:2}
+        .hero-text{position:absolute;top:15%;left:0;width:100%;text-align:center;z-index:15;pointer-events:none}
+        .couple-names{font-family:Georgia,'Times New Roman','Playfair Display',serif;font-size:3.5rem;font-weight:400;color:#000;letter-spacing:4px;text-shadow:2px 2px 4px rgba(255,255,255,0.5);margin-bottom:10px}
+        .wedding-date-top{font-family:Georgia,'Times New Roman','Playfair Display',serif;font-size:1.5rem;font-weight:300;color:#000;letter-spacing:2px;text-shadow:1px 1px 2px rgba(255,255,255,0.5)}
+        .heart-container{position:absolute;top:35%;left:62%;transform:translateX(-50%);z-index:10;animation:bounce 1.5s ease-in-out infinite;cursor:pointer}
+        .heart{font-size:2rem;display:inline-block;animation:heartbeat 1s ease-in-out infinite}
+        @media(max-width:768px){.heart-container{top:42%!important;left:60%!important}.heart{font-size:2.4rem!important}.couple-names{font-size:2.2rem}.wedding-date-top{font-size:1rem}.hero-text{top:12%}}
+        @media(max-width:480px){.heart-container{top:46%!important}.couple-names{font-size:1.8rem}.wedding-date-top{font-size:0.9rem}.hero-text{top:10%}}
+        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-20px)}}
+        @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+        .scroll-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#fff;font-size:0.8rem;z-index:10;text-shadow:0 2px 4px rgba(0,0,0,0.3);background:rgba(0,0,0,0.5);padding:8px 16px;border-radius:30px;backdrop-filter:blur(4px);white-space:nowrap}
+        .main-content{background:#fff;border-radius:40px 40px 0 0;margin-top:-30px;position:relative;z-index:20;box-shadow:0 -10px 30px rgba(0,0,0,0.1)}
+        .wedding-app{max-width:1200px;width:100%;margin:0 auto;background:#fff;border-radius:60px 60px 40px 40px;overflow:hidden}
+        .couple-header{text-align:center;padding:60px 30px 40px;border-bottom:2px solid #d4af37;background:linear-gradient(135deg,#fff,#fafff0)}
+        .couple-header h1{font-family:Georgia,'Times New Roman',Times,serif;font-size:4rem;font-weight:400;letter-spacing:3px;color:#1a3a1a;margin-bottom:15px}
+        .couple-header h1 span{font-weight:300;font-size:3rem;color:#d4af37}
+        .wedding-date{font-size:1.3rem;color:#2a5a2a;font-weight:400;margin-top:10px}
+        .venue{font-size:1.1rem;color:#4a6a4a;margin-top:5px}
+        .language-switcher{display:flex;gap:10px;justify-content:center;margin:20px auto 0;background:rgba(0,0,0,0.05);padding:8px 16px;border-radius:50px;width:fit-content}
+        .lang-btn{background:transparent;border:none;color:#1a3a1a;padding:6px 16px;border-radius:30px;cursor:pointer;font-size:1rem;display:flex;align-items:center;gap:8px}
+        .lang-btn.active{background:#d4af37;color:#1a3a1a}
+        .flag{font-size:1.2rem}
+        .guest-lookup{background:#f8fff5;border-radius:40px;padding:40px;margin:30px;border:2px solid #d4af37;box-shadow:0 8px 0 #c5a031}
+        .greeting{text-align:center;font-size:1.2rem;color:#1a3a1a;margin-bottom:25px;font-style:italic}
+        .search-container{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;position:relative}
+        .search-input-wrapper{flex:2 1 300px;position:relative}
+        .name-search{width:100%;padding:18px 28px;border-radius:60px;border:2px solid #d4af37;font-size:1.1rem;outline:none;background:#fff}
+        .name-search:focus{border-color:#2a5a2a;box-shadow:0 0 0 3px #f0e6c5}
+        .autocomplete-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid #d4af37;border-top:none;border-radius:0 0 30px 30px;max-height:250px;overflow-y:auto;z-index:100;box-shadow:0 10px 20px rgba(0,0,0,0.1);display:none}
+        .autocomplete-item{padding:12px 20px;cursor:pointer;border-bottom:1px solid #f0e6c5}
+        .autocomplete-item:hover{background:#f8fff5;color:#2a5a2a}
+        .search-container button{background:#2a5a2a;color:#fff;padding:18px 45px;border-radius:60px;border:none;font-size:1.1rem;font-weight:600;cursor:pointer;border:2px solid #d4af37;box-shadow:0 4px 0 #1a3a1a}
+        .search-container button:hover{background:#1a3a1a;transform:translateY(-2px);box-shadow:0 6px 0 #0a2a0a}
+        .search-hint{text-align:center;color:#4a6a4a;font-size:0.9rem;margin-top:15px}
+        .result-card{background:#fff;border-radius:40px;padding:40px;margin:30px;text-align:center;border:2px solid #d4af37;box-shadow:0 10px 0 #c5a031}
+        .welcome-badge{font-size:2rem;color:#1a3a1a;margin-bottom:20px;font-family:Georgia,'Times New Roman',Times,serif}
+        .group-badge{background:#f8fff5;padding:12px 30px;border-radius:60px;display:inline-block;font-size:1.3rem;color:#2a5a2a;font-weight:500;margin:15px 0;border:2px solid #d4af37}
+        .table-display{background:#fafff0;border-radius:50px;padding:40px;margin:25px 0;border:3px dashed #d4af37}
+        .table-label{font-size:1.2rem;color:#4a6a4a;text-transform:uppercase;letter-spacing:4px;margin-bottom:10px}
+        .table-number{font-size:7rem;font-weight:400;color:#1a3a1a;line-height:1;font-family:Georgia,'Times New Roman',Times,serif}
+        .table-description{font-size:1.8rem;color:#d4af37;margin-top:10px}
+        .family-note{font-size:1.2rem;color:#2a5a2a;margin:15px 0;font-style:italic;background:#f8fff5;padding:15px;border-radius:60px}
+        .photo-upload-section{background:#f8fff5;border-radius:40px;padding:40px;margin:30px;text-align:center;border:2px solid #d4af37;box-shadow:0 8px 0 #c5a031}
+        .photo-upload-section h2{font-size:2.2rem;font-weight:300;color:#1a3a1a;font-family:Georgia,'Times New Roman',Times,serif}
+        .upload-area{background:#fff;border-radius:35px;padding:40px;margin:25px 0;border:3px dashed #d4af37;cursor:pointer;transition:0.3s}
+        .upload-area:hover{background:#fafff0;border-color:#2a5a2a}
+        .upload-icon{font-size:3.5rem;margin-bottom:10px;color:#d4af37}
+        .upload-text{font-size:1.3rem;color:#1a3a1a}
+        .upload-hint{color:#4a6a4a;font-size:0.9rem}
+        #fileInput{display:none}
+        .upload-button{background:#2a5a2a;color:#fff;border:2px solid #d4af37;padding:14px 40px;border-radius:60px;font-size:1rem;cursor:pointer;margin-top:15px;box-shadow:0 4px 0 #1a3a1a}
+        .upload-status{margin-top:20px;padding:12px;border-radius:60px;display:none}
+        .upload-status.success{background:#e8f5e8;color:#1a4a1a;display:block}
+        .photo-gallery{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;max-height:300px;overflow-y:auto;padding:15px;background:#fff;border-radius:30px;border:2px solid #d4af37}
+        .gallery-image{width:100%;height:130px;object-fit:cover;border-radius:16px;border:2px solid #f8e6b0}
+        .info-tabs{display:flex;gap:10px;margin:20px 30px;flex-wrap:wrap;justify-content:center}
+        .info-tab-btn{padding:12px 30px;background:transparent;border:2px solid #d4af37;border-radius:60px;font-size:1rem;cursor:pointer;color:#1a3a1a}
+        .info-tab-btn.active{background:#2a5a2a;color:#fff}
+        .info-content{background:#fff;border-radius:40px;padding:35px;margin:30px;border:2px solid #d4af37}
+        .info-pane{display:none}
+        .info-pane.active{display:block}
+        .info-pane h2{font-family:Georgia,'Times New Roman',Times,serif;font-size:2rem;color:#1a3a1a;margin-bottom:25px;border-bottom:2px solid #d4af37;padding-bottom:15px}
+        .program-item{display:flex;padding:14px 0;border-bottom:1px solid #f0e6c5;font-size:1.1rem}
+        .program-time{font-weight:600;color:#d4af37;width:110px}
+        .menu-category{font-weight:600;color:#1a3a1a;font-size:1.5rem;margin:25px 0 15px;font-family:Georgia,'Times New Roman',Times,serif;border-bottom:2px solid #d4af37;display:inline-block;padding-bottom:5px}
+        .menu-item{padding:8px 0 8px 25px;border-left:3px solid #d4af37;margin:5px 0;font-size:1.1rem;color:#1a3a1a}
+        .song-item{padding:14px;border-bottom:1px solid #f0e6c5;font-size:1.1rem}
+        .map-image{max-width:100%;border-radius:24px;border:3px solid #d4af37;cursor:pointer}
+        .photo-album-section{background:#f8fff5;border-radius:40px;padding:40px;margin:30px;text-align:center;border:2px solid #d4af37;box-shadow:0 8px 0 #c5a031}
+        .photo-album-link{display:inline-block;padding:14px 45px;background:#2a5a2a;color:#fff;border-radius:60px;text-decoration:none;margin:20px 0;border:2px solid #d4af37;box-shadow:0 4px 0 #1a3a1a}
+        .footer{text-align:center;padding:40px 20px 50px;color:#4a6a4a;border-top:2px solid #d4af37;background:#fff}
+        .countdown-note{margin-top:15px;color:#d4af37;font-size:1.1rem}
+        @media(max-width:700px){.couple-header h1{font-size:2.8rem}.couple-header h1 span{font-size:2.2rem}.table-number{font-size:5rem}.table-description{font-size:1.4rem}.menu-item{padding-left:15px;font-size:1rem}}
     </style>
 </head>
 <body>
-    <div class="hero" id="heroSection">
-        <img src="Phone_app.png" alt="Ehab & Radwa" class="hero-image" id="heroImage">
-        <div class="hero-overlay"></div>
-        
-        <div class="hero-text">
-            <div class="couple-names">Ehab & Radwa</div>
-            <div class="wedding-date-top">April 10, 2026</div>
-        </div>
-        
-        <div class="heart-container" id="heartBtn">
-            <span class="heart">❤️</span>
-        </div>
-        
-        <div class="scroll-hint" id="scrollHint">👇 Scroll down for more</div>
+<div class="hero" id="heroSection">
+    <img src="Phone_app.png" alt="Ehab & Radwa" class="hero-image">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+        <div class="couple-names">Ehab & Radwa</div>
+        <div class="wedding-date-top">April 10, 2026</div>
     </div>
+    <div class="heart-container" id="heartBtn"><span class="heart">❤️</span></div>
+    <div class="scroll-hint" id="scrollHint">👇 Scroll down for more</div>
+</div>
 
-    <div class="main-content" id="mainContent">
-        <div class="wedding-app">
-            <div class="couple-header">
-                <h1>Ehab <span>&</span> Radwa</h1>
-                <div class="wedding-date">April 10, 2026</div>
-                <div class="venue">V Garden · Abou Rawash, Giza</div>
-                
-                <div class="language-switcher">
-                    <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')">
-                        <span class="flag">🇬🇧</span> English
-                    </button>
-                    <button class="lang-btn" id="btnArabic" onclick="setLanguage('ar')">
-                        <span class="flag">🇪🇬</span> العربية
-                    </button>
+<div class="main-content" id="mainContent">
+    <div class="wedding-app">
+        <div class="couple-header">
+            <h1>Ehab <span>&</span> Radwa</h1>
+            <div class="wedding-date">April 10, 2026</div>
+            <div class="venue">V Garden · Abou Rawash, Giza</div>
+            <div class="language-switcher">
+                <button class="lang-btn active" id="btnEnglish" onclick="setLanguage('en')"><span class="flag">🇬🇧</span> English</button>
+                <button class="lang-btn" id="btnArabic" onclick="setLanguage('ar')"><span class="flag">🇪🇬</span> العربية</button>
+            </div>
+        </div>
+
+        <div class="guest-lookup">
+            <div class="greeting" id="greetingText">💕 Please enter your name to find your table 💕</div>
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <input type="text" id="guestName" class="name-search" placeholder="e.g., Ahmed Hassan" autocomplete="off">
+                    <div id="autocompleteList" class="autocomplete-list"></div>
                 </div>
+                <button id="findTableBtn">Find my table</button>
+            </div>
+            <div class="search-hint" id="searchHint">Start typing to see matching names</div>
+        </div>
+
+        <div class="result-card">
+            <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
+            <div class="group-badge" id="groupName">—</div>
+            <div class="table-display">
+                <div class="table-label" id="tableLabel">Your table</div>
+                <div class="table-number" id="tableNumber">—</div>
+                <div class="table-description" id="tableDescription"></div>
+            </div>
+            <div class="family-note" id="familyNote"></div>
+        </div>
+
+        <div class="photo-upload-section">
+            <h2 id="uploadTitle">📸 Share your photos</h2>
+            <p style="color:#2a5a2a;margin-bottom:15px" id="uploadSubtitle">Upload your photos from tonight</p>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📷</div>
+                <div class="upload-text" id="uploadText">Click here to upload photos</div>
+                <div class="upload-hint" id="uploadHint">Select one or multiple photos</div>
+            </div>
+            <input type="file" id="fileInput" multiple accept="image/*">
+            <button class="upload-button" onclick="document.getElementById('fileInput').click()" id="uploadButton">Choose photos</button>
+            <div id="uploadStatus" class="upload-status"></div>
+            <div id="photoGallery" class="photo-gallery"></div>
+        </div>
+
+        <div class="info-tabs">
+            <button class="info-tab-btn active" onclick="showInfoTab('program')" id="tabProgram">📋 Program</button>
+            <button class="info-tab-btn" onclick="showInfoTab('menu')" id="tabMenu">🍽️ Menu</button>
+            <button class="info-tab-btn" onclick="showInfoTab('songs')" id="tabSongs">🎶 Song list</button>
+            <button class="info-tab-btn" onclick="showInfoTab('map')" id="tabMap">🗺️ Table map</button>
+        </div>
+
+        <div class="info-content">
+            <div id="program-pane" class="info-pane active">
+                <h2 id="programTitle">Wedding Program</h2>
+                <div class="program-item"><span class="program-time">2:30 PM</span> <span id="program1">Guest arrival & welcome drinks</span></div>
+                <div class="program-item"><span class="program-time">3:30 PM</span> <span id="program2">Sunset ceremony</span></div>
+                <div class="program-item"><span class="program-time">4:30 PM</span> <span id="program3">Cocktail hour</span></div>
+                <div class="program-item"><span class="program-time">5:30 PM</span> <span id="program4">Dinner served</span></div>
+                <div class="program-item"><span class="program-time">7:00 PM</span> <span id="program5">First dance</span></div>
+                <div class="program-item"><span class="program-time">8:00 PM</span> <span id="program6">Cake & dancing</span></div>
+                <div class="program-item"><span class="program-time">10:30 PM</span> <span id="program7">Sparkler send-off</span></div>
             </div>
 
-            <div class="guest-lookup">
-                <div class="greeting" id="greetingText">💕 Please enter your name to find your table 💕</div>
-                <div class="search-container">
-                    <div class="search-input-wrapper">
-                        <input type="text" id="guestName" class="name-search" placeholder="e.g., Ahmed Hassan" autocomplete="off">
-                        <div id="autocompleteList" class="autocomplete-list"></div>
-                    </div>
-                    <button id="findTableBtn">Find my table</button>
-                </div>
-                <div class="search-hint" id="searchHint">Start typing to see matching names</div>
+            <div id="menu-pane" class="info-pane"><div id="menuContent"></div></div>
+
+            <div id="songs-pane" class="info-pane">
+                <h2 id="songsTitle">Song List</h2>
+                <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis</div>
+                <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
+                <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
+                <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
+                <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
             </div>
 
-            <div class="result-card">
-                <div class="welcome-badge" id="welcomeMessage">Welcome to our wedding!</div>
-                <div class="group-badge" id="groupName">—</div>
-                <div class="table-display">
-                    <div class="table-label" id="tableLabel">Your table</div>
-                    <div class="table-number" id="tableNumber">—</div>
-                    <div class="table-description" id="tableDescription"></div>
-                </div>
-                <div class="family-note" id="familyNote"></div>
+            <div id="map-pane" class="info-pane">
+                <h2 id="mapTitle">Table Layout</h2>
+                <div class="table-map"><img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)"><p style="margin-top:15px;color:#4a6a4a" id="mapHint">Click map to enlarge</p></div>
             </div>
+        </div>
 
-            <div class="photo-upload-section">
-                <h2 id="uploadTitle">📸 Share your photos</h2>
-                <p style="color: #2a5a2a; margin-bottom: 15px;" id="uploadSubtitle">Upload your photos from tonight</p>
-                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
-                    <div class="upload-icon">📷</div>
-                    <div class="upload-text" id="uploadText">Click here to upload photos</div>
-                    <div class="upload-hint" id="uploadHint">Select one or multiple photos</div>
-                </div>
-                <input type="file" id="fileInput" multiple accept="image/*">
-                <button class="upload-button" onclick="document.getElementById('fileInput').click()" id="uploadButton">Choose photos</button>
-                <div id="uploadStatus" class="upload-status"></div>
-                <div id="photoGallery" class="photo-gallery"></div>
-            </div>
+        <div class="photo-album-section">
+            <h2 id="albumTitle">📸 Wedding Photo Album</h2>
+            <p style="color:#2a5a2a" id="albumSubtitle">View all photos shared by guests</p>
+            <a href="https://drive.google.com/drive/folders/1H9yzH26nqtfYw0g_T499LZfQX3Fb5Oxt" target="_blank" class="photo-album-link" id="albumLink">Open photo album</a>
+        </div>
 
-            <div class="info-tabs">
-                <button class="info-tab-btn active" onclick="showInfoTab('program')" id="tabProgram">📋 Program</button>
-                <button class="info-tab-btn" onclick="showInfoTab('menu')" id="tabMenu">🍽️ Menu</button>
-                <button class="info-tab-btn" onclick="showInfoTab('songs')" id="tabSongs">🎶 Song list</button>
-                <button class="info-tab-btn" onclick="showInfoTab('map')" id="tabMap">🗺️ Table map</button>
-            </div>
-
-            <div class="info-content">
-                <div id="program-pane" class="info-pane active">
-                    <h2 id="programTitle">Wedding Program</h2>
-                    <div class="program-item"><span class="program-time">2:30 PM</span> <span id="program1">Guest arrival & welcome drinks</span></div>
-                    <div class="program-item"><span class="program-time">3:30 PM</span> <span id="program2">Sunset ceremony</span></div>
-                    <div class="program-item"><span class="program-time">4:30 PM</span> <span id="program3">Cocktail hour</span></div>
-                    <div class="program-item"><span class="program-time">5:30 PM</span> <span id="program4">Dinner served</span></div>
-                    <div class="program-item"><span class="program-time">7:00 PM</span> <span id="program5">First dance</span></div>
-                    <div class="program-item"><span class="program-time">8:00 PM</span> <span id="program6">Cake & dancing</span></div>
-                    <div class="program-item"><span class="program-time">10:30 PM</span> <span id="program7">Sparkler send-off</span></div>
-                </div>
-
-                <!-- MENU PANE - Will be populated dynamically based on language -->
-                <div id="menu-pane" class="info-pane">
-                    <div id="menuContent"></div>
-                </div>
-
-                <div id="songs-pane" class="info-pane">
-                    <h2 id="songsTitle">Song List</h2>
-                    <div class="song-item">🎵 "Can't Help Falling in Love" – Elvis</div>
-                    <div class="song-item">🎵 "Thinking Out Loud" – Ed Sheeran</div>
-                    <div class="song-item">🎵 "Nour El Ain" – Amr Diab</div>
-                    <div class="song-item">🎵 "Sah Sah" – Nancy Ajram</div>
-                    <div class="song-item">🎵 "Enta Omri" – Om Kalthoum</div>
-                </div>
-
-                <div id="map-pane" class="info-pane">
-                    <h2 id="mapTitle">Table Layout</h2>
-                    <div class="table-map">
-                        <img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)">
-                        <p style="margin-top: 15px; color: #4a6a4a;" id="mapHint">Click map to enlarge</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="photo-album-section">
-                <h2 id="albumTitle">📸 Wedding Photo Album</h2>
-                <p style="color: #2a5a2a;" id="albumSubtitle">View all photos shared by guests</p>
-                <a href="https://drive.google.com/drive/folders/1H9yzH26nqtfYw0g_T499LZfQX3Fb5Oxt" target="_blank" class="photo-album-link" id="albumLink">Open photo album</a>
-            </div>
-
-            <div class="footer">
-                <p>Ehab & Radwa · April 10, 2026</p>
-                <p>V Garden · Abou Rawash, Giza</p>
-                <p style="margin-top: 15px;" id="footerMessage">With great joy, we invite you to celebrate our wedding.</p>
-                <p class="countdown-note" id="countdown">⏳ 17 days to go</p>
-            </div>
+        <div class="footer">
+            <p>Ehab & Radwa · April 10, 2026</p>
+            <p>V Garden · Abou Rawash, Giza</p>
+            <p style="margin-top:15px" id="footerMessage">With great joy, we invite you to celebrate our wedding.</p>
+            <p class="countdown-note" id="countdown">⏳ 17 days to go</p>
         </div>
     </div>
+</div>
 
-    <script>
-        // ============================================
-        // MENU DATA - Separate English and Arabic
-        // ============================================
-        const menuData = {
-            en: {
-                title: "Menu",
-                sections: [
-                    {
-                        category: "🥗 Starters",
-                        items: [
-                            "🍃 Warak Enab (Stuffed Grape Leaves)",
-                            "🍘 Kibbeh",
-                            "🥟 Sambousek (Meat & Cheese)",
-                            "🌯 Spring Rolls",
-                            "🥣 Tahini Sauce",
-                            "🍆 Baba Ganoush",
-                            "🥗 Fattoush",
-                            "🌿 Tabbouleh"
-                        ]
-                    },
-                    {
-                        category: "🍽️ Main Courses",
-                        items: [
-                            "🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins",
-                            "🍄 Chicken Piccata with Mushroom Sauce",
-                            "🥩 Grilled Kofta (Live Station)",
-                            "🍗 Grilled Shish Tawook (Live Station)",
-                            "🍝 Lasagna",
-                            "🍆 Mixed Stuffed Vegetables"
-                        ]
-                    },
-                    {
-                        category: "🍝 Pasta Station",
-                        items: [
-                            "Pasta Varieties: Spaghetti, Fusilli, Penne",
-                            "Red Sauce & White Sauce",
-                            "Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"
-                        ]
-                    },
-                    {
-                        category: "🍗 Chicken & Beef Specials",
-                        items: [
-                            "Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto",
-                            "🥩 Beef Teriyaki Sauce",
-                            "🥔 Potatoes Gratin"
-                        ]
-                    },
-                    {
-                        category: "🍰 Desserts",
-                        items: [
-                            "🍮 Om Ali (Egyptian Bread Pudding)",
-                            "🍬 Candy Corner"
-                        ]
-                    }
-                ]
-            },
-            ar: {
-                title: "قائمة الطعام",
-                sections: [
-                    {
-                        category: "🥗 المقبلات",
-                        items: [
-                            "🍃 ورق عنب",
-                            "🍘 كبيبه",
-                            "🥟 سمبوسك لحمه وجبنة",
-                            "🌯 سبرينج رولز",
-                            "🥣 طحينه",
-                            "🍆 بابا غنوج",
-                            "🥗 فتوش",
-                            "🌿 تبوله"
-                        ]
-                    },
-                    {
-                        category: "🍽️ الأطباق الرئيسية",
-                        items: [
-                            "🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب",
-                            "🍄 بيكاتا ماشروم",
-                            "🥩 كفته مشويه لايف",
-                            "🍗 شيش طاووك لايف",
-                            "🍝 لازانيا",
-                            "🍆 محشي مشكل"
-                        ]
-                    },
-                    {
-                        category: "🍝 باستا ستيشن",
-                        items: [
-                            "نوع المكرونة: سباجتي، فيوسيلي، بنه",
-                            "صوص احمر، صوص ابيض",
-                            "ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"
-                        ]
-                    },
-                    {
-                        category: "🍗 أطباق الدجاج واللحم الخاصة",
-                        items: [
-                            "تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص",
-                            "🥩 بيف ترياكي صوص",
-                            "🥔 بطاطس جراتان"
-                        ]
-                    },
-                    {
-                        category: "🍰 الحلويات",
-                        items: [
-                            "🍮 ام علي",
-                            "🍬 كاندي كورنر"
-                        ]
-                    }
-                ]
-            }
-        };
+<script>
+// ========== MENU DATA ==========
+const menuData={
+    en:{title:"Menu",sections:[
+        {category:"🥗 Starters",items:["🍃 Warak Enab (Stuffed Grape Leaves)","🍘 Kibbeh","🥟 Sambousek (Meat & Cheese)","🌯 Spring Rolls","🥣 Tahini Sauce","🍆 Baba Ganoush","🥗 Fattoush","🌿 Tabbouleh"]},
+        {category:"🍽️ Main Courses",items:["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins","🍄 Chicken Piccata with Mushroom Sauce","🥩 Grilled Kofta (Live Station)","🍗 Grilled Shish Tawook (Live Station)","🍝 Lasagna","🍆 Mixed Stuffed Vegetables"]},
+        {category:"🍝 Pasta Station",items:["Pasta Varieties: Spaghetti, Fusilli, Penne","Red Sauce & White Sauce","Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"]},
+        {category:"🍗 Chicken & Beef Specials",items:["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto","🥩 Beef Teriyaki Sauce","🥔 Potatoes Gratin"]},
+        {category:"🍰 Desserts",items:["🍮 Om Ali (Egyptian Bread Pudding)","🍬 Candy Corner"]}
+    ]},
+    ar:{title:"قائمة الطعام",sections:[
+        {category:"🥗 المقبلات",items:["🍃 ورق عنب","🍘 كبيبه","🥟 سمبوسك لحمه وجبنة","🌯 سبرينج رولز","🥣 طحينه","🍆 بابا غنوج","🥗 فتوش","🌿 تبوله"]},
+        {category:"🍽️ الأطباق الرئيسية",items:["🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب","🍄 بيكاتا ماشروم","🥩 كفته مشويه لايف","🍗 شيش طاووك لايف","🍝 لازانيا","🍆 محشي مشكل"]},
+        {category:"🍝 باستا ستيشن",items:["نوع المكرونة: سباجتي، فيوسيلي، بنه","صوص احمر، صوص ابيض","ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"]},
+        {category:"🍗 أطباق الدجاج واللحم الخاصة",items:["تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص","🥩 بيف ترياكي صوص","🥔 بطاطس جراتان"]},
+        {category:"🍰 الحلويات",items:["🍮 ام علي","🍬 كاندي كورنر"]}
+    ]}
+};
 
-        function renderMenu(lang) {
-            const menuContainer = document.getElementById('menuContent');
-            const data = menuData[lang];
-            
-            let html = `<h2>${data.title}</h2>`;
-            
-            data.sections.forEach(section => {
-                html += `<div class="menu-section">`;
-                html += `<div class="menu-category">${section.category}</div>`;
-                section.items.forEach(item => {
-                    html += `<div class="menu-item">${item}</div>`;
-                });
-                html += `</div>`;
-                html += `<div class="menu-divider"></div>`;
-            });
-            
-            menuContainer.innerHTML = html;
-        }
+function renderMenu(lang){
+    const data=menuData[lang];
+    let html=`<h2>${data.title}</h2>`;
+    data.sections.forEach(s=>{html+=`<div class="menu-section"><div class="menu-category">${s.category}</div>`+s.items.map(i=>`<div class="menu-item">${i}</div>`).join('')+`</div><div class="menu-divider"></div>`});
+    document.getElementById('menuContent').innerHTML=html;
+}
 
-        // ============================================
-        // COMPLETE GUEST DATABASE - ALL GUESTS INCLUDED
-        // (Same as previous version - kept for brevity)
-        // ============================================
-        const guestDatabase = {
-            // === TABLE 1 - MAIN FAMILY TABLE ===
-            "ehab el-masry": { displayName: "Ehab El-Masry", arabicName: "إيهاب المصري", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
-            "radwa": { displayName: "Radwa", arabicName: "رضوى", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
-            "eng mostafa el-fayoumy": { displayName: "Eng. Mostafa El-Fayoumy", arabicName: "م. مصطفى الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "laila el-kady": { displayName: "Laila El-Kady", arabicName: "ليلى القاضي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "menna el-fayoumy": { displayName: "Menna El-Fayoumy", arabicName: "منا الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "mohamed el-fayoumy": { displayName: "Mohamed El-Fayoumy", arabicName: "محمد الفيومي", group: "Family", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "merna": { displayName: "Merna", arabicName: "ميرنا", group: "Partner", table: "1", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna"] },
-            "dr ahmed el-masry": { displayName: "Dr. Ahmed El-Masry", arabicName: "د. أحمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "hoda kanswa": { displayName: "Hoda Kanswa", arabicName: "هدى قنصوة", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "mohamed el-masry": { displayName: "Mohamed EL-Masry", arabicName: "محمد المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "amir el-masry": { displayName: "Amir EL-Masry", arabicName: "أمير المصري", group: "Family", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "yasmin rahmy": { displayName: "Yasmin Rahmy", arabicName: "ياسمين رحمي", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "zeina": { displayName: "Zeina", arabicName: "زينة", group: "Partner", table: "1", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-            "raghda el-kady": { displayName: "Raghda El-Kady", arabicName: "رغدة القاضي", group: "Family", table: "1", groupName: "Raghda El-Kady", members: ["Raghda El-Kady"] },
-            
-            // === TABLE 2 ===
-            "نورا محمد الفيومي": { displayName: "Noura Mohamed El-Fayoumy", arabicName: "نورا محمد الفيومي", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-            "ايهاب": { displayName: "Ehab", arabicName: "ايهاب", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-            "جني": { displayName: "Genny", arabicName: "جني", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-            "محمد": { displayName: "Mohamed", arabicName: "محمد", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-            "ادم": { displayName: "Adam", arabicName: "ادم", group: "Family", table: "2", groupName: "نورا محمد الفيومي Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-            "زينب الفيومى": { displayName: "Zeinab El-Fayoumy", arabicName: "زينب الفيومى", group: "Family", table: "2", groupName: "زينب الفيومى", members: ["زينب الفيومى"] },
-            "فوقيه": { displayName: "Fouqia", arabicName: "فوقيه", group: "Family", table: "2", groupName: "فوقيه & مصطفي", members: ["فوقيه", "مصطفي"] },
-            "مصطفي": { displayName: "Mostafa", arabicName: "مصطفي", group: "Family", table: "2", groupName: "فوقيه & مصطفي", members: ["فوقيه", "مصطفي"] },
-            "ingy fahmy": { displayName: "Ingy Fahmy", arabicName: "إنجي فهمي", group: "Family", table: "2", groupName: "Ingy Fahmy & Mada Khaled", members: ["Ingy Fahmy", "Mada Khaled"] },
-            "mada khaled": { displayName: "Mada Khaled", arabicName: "مادة خالد", group: "Family", table: "2", groupName: "Ingy Fahmy & Mada Khaled", members: ["Ingy Fahmy", "Mada Khaled"] },
-            "شيرين الفيومي": { displayName: "Sherine El-Fayoumy", arabicName: "شيرين الفيومي", group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين عمرو", "اسيا"] },
-            "عمرو": { displayName: "Amr", arabicName: "عمرو", group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين عمرو", "اسيا"] },
-            "يوسف": { displayName: "Youssef", arabicName: "يوسف", group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين عمرو", "اسيا"] },
-            "ياسين عمرو": { displayName: "Yassin Amr", arabicName: "ياسين عمرو", group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين عمرو", "اسيا"] },
-            "اسيا": { displayName: "Asiya", arabicName: "اسيا", group: "Family", table: "2", groupName: "شيرين الفيومي Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين عمرو", "اسيا"] },
-            "mohammed amin assaad": { displayName: "Mohammed Amin Assaad", arabicName: "محمد أمين أسعد", group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-            "maysa yehia": { displayName: "Maysa Yehia", arabicName: "ميسى يحيى", group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-            "menna amin": { displayName: "Menna Amin", arabicName: "منا أمين", group: "Family", table: "2", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-            
-            // === TABLE 3 to TABLE 14 entries remain the same as previous version ===
-            // For brevity, I'm including the key entries and will provide the complete file
-        };
+// ========== GUEST DATABASE (FULL - includes all guests) ==========
+const guestDatabase={
+    "ehab el-masry":{displayName:"Ehab El-Masry",arabicName:"إيهاب المصري",group:"Soulmate",table:"1",groupName:"Ehab & Radwa",members:["Ehab El-Masry","Radwa"]},
+    "radwa":{displayName:"Radwa",arabicName:"رضوى",group:"Soulmate",table:"1",groupName:"Ehab & Radwa",members:["Ehab El-Masry","Radwa"]},
+    "eng mostafa el-fayoumy":{displayName:"Eng. Mostafa El-Fayoumy",arabicName:"م. مصطفى الفيومي",group:"Family",table:"1",groupName:"Mostafa El-Fayoumy Family",members:["Eng. Mostafa El-Fayoumy","Laila El-Kady","Menna El-Fayoumy","Mohamed El-Fayoumy","Merna"]},
+    "laila el-kady":{displayName:"Laila El-Kady",arabicName:"ليلى القاضي",group:"Family",table:"1",groupName:"Mostafa El-Fayoumy Family",members:["Eng. Mostafa El-Fayoumy","Laila El-Kady","Menna El-Fayoumy","Mohamed El-Fayoumy","Merna"]},
+    "menna el-fayoumy":{displayName:"Menna El-Fayoumy",arabicName:"منا الفيومي",group:"Family",table:"1",groupName:"Mostafa El-Fayoumy Family",members:["Eng. Mostafa El-Fayoumy","Laila El-Kady","Menna El-Fayoumy","Mohamed El-Fayoumy","Merna"]},
+    "mohamed el-fayoumy":{displayName:"Mohamed El-Fayoumy",arabicName:"محمد الفيومي",group:"Family",table:"1",groupName:"Mostafa El-Fayoumy Family",members:["Eng. Mostafa El-Fayoumy","Laila El-Kady","Menna El-Fayoumy","Mohamed El-Fayoumy","Merna"]},
+    "merna":{displayName:"Merna",arabicName:"ميرنا",group:"Partner",table:"1",groupName:"Mostafa El-Fayoumy Family",members:["Eng. Mostafa El-Fayoumy","Laila El-Kady","Menna El-Fayoumy","Mohamed El-Fayoumy","Merna"]},
+    "dr ahmed el-masry":{displayName:"Dr. Ahmed El-Masry",arabicName:"د. أحمد المصري",group:"Family",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "hoda kanswa":{displayName:"Hoda Kanswa",arabicName:"هدى قنصوة",group:"Family",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "mohamed el-masry":{displayName:"Mohamed EL-Masry",arabicName:"محمد المصري",group:"Family",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "amir el-masry":{displayName:"Amir EL-Masry",arabicName:"أمير المصري",group:"Family",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "yasmin rahmy":{displayName:"Yasmin Rahmy",arabicName:"ياسمين رحمي",group:"Partner",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "zeina":{displayName:"Zeina",arabicName:"زينة",group:"Partner",table:"1",groupName:"Ahmed El-Masry Family",members:["Dr. Ahmed El-Masry","Hoda Kanswa","Mohamed EL-Masry","Amir EL-Masry","Yasmin Rahmy","Zeina"]},
+    "raghda el-kady":{displayName:"Raghda El-Kady",arabicName:"رغدة القاضي",group:"Family",table:"1",groupName:"Raghda El-Kady",members:["Raghda El-Kady"]},
+    "نورا محمد الفيومي":{displayName:"Noura Mohamed El-Fayoumy",arabicName:"نورا محمد الفيومي",group:"Family",table:"2",groupName:"نورا محمد الفيومي Family",members:["نورا محمد الفيومي","ايهاب","جني","محمد","ادم"]},
+    "ايهاب":{displayName:"Ehab",arabicName:"ايهاب",group:"Family",table:"2",groupName:"نورا محمد الفيومي Family",members:["نورا محمد الفيومي","ايهاب","جني","محمد","ادم"]},
+    "جني":{displayName:"Genny",arabicName:"جني",group:"Family",table:"2",groupName:"نورا محمد الفيومي Family",members:["نورا محمد الفيومي","ايهاب","جني","محمد","ادم"]},
+    "محمد":{displayName:"Mohamed",arabicName:"محمد",group:"Family",table:"2",groupName:"نورا محمد الفيومي Family",members:["نورا محمد الفيومي","ايهاب","جني","محمد","ادم"]},
+    "ادم":{displayName:"Adam",arabicName:"ادم",group:"Family",table:"2",groupName:"نورا محمد الفيومي Family",members:["نورا محمد الفيومي","ايهاب","جني","محمد","ادم"]},
+    "زينب الفيومى":{displayName:"Zeinab El-Fayoumy",arabicName:"زينب الفيومى",group:"Family",table:"2",groupName:"زينب الفيومى",members:["زينب الفيومى"]},
+    "فوقيه":{displayName:"Fouqia",arabicName:"فوقيه",group:"Family",table:"2",groupName:"فوقيه & مصطفي",members:["فوقيه","مصطفي"]},
+    "مصطفي":{displayName:"Mostafa",arabicName:"مصطفي",group:"Family",table:"2",groupName:"فوقيه & مصطفي",members:["فوقيه","مصطفي"]},
+    "ingy fahmy":{displayName:"Ingy Fahmy",arabicName:"إنجي فهمي",group:"Family",table:"2",groupName:"Ingy Fahmy & Mada Khaled",members:["Ingy Fahmy","Mada Khaled"]},
+    "mada khaled":{displayName:"Mada Khaled",arabicName:"مادة خالد",group:"Family",table:"2",groupName:"Ingy Fahmy & Mada Khaled",members:["Ingy Fahmy","Mada Khaled"]},
+    "شيرين الفيومي":{displayName:"Sherine El-Fayoumy",arabicName:"شيرين الفيومي",group:"Family",table:"2",groupName:"شيرين الفيومي Family",members:["شيرين الفيومي","عمرو","يوسف","ياسين عمرو","اسيا"]},
+    "عمرو":{displayName:"Amr",arabicName:"عمرو",group:"Family",table:"2",groupName:"شيرين الفيومي Family",members:["شيرين الفيومي","عمرو","يوسف","ياسين عمرو","اسيا"]},
+    "يوسف":{displayName:"Youssef",arabicName:"يوسف",group:"Family",table:"2",groupName:"شيرين الفيومي Family",members:["شيرين الفيومي","عمرو","يوسف","ياسين عمرو","اسيا"]},
+    "ياسين عمرو":{displayName:"Yassin Amr",arabicName:"ياسين عمرو",group:"Family",table:"2",groupName:"شيرين الفيومي Family",members:["شيرين الفيومي","عمرو","يوسف","ياسين عمرو","اسيا"]},
+    "اسيا":{displayName:"Asiya",arabicName:"اسيا",group:"Family",table:"2",groupName:"شيرين الفيومي Family",members:["شيرين الفيومي","عمرو","يوسف","ياسين عمرو","اسيا"]},
+    "mohammed amin assaad":{displayName:"Mohammed Amin Assaad",arabicName:"محمد أمين أسعد",group:"Family",table:"2",groupName:"Mohammed Amin Assaad Family",members:["Mohammed Amin Assaad","Maysa Yehia","Menna Amin"]},
+    "maysa yehia":{displayName:"Maysa Yehia",arabicName:"ميسى يحيى",group:"Family",table:"2",groupName:"Mohammed Amin Assaad Family",members:["Mohammed Amin Assaad","Maysa Yehia","Menna Amin"]},
+    "menna amin":{displayName:"Menna Amin",arabicName:"منا أمين",group:"Family",table:"2",groupName:"Mohammed Amin Assaad Family",members:["Mohammed Amin Assaad","Maysa Yehia","Menna Amin"]},
+    "omnia karam":{displayName:"Omnia Karam",arabicName:"أمنية كرم",group:"Family",table:"3",groupName:"Omnia Karam Family",members:["Omnia karam","Tamer Mostafa","Leila Tamer","Younis Tamer"]},
+    "tamer mostafa":{displayName:"Tamer Mostafa",arabicName:"تامر مصطفى",group:"Family",table:"3",groupName:"Omnia Karam Family",members:["Omnia karam","Tamer Mostafa","Leila Tamer","Younis Tamer"]},
+    "leila tamer":{displayName:"Leila Tamer",arabicName:"ليلى تامر",group:"Family",table:"3",groupName:"Omnia Karam Family",members:["Omnia karam","Tamer Mostafa","Leila Tamer","Younis Tamer"]},
+    "younis tamer":{displayName:"Younis Tamer",arabicName:"يونس تامر",group:"Family",table:"3",groupName:"Omnia Karam Family",members:["Omnia karam","Tamer Mostafa","Leila Tamer","Younis Tamer"]},
+    "rana swelam":{displayName:"Rana Swelam",arabicName:"رنا سويلم",group:"Family",table:"3",groupName:"Rana Swelam Family",members:["Rana swelam","Saeed","Farida"]},
+    "saeed":{displayName:"Saeed",arabicName:"سعيد",group:"Family",table:"3",groupName:"Rana Swelam Family",members:["Rana swelam","Saeed","Farida"]},
+    "farida":{displayName:"Farida",arabicName:"فريدة",group:"Family",table:"3",groupName:"Rana Swelam Family",members:["Rana swelam","Saeed","Farida"]},
+    "nesrien almokadem":{displayName:"Nesrien Almokadem",arabicName:"نسرين المقدم",group:"Family",table:"3",groupName:"Nesrien Almokadem Family",members:["Nesrien Almokadem","Maram","Ucif"]},
+    "maram":{displayName:"Maram",arabicName:"مرام",group:"Family",table:"3",groupName:"Nesrien Almokadem Family",members:["Nesrien Almokadem","Maram","Ucif"]},
+    "ucif":{displayName:"Ucif",arabicName:"أوسيف",group:"Family",table:"3",groupName:"Nesrien Almokadem Family",members:["Nesrien Almokadem","Maram","Ucif"]},
+    "samar hamed":{displayName:"Samar Hamed",arabicName:"سمر حامد",group:"Friends",table:"3",groupName:"Samar Hamed",members:["Samar Hamed"]},
+    "amr el kadi":{displayName:"Amr El Kadi",arabicName:"عمرو القاضي",group:"Family",table:"3",groupName:"Amr El Kadi Family",members:["Amr El kadi","Shaymaa abdalla","Eman Gabr","Karma","Celia"]},
+    "shaymaa abdalla":{displayName:"Shaymaa Abdalla",arabicName:"شيماء عبدالله",group:"Family",table:"3",groupName:"Amr El Kadi Family",members:["Amr El kadi","Shaymaa abdalla","Eman Gabr","Karma","Celia"]},
+    "eman gabr":{displayName:"Eman Gabr",arabicName:"إيمان جبر",group:"Family",table:"3",groupName:"Amr El Kadi Family",members:["Amr El kadi","Shaymaa abdalla","Eman Gabr","Karma","Celia"]},
+    "karma":{displayName:"Karma",arabicName:"كارما",group:"Family",table:"3",groupName:"Amr El Kadi Family",members:["Amr El kadi","Shaymaa abdalla","Eman Gabr","Karma","Celia"]},
+    "celia":{displayName:"Celia",arabicName:"سيلا",group:"Family",table:"3",groupName:"Amr El Kadi Family",members:["Amr El kadi","Shaymaa abdalla","Eman Gabr","Karma","Celia"]},
+    "mona nofal":{displayName:"Mona Nofal",arabicName:"منى نوفل",group:"Partner",table:"3",groupName:"Mona Nofal & Mostafa Nazir",members:["Mona nofal","Mostafa Nazir"]},
+    "mostafa nazir":{displayName:"Mostafa Nazir",arabicName:"مصطفى نظير",group:"Partner",table:"3",groupName:"Mona Nofal & Mostafa Nazir",members:["Mona nofal","Mostafa Nazir"]},
+    "nadia mohasseb":{displayName:"Nadia Mohasseb",arabicName:"نادية محسب",group:"Partner",table:"3",groupName:"Nadia Mohasseb & Marwan Kabbani",members:["Nadia Mohasseb","Marwan Kabbani"]},
+    "marwan kabbani":{displayName:"Marwan Kabbani",arabicName:"مروان قباني",group:"Partner",table:"3",groupName:"Nadia Mohasseb & Marwan Kabbani",members:["Nadia Mohasseb","Marwan Kabbani"]},
+    "maather gomaa":{displayName:"Maather Gomaa",arabicName:"مأثر جمعة",group:"Family",table:"3",groupName:"Maather Gomaa Family",members:["Maather Gomaa","Khadija","Amena"]},
+    "khadija":{displayName:"Khadija",arabicName:"خديجة",group:"Family",table:"3",groupName:"Maather Gomaa Family",members:["Maather Gomaa","Khadija","Amena"]},
+    "amena":{displayName:"Amena",arabicName:"أمينة",group:"Family",table:"3",groupName:"Maather Gomaa Family",members:["Maather Gomaa","Khadija","Amena"]},
+    "ahmed said":{displayName:"Ahmed Said",arabicName:"أحمد سعيد",group:"Family",table:"3",groupName:"Ahmed Said Family",members:["Ahmed Said","Sue","Mariam","Kenzi"]},
+    "sue":{displayName:"Sue",arabicName:"سو",group:"Family",table:"3",groupName:"Ahmed Said Family",members:["Ahmed Said","Sue","Mariam","Kenzi"]},
+    "mariam":{displayName:"Mariam",arabicName:"مريم",group:"Family",table:"3",groupName:"Ahmed Said Family",members:["Ahmed Said","Sue","Mariam","Kenzi"]},
+    "kenzi":{displayName:"Kenzi",arabicName:"كنزي",group:"Family",table:"3",groupName:"Ahmed Said Family",members:["Ahmed Said","Sue","Mariam","Kenzi"]},
+    "sherif el kadi":{displayName:"Sherif El Kadi",arabicName:"شريف القاضي",group:"Partner",table:"3",groupName:"Sherif El Kadi & Plus One",members:["Sherif El Kadi","Plus one"]},
+    "shaza saeed":{displayName:"Shaza Saeed",arabicName:"شذى سعيد",group:"Family",table:"3",groupName:"Shaza Saeed Family",members:["Shaza Saeed","Ahmed abo bakr","Khadija Ahmed"]},
+    "ahmed abo bakr":{displayName:"Ahmed Abo Bakr",arabicName:"أحمد أبو بكر",group:"Family",table:"3",groupName:"Shaza Saeed Family",members:["Shaza Saeed","Ahmed abo bakr","Khadija Ahmed"]},
+    "khadija ahmed":{displayName:"Khadija Ahmed",arabicName:"خديجة أحمد",group:"Family",table:"3",groupName:"Shaza Saeed Family",members:["Shaza Saeed","Ahmed abo bakr","Khadija Ahmed"]},
+    "devika chowgule":{displayName:"Devika Chowgule",arabicName:"ديفيكا تشوغول",group:"Family",table:"4",groupName:"Devika Chowgule Family",members:["Devika Chowgule","Viral Doshi","Rheyaan Doshi","Saira Doshi"]},
+    "viral doshi":{displayName:"Viral Doshi",arabicName:"فيرال دوشي",group:"Family",table:"4",groupName:"Devika Chowgule Family",members:["Devika Chowgule","Viral Doshi","Rheyaan Doshi","Saira Doshi"]},
+    "rheyaan doshi":{displayName:"Rheyaan Doshi",arabicName:"ريان دوشي",group:"Family",table:"4",groupName:"Devika Chowgule Family",members:["Devika Chowgule","Viral Doshi","Rheyaan Doshi","Saira Doshi"]},
+    "saira doshi":{displayName:"Saira Doshi",arabicName:"سايرا دوشي",group:"Family",table:"4",groupName:"Devika Chowgule Family",members:["Devika Chowgule","Viral Doshi","Rheyaan Doshi","Saira Doshi"]},
+    "jose f ramon prados":{displayName:"Jose F Ramon Prados",arabicName:"خوسيه رامون برادوس",group:"Family",table:"4",groupName:"Jose F Ramon Prados Family",members:["Jose F Ramon Prados","Raquel Baumela","Emma Ramon Baumela"]},
+    "raquel baumela":{displayName:"Raquel Baumela",arabicName:"راكيل بوميلا",group:"Family",table:"4",groupName:"Jose F Ramon Prados Family",members:["Jose F Ramon Prados","Raquel Baumela","Emma Ramon Baumela"]},
+    "emma ramon baumela":{displayName:"Emma Ramon Baumela",arabicName:"إيما رامون بوميلا",group:"Family",table:"4",groupName:"Jose F Ramon Prados Family",members:["Jose F Ramon Prados","Raquel Baumela","Emma Ramon Baumela"]},
+    "maria andrea diaz usme":{displayName:"Maria Andrea Diaz Usme",arabicName:"ماريا أندريا دياز أوسمي",group:"Partner",table:"4",groupName:"Maria Andrea & Daniel",members:["Maria Andrea Diaz Usme","Daniel Mendoza"]},
+    "daniel mendoza":{displayName:"Daniel Mendoza",arabicName:"دانيال ميندوزا",group:"Partner",table:"4",groupName:"Maria Andrea & Daniel",members:["Maria Andrea Diaz Usme","Daniel Mendoza"]},
+    "elena granados mansilla":{displayName:"Elena Granados Mansilla",arabicName:"إلينا جرانادوس مانسيلا",group:"Partner",table:"4",groupName:"Elena & Connor",members:["Elena Granados Mansilla","Connor Barron"]},
+    "connor barron":{displayName:"Connor Barron",arabicName:"كونور بارون",group:"Partner",table:"4",groupName:"Elena & Connor",members:["Elena Granados Mansilla","Connor Barron"]},
+    "karim mohamed":{displayName:"Karim Mohamed",arabicName:"كريم محمد",group:"Friends",table:"4",groupName:"Karim Mohamed",members:["Karim Mohamed"]},
+    "ronak parikh":{displayName:"Ronak Parikh",arabicName:"روناك باريك",group:"Friends",table:"4",groupName:"Ronak Parikh",members:["Ronak Parikh"]},
+    "bella micheletto lima":{displayName:"Bella Micheletto Lima",arabicName:"بيلا ميكيليتو ليما",group:"Partner",table:"5",groupName:"Bella & Ashkan",members:["Bella Micheletto Lima","Ashkan Ashki"]},
+    "ashkan ashki":{displayName:"Ashkan Ashki",arabicName:"أشكان أشكي",group:"Partner",table:"5",groupName:"Bella & Ashkan",members:["Bella Micheletto Lima","Ashkan Ashki"]},
+    "elena jimenez rodriguez":{displayName:"Elena Jimenez Rodriguez",arabicName:"إلينا خيمينيز رودريجيز",group:"Friend",table:"5",groupName:"Elena & Maxine",members:["Elena Jimenez Rodriguez","Maxine Davis"]},
+    "maxine davis":{displayName:"Maxine Davis",arabicName:"ماكسين ديفيس",group:"Friend",table:"5",groupName:"Elena & Maxine",members:["Elena Jimenez Rodriguez","Maxine Davis"]},
+    "diana medina":{displayName:"Diana Medina",arabicName:"ديانا مدينا",group:"Family",table:"5",groupName:"Diana Medina Family",members:["Diana Medina","Rafael","Regina"]},
+    "rafael":{displayName:"Rafael",arabicName:"رافاييل",group:"Family",table:"5",groupName:"Diana Medina Family",members:["Diana Medina","Rafael","Regina"]},
+    "regina":{displayName:"Regina",arabicName:"ريجينا",group:"Family",table:"5",groupName:"Diana Medina Family",members:["Diana Medina","Rafael","Regina"]},
+    "chrissa stamatopoulou":{displayName:"Chrissa Stamatopoulou",arabicName:"كريسا ستاماتوبولو",group:"Partner",table:"5",groupName:"Chrissa & Andreas",members:["Chrissa Stamatopoulou","Andreas Lostrom"]},
+    "andreas lostrom":{displayName:"Andreas Lostrom",arabicName:"أندرياس لوستروم",group:"Partner",table:"5",groupName:"Chrissa & Andreas",members:["Chrissa Stamatopoulou","Andreas Lostrom"]},
+    "lorenzo simón santillana":{displayName:"Lorenzo Simón Santillana",arabicName:"لورينزو سيمون سانتيلانا",group:"Family",table:"5",groupName:"Lorenzo & MaMa",members:["Lorenzo Simón Santillana","MaMa"]},
+    "mama":{displayName:"MaMa",arabicName:"ماما",group:"Family",table:"5",groupName:"Lorenzo & MaMa",members:["Lorenzo Simón Santillana","MaMa"]},
+    "علاء المصري":{displayName:"Alaa El-Masry",arabicName:"علاء المصري",group:"Family",table:"6",groupName:"علاء المصري Family",members:["علاء المصري","برلنتي","ندى","نورهان"]},
+    "برلنتي":{displayName:"Berlenti",arabicName:"برلنتي",group:"Family",table:"6",groupName:"علاء المصري Family",members:["علاء المصري","برلنتي","ندى","نورهان"]},
+    "ندى":{displayName:"Nada",arabicName:"ندى",group:"Family",table:"6",groupName:"علاء المصري Family",members:["علاء المصري","برلنتي","ندى","نورهان"]},
+    "نورهان":{displayName:"Nourhan",arabicName:"نورهان",group:"Family",table:"6",groupName:"علاء المصري Family",members:["علاء المصري","برلنتي","ندى","نورهان"]},
+    "ثناء نجم":{displayName:"Sanaa Negm",arabicName:"ثناء نجم",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "نورا المصري":{displayName:"Noura El-Masry",arabicName:"نورا المصري",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "احمد محمد المصري":{displayName:"Ahmed Mohamed El-Masry",arabicName:"احمد محمد المصري",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "جني المصري":{displayName:"Genny El-Masry",arabicName:"جني المصري",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "لمي المصري":{displayName:"Lamy El-Masry",arabicName:"لمي المصري",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "نورا":{displayName:"Nora",arabicName:"نورا",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "لمى":{displayName:"Lama",arabicName:"لمى",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "جنى":{displayName:"Jana El-Masry",arabicName:"جنى المصري",group:"Family",table:"6",groupName:"ثناء نجم Family",members:["ثناء نجم","نورا المصري","احمد محمد المصري","جني المصري","لمي المصري","نورا","لمى","جنى"]},
+    "raghda elmohandes":{displayName:"Raghda Elmohandes",arabicName:"رغدة المهندس",group:"Partner",table:"7",groupName:"Raghda & Moataz",members:["Raghda Elmohandes","معتز المهندس"]},
+    "معتز المهندس":{displayName:"Moataz Elmohandes",arabicName:"معتز المهندس",group:"Partner",table:"7",groupName:"Raghda & Moataz",members:["Raghda Elmohandes","معتز المهندس"]},
+    "محمد النجدي":{displayName:"Mohamed El-Nagdy",arabicName:"محمد النجدي",group:"Partner",table:"7",groupName:"Mohamed & Hend",members:["محمد النجدي","هند الصنعاني"]},
+    "هند الصنعاني":{displayName:"Hend El-Sanaani",arabicName:"هند الصنعاني",group:"Partner",table:"7",groupName:"Mohamed & Hend",members:["محمد النجدي","هند الصنعاني"]},
+    "أحمد الباز":{displayName:"Ahmed El-Baz",arabicName:"أحمد الباز",group:"Family",table:"8",groupName:"Ahmed El-Baz Family",members:["أحمد الباز","هبة الله","مريم أحمد","ملك أحمد","أحمد أحمد"]},
+    "هبة الله":{displayName:"Hibatullah",arabicName:"هبة الله",group:"Family",table:"8",groupName:"Ahmed El-Baz Family",members:["أحمد الباز","هبة الله","مريم أحمد","ملك أحمد","أحمد أحمد"]},
+    "مريم أحمد":{displayName:"Mariam Ahmed",arabicName:"مريم أحمد",group:"Family",table:"8",groupName:"Ahmed El-Baz Family",members:["أحمد الباز","هبة الله","مريم أحمد","ملك أحمد","أحمد أحمد"]},
+    "ملك أحمد":{displayName:"Malak Ahmed",arabicName:"ملك أحمد",group:"Family",table:"8",groupName:"Ahmed El-Baz Family",members:["أحمد الباز","هبة الله","مريم أحمد","ملك أحمد","أحمد أحمد"]},
+    "أحمد أحمد":{displayName:"Ahmed Ahmed",arabicName:"أحمد أحمد",group:"Family",table:"8",groupName:"Ahmed El-Baz Family",members:["أحمد الباز","هبة الله","مريم أحمد","ملك أحمد","أحمد أحمد"]},
+    "omar el-masry":{displayName:"Omar EL-Masry",arabicName:"عمر المصري",group:"Partner",table:"8",groupName:"Omar & Hanan",members:["Omar EL-Masry","Hanan"]},
+    "hanan":{displayName:"Hanan",arabicName:"حنان",group:"Partner",table:"8",groupName:"Omar & Hanan",members:["Omar EL-Masry","Hanan"]},
+    "hassan metwally":{displayName:"Hassan Metwally",arabicName:"حسن متولي",group:"Family",table:"9",groupName:"Hassan Metwally Family",members:["Hassan Metwally","Dr Lamyia","Sherif metwally","aya metwally","ahmed metwally"]},
+    "dr lamyia":{displayName:"Dr Lamyia",arabicName:"د. لمياء",group:"Family",table:"9",groupName:"Hassan Metwally Family",members:["Hassan Metwally","Dr Lamyia","Sherif metwally","aya metwally","ahmed metwally"]},
+    "sherif metwally":{displayName:"Sherif Metwally",arabicName:"شريف متولي",group:"Family",table:"9",groupName:"Hassan Metwally Family",members:["Hassan Metwally","Dr Lamyia","Sherif metwally","aya metwally","ahmed metwally"]},
+    "aya metwally":{displayName:"Aya Metwally",arabicName:"آية متولي",group:"Family",table:"9",groupName:"Hassan Metwally Family",members:["Hassan Metwally","Dr Lamyia","Sherif metwally","aya metwally","ahmed metwally"]},
+    "ahmed metwally":{displayName:"Ahmed Metwally",arabicName:"أحمد متولي",group:"Family",table:"9",groupName:"Hassan Metwally Family",members:["Hassan Metwally","Dr Lamyia","Sherif metwally","aya metwally","ahmed metwally"]},
+    "اللواء وائل أمين":{displayName:"Major General Wael Amin",arabicName:"اللواء وائل أمين",group:"Family",table:"9",groupName:"Wael Amin & Plus One",members:["اللواء وائل أمين","Plus one"]},
+    "rizan el-masry":{displayName:"Rizan EL-Masry",arabicName:"ريزان المصري",group:"Family",table:"10",groupName:"Rizan EL-Masry Family",members:["Rizan EL-Masry","Mohmed helmey","Ahmed Helmey","Amr Helmey","Hla Helmey"]},
+    "mohmed helmey":{displayName:"Mohmed Helmey",arabicName:"محمد حلمي",group:"Family",table:"10",groupName:"Rizan EL-Masry Family",members:["Rizan EL-Masry","Mohmed helmey","Ahmed Helmey","Amr Helmey","Hla Helmey"]},
+    "ahmed helmey":{displayName:"Ahmed Helmey",arabicName:"أحمد حلمي",group:"Family",table:"10",groupName:"Rizan EL-Masry Family",members:["Rizan EL-Masry","Mohmed helmey","Ahmed Helmey","Amr Helmey","Hla Helmey"]},
+    "amr helmey":{displayName:"Amr Helmey",arabicName:"عمرو حلمي",group:"Family",table:"10",groupName:"Rizan EL-Masry Family",members:["Rizan EL-Masry","Mohmed helmey","Ahmed Helmey","Amr Helmey","Hla Helmey"]},
+    "hla helmey":{displayName:"Hla Helmey",arabicName:"هلا حلمي",group:"Family",table:"10",groupName:"Rizan EL-Masry Family",members:["Rizan EL-Masry","Mohmed helmey","Ahmed Helmey","Amr Helmey","Hla Helmey"]},
+    "مروة الباز":{displayName:"Marwa El-Baz",arabicName:"مروة الباز",group:"Family",table:"10",groupName:"Marwa El-Baz Family",members:["مروة الباز","خالد","ياسين","+2 sisters"]},
+    "خالد":{displayName:"Khaled",arabicName:"خالد",group:"Family",table:"10",groupName:"Marwa El-Baz Family",members:["مروة الباز","خالد","ياسين","+2 sisters"]},
+    "ياسين":{displayName:"Yassin",arabicName:"ياسين",group:"Family",table:"10",groupName:"Marwa El-Baz Family",members:["مروة الباز","خالد","ياسين","+2 sisters"]},
+    "hazem el-masry":{displayName:"Hazem EL-Masry",arabicName:"حازم المصري",group:"Family",table:"11",groupName:"Hazem EL-Masry Family",members:["Hazem EL-Masry","Yara elrashedi","Mona EL-Masry","Leen EL-Masry","Lojian EL-Masry"]},
+    "yara elrashedi":{displayName:"Yara Elrashedi",arabicName:"يارا الراشدي",group:"Family",table:"11",groupName:"Hazem EL-Masry Family",members:["Hazem EL-Masry","Yara elrashedi","Mona EL-Masry","Leen EL-Masry","Lojian EL-Masry"]},
+    "mona el-masry":{displayName:"Mona EL-Masry",arabicName:"منى المصري",group:"Family",table:"11",groupName:"Hazem EL-Masry Family",members:["Hazem EL-Masry","Yara elrashedi","Mona EL-Masry","Leen EL-Masry","Lojian EL-Masry"]},
+    "leen el-masry":{displayName:"Leen EL-Masry",arabicName:"لين المصري",group:"Family",table:"11",groupName:"Hazem EL-Masry Family",members:["Hazem EL-Masry","Yara elrashedi","Mona EL-Masry","Leen EL-Masry","Lojian EL-Masry"]},
+    "lojian el-masry":{displayName:"Lojian EL-Masry",arabicName:"لوجيان المصري",group:"Family",table:"11",groupName:"Hazem EL-Masry Family",members:["Hazem EL-Masry","Yara elrashedi","Mona EL-Masry","Leen EL-Masry","Lojian EL-Masry"]},
+    "محمد كمال":{displayName:"Mohamed Kamal",arabicName:"محمد كمال",group:"Family",table:"12",groupName:"Mohamed Kamal Family",members:["محمد كمال","منال محمد","هدي محمد","هاجر محمد","هناء محمد"]},
+    "منال محمد":{displayName:"Manal Mohamed",arabicName:"منال محمد",group:"Family",table:"12",groupName:"Mohamed Kamal Family",members:["محمد كمال","منال محمد","هدي محمد","هاجر محمد","هناء محمد"]},
+    "هدي محمد":{displayName:"Huda Mohamed",arabicName:"هدي محمد",group:"Family",table:"12",groupName:"Mohamed Kamal Family",members:["محمد كمال","منال محمد","هدي محمد","هاجر محمد","هناء محمد"]},
+    "هاجر محمد":{displayName:"Hager Mohamed",arabicName:"هاجر محمد",group:"Family",table:"12",groupName:"Mohamed Kamal Family",members:["محمد كمال","منال محمد","هدي محمد","هاجر محمد","هناء محمد"]},
+    "هناء محمد":{displayName:"Hanaa Mohamed",arabicName:"هناء محمد",group:"Family",table:"12",groupName:"Mohamed Kamal Family",members:["محمد كمال","منال محمد","هدي محمد","هاجر محمد","هناء محمد"]},
+    "ايمان كمال":{displayName:"Eman Kamal",arabicName:"ايمان كمال",group:"Partner",table:"12",groupName:"Eman & Ahmed",members:["ايمان كمال","احمد الوسيمي"]},
+    "احمد الوسيمي":{displayName:"Ahmed El-Waseemy",arabicName:"احمد الوسيمي",group:"Partner",table:"12",groupName:"Eman & Ahmed",members:["ايمان كمال","احمد الوسيمي"]},
+    "amira hossam eldin":{displayName:"Amira Hossam Eldin",arabicName:"أميرة حسام الدين",group:"Friends",table:"12",groupName:"Amira & Rasha",members:["Amira Hossam Eldin","Rasha Saad"]},
+    "rasha saad":{displayName:"Rasha Saad",arabicName:"رشا سعد",group:"Friends",table:"12",groupName:"Amira & Rasha",members:["Amira Hossam Eldin","Rasha Saad"]},
+    "ماجدة توفيق قنصوة":{displayName:"Magda Tawfik Konsowa",arabicName:"ماجدة توفيق قنصوة",group:"Family",table:"13",groupName:"Magda Tawfik Family",members:["ماجدة توفيق قنصوة","ياسمين عبدالعزيزي وادي","دينا عبدالعزيز وادي","غزل"]},
+    "ياسمين عبدالعزيزي وادي":{displayName:"Yasmine Abdelaziz Wadi",arabicName:"ياسمين عبدالعزيزي وادي",group:"Family",table:"13",groupName:"Magda Tawfik Family",members:["ماجدة توفيق قنصوة","ياسمين عبدالعزيزي وادي","دينا عبدالعزيز وادي","غزل"]},
+    "دينا عبدالعزيز وادي":{displayName:"Dina Abdelaziz Wadi",arabicName:"دينا عبدالعزيز وادي",group:"Family",table:"13",groupName:"Magda Tawfik Family",members:["ماجدة توفيق قنصوة","ياسمين عبدالعزيزي وادي","دينا عبدالعزيز وادي","غزل"]},
+    "غزل":{displayName:"Ghazl",arabicName:"غزل",group:"Family",table:"13",groupName:"Magda Tawfik Family",members:["ماجدة توفيق قنصوة","ياسمين عبدالعزيزي وادي","دينا عبدالعزيز وادي","غزل"]},
+    "سارة عبدالعزيز وادي":{displayName:"Sara Abdelaziz Wadi",arabicName:"سارة عبدالعزيز وادي",group:"Family",table:"13",groupName:"Sara Abdelaziz Family",members:["سارة عبدالعزيز وادي","ثروت","رحمه رابح"]},
+    "ثروت":{displayName:"Tharwat",arabicName:"ثروت",group:"Family",table:"13",groupName:"Sara Abdelaziz Family",members:["سارة عبدالعزيز وادي","ثروت","رحمه رابح"]},
+    "رحمه رابح":{displayName:"Rahma Rabeh",arabicName:"رحمه رابح",group:"Family",table:"13",groupName:"Sara Abdelaziz Family",members:["سارة عبدالعزيز وادي","ثروت","رحمه رابح"]},
+    "mariam":{displayName:"Mariam",arabicName:"مريم",group:"Family",table:"14",groupName:"Mariam Family",members:["Mariam","Child 1","Child 2"]},
+    "samia elsokkary":{displayName:"Samia ElSokkary",arabicName:"سامية السكري",group:"Family",table:"14",groupName:"Samia & Hossam",members:["Samia ElSokkary","Hossam ElSokkry"]},
+    "hossam elsokkry":{displayName:"Hossam ElSokkry",arabicName:"حسام السكري",group:"Family",table:"14",groupName:"Samia & Hossam",members:["Samia ElSokkary","Hossam ElSokkry"]},
+    "alaa nofal":{displayName:"Alaa Nofal",arabicName:"علاء نوفل",group:"Family",table:"14",groupName:"Alaa & Ibrahim",members:["Alaa Nofal","Ibrahim Nofal"]},
+    "ibrahim nofal":{displayName:"Ibrahim Nofal",arabicName:"إبراهيم نوفل",group:"Family",table:"14",groupName:"Alaa & Ibrahim",members:["Alaa Nofal","Ibrahim Nofal"]},
+    "sara kamal":{displayName:"Sara Kamal",arabicName:"سارة كمال",group:"Family",table:"14",groupName:"Sara Kamal Family",members:["Sara Kamal","Plus One","Kid 1","Kid 2"]}
+};
 
-        // Note: For the complete HTML file, I'll include all guest entries from the previous version
-        // The full file will have all Tables 1-14 with all guests as previously set up.
+const guestNamesList=Object.keys(guestDatabase).map(k=>({key:k,displayName:guestDatabase[k].displayName,arabicName:guestDatabase[k].arabicName}));
+const searchInput=document.getElementById('guestName'),autocompleteList=document.getElementById('autocompleteList');
 
-        // For this response, I'm showing the menu functionality.
-        // The complete file with all guests will be provided in the final answer.
+function showAutocomplete(f){
+    const fl=f.toLowerCase().trim();
+    if(fl.length<2){autocompleteList.style.display='none';return;}
+    const matches=guestNamesList.filter(i=>i.key.toLowerCase().startsWith(fl)||i.displayName.toLowerCase().startsWith(fl)||i.key.toLowerCase().includes(fl)||i.displayName.toLowerCase().includes(fl)||(i.arabicName&&i.arabicName.includes(f))).slice(0,6);
+    if(!matches.length){autocompleteList.style.display='none';return;}
+    autocompleteList.innerHTML='';
+    matches.forEach(m=>{const d=document.createElement('div');d.className='autocomplete-item';d.textContent=m.arabicName&&m.arabicName!==m.displayName?`${m.displayName} / ${m.arabicName}`:m.displayName;d.onclick=()=>{searchInput.value=m.key;autocompleteList.style.display='none';findGuestTable()};autocompleteList.appendChild(d)});
+    autocompleteList.style.display='block';
+}
+searchInput.addEventListener('input',e=>showAutocomplete(e.target.value));
+document.addEventListener('click',e=>{if(e.target!==searchInput)autocompleteList.style.display='none'});
 
-        // Create searchable list for autocomplete
-        const guestNamesList = Object.keys(guestDatabase).map(key => ({
-            key: key,
-            displayName: guestDatabase[key].displayName,
-            arabicName: guestDatabase[key].arabicName
-        }));
+const GOOGLE_DRIVE_UPLOAD_URL="https://script.google.com/macros/s/AKfycbwFhDIHzJI8m7OTh6-Y3s9st8ES12fsYUYR-Va1lxfxjUWX4z71_WjUBzyxv07-pMYs/exec";
+async function uploadToDrive(file,guestName){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=async e=>{const b64=e.target.result.split(',')[1];try{await fetch(GOOGLE_DRIVE_UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({fileName:file.name,fileData:b64,mimeType:file.type,guestName})});r()}catch(e){j(e)}};rd.readAsDataURL(file)})}
 
-        // Autocomplete functionality
-        const searchInput = document.getElementById('guestName');
-        const autocompleteList = document.getElementById('autocompleteList');
+let currentLang='en';
+const translations={
+    en:{scrollHint:"👇 Scroll down for more",greeting:"💕 Please enter your name to find your table 💕",searchPlaceholder:"e.g., Ahmed Hassan",findButton:"Find my table",searchHint:"Start typing to see matching names",tableLabel:"Your table",notFoundMessage:"Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!",uploadTitle:"📸 Share your photos",uploadSubtitle:"Upload your photos from tonight",uploadText:"Click here to upload photos",uploadHint:"Select one or multiple photos",uploadButton:"Choose photos",tabProgram:"📋 Program",tabMenu:"🍽️ Menu",tabSongs:"🎶 Song list",tabMap:"🗺️ Table map",programTitle:"Wedding Program",program1:"Guest arrival & welcome drinks",program2:"Sunset ceremony",program3:"Cocktail hour",program4:"Dinner served",program5:"First dance",program6:"Cake & dancing",program7:"Sparkler send-off",songsTitle:"Song List",mapTitle:"Table Layout",mapHint:"Click map to enlarge",albumTitle:"📸 Wedding Photo Album",albumSubtitle:"View all photos shared by guests",albumLink:"Open photo album",footerMessage:"With great joy, we invite you to celebrate our wedding.",countdown:"⏳ 17 days to go"},
+    ar:{scrollHint:"👇 اسحب للأسفل للمزيد",greeting:"💕 من فضلك أدخل اسمك لتعرف طاولتك 💕",searchPlaceholder:"مثال: أحمد حسن",findButton:"ابحث عن طاولتي",searchHint:"ابدأ الكتابة لرؤية الأسماء المتطابقة",tableLabel:"طاولتك",notFoundMessage:"مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورحاب! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!",uploadTitle:"📸 شارك صورك",uploadSubtitle:"حمّل صورك من الليلة",uploadText:"اضغط هنا لرفع الصور",uploadHint:"اختر صورة أو أكثر",uploadButton:"اختر الصور",tabProgram:"📋 البرنامج",tabMenu:"🍽️ قائمة الطعام",tabSongs:"🎶 قائمة الأغاني",tabMap:"🗺️ خريطة الطاولات",programTitle:"برنامج الزفاف",program1:"وصول الضيوف ومشروبات الترحيب",program2:"حفل غروب الشمس",program3:"ساعة الكوكتيل",program4:"تقديم العشاء",program5:"الرقصة الأولى",program6:"تقطيع الكيك والرقص",program7:"وداع بالشماريخ",songsTitle:"قائمة الأغاني",mapTitle:"خريطة الطاولات",mapHint:"اضغط على الخريطة للتكبير",albumTitle:"📸 ألبوم صور الزفاف",albumSubtitle:"شاهد جميع الصور التي شاركها الضيوف",albumLink:"افتح الألبوم",footerMessage:"بكل سرور، ندعوكم للاحتفال بحفل زفافنا",countdown:"⏳ 17 يوم متبقي"}
+};
 
-        function showAutocomplete(filter) {
-            const filterLower = filter.toLowerCase().trim();
-            if (filterLower.length < 2) {
-                autocompleteList.style.display = 'none';
-                return;
-            }
-            
-            const matches = guestNamesList.filter(item => {
-                const keyMatch = item.key.toLowerCase().startsWith(filterLower);
-                const displayMatch = item.displayName.toLowerCase().startsWith(filterLower);
-                const containsMatch = item.key.toLowerCase().includes(filterLower) || 
-                                      item.displayName.toLowerCase().includes(filterLower);
-                const arabicMatch = item.arabicName && item.arabicName.includes(filter);
-                
-                return keyMatch || displayMatch || containsMatch || arabicMatch;
-            }).slice(0, 6);
+function setLanguage(lang){
+    currentLang=lang;
+    document.documentElement.lang=lang==='ar'?'ar':'en';
+    document.getElementById('btnEnglish').classList.toggle('active',lang==='en');
+    document.getElementById('btnArabic').classList.toggle('active',lang==='ar');
+    const t=translations[lang];
+    document.getElementById('scrollHint').textContent=t.scrollHint;
+    document.getElementById('greetingText').textContent=t.greeting;
+    searchInput.placeholder=t.searchPlaceholder;
+    document.getElementById('findTableBtn').textContent=t.findButton;
+    document.getElementById('searchHint').textContent=t.searchHint;
+    document.getElementById('tableLabel').textContent=t.tableLabel;
+    document.getElementById('uploadTitle').textContent=t.uploadTitle;
+    document.getElementById('uploadSubtitle').textContent=t.uploadSubtitle;
+    document.getElementById('uploadText').textContent=t.uploadText;
+    document.getElementById('uploadHint').textContent=t.uploadHint;
+    document.getElementById('uploadButton').textContent=t.uploadButton;
+    document.getElementById('tabProgram').textContent=t.tabProgram;
+    document.getElementById('tabMenu').textContent=t.tabMenu;
+    document.getElementById('tabSongs').textContent=t.tabSongs;
+    document.getElementById('tabMap').textContent=t.tabMap;
+    document.getElementById('programTitle').textContent=t.programTitle;
+    document.getElementById('program1').textContent=t.program1;
+    document.getElementById('program2').textContent=t.program2;
+    document.getElementById('program3').textContent=t.program3;
+    document.getElementById('program4').textContent=t.program4;
+    document.getElementById('program5').textContent=t.program5;
+    document.getElementById('program6').textContent=t.program6;
+    document.getElementById('program7').textContent=t.program7;
+    document.getElementById('songsTitle').textContent=t.songsTitle;
+    document.getElementById('mapTitle').textContent=t.mapTitle;
+    document.getElementById('mapHint').textContent=t.mapHint;
+    document.getElementById('albumTitle').textContent=t.albumTitle;
+    document.getElementById('albumSubtitle').textContent=t.albumSubtitle;
+    document.getElementById('albumLink').textContent=t.albumLink;
+    document.getElementById('footerMessage').textContent=t.footerMessage;
+    document.getElementById('countdown').textContent=t.countdown;
+    renderMenu(lang);
+    findGuestTable();
+}
 
-            if (matches.length === 0) {
-                autocompleteList.style.display = 'none';
-                return;
-            }
+function findGuestTable(){
+    const name=searchInput.value.trim().toLowerCase();
+    let guest=guestDatabase[name];
+    if(!guest) for(const[k,v] of Object.entries(guestDatabase)) if(v.displayName.toLowerCase()===name||(v.arabicName&&v.arabicName.toLowerCase()===name)){guest=v;break;}
+    const t=translations[currentLang];
+    const welcome=document.getElementById('welcomeMessage'),group=document.getElementById('groupName'),table=document.getElementById('tableNumber'),desc=document.getElementById('tableDescription'),note=document.getElementById('familyNote');
+    if(guest){
+        const displayName=currentLang==='ar'&&guest.arabicName?guest.arabicName:guest.displayName;
+        welcome.textContent=`Welcome, ${displayName}! 💖`;
+        group.textContent=guest.group;
+        table.textContent=guest.table;
+        desc.textContent=guest.groupName;
+        const others=guest.members.filter(m=>m.toLowerCase()!==name&&m!==guest.displayName);
+        const rel=guest.group==='Soulmate'?'soulmate':guest.group==='Partner'?'partner':guest.group==='Friend'?'friend':'family';
+        note.textContent=others.length?`✨ Your ${rel} (${others.join(', ')}) sits with you at Table ${guest.table} ✨`:`✨ You're at Table ${guest.table} with your ${rel} ✨`;
+    }else{
+        welcome.textContent=`Welcome, ${searchInput.value.trim()||(currentLang==='ar'?'ضيفنا العزيز':'Guest')}! 💖`;
+        group.textContent=currentLang==='ar'?'مرحباً بك':'Welcome';
+        table.textContent='?';
+        desc.textContent=currentLang==='ar'?'طاولة العائلة':'Family Table';
+        note.textContent=t.notFoundMessage;
+    }
+}
 
-            autocompleteList.innerHTML = '';
-            matches.forEach(match => {
-                const div = document.createElement('div');
-                div.className = 'autocomplete-item';
-                if (match.arabicName && match.arabicName !== match.displayName) {
-                    div.textContent = `${match.displayName} / ${match.arabicName}`;
-                } else {
-                    div.textContent = match.displayName;
-                }
-                div.onclick = () => {
-                    searchInput.value = match.key;
-                    autocompleteList.style.display = 'none';
-                    findGuestTable();
-                };
-                autocompleteList.appendChild(div);
-            });
-            autocompleteList.style.display = 'block';
-        }
-
-        searchInput.addEventListener('input', function(e) {
-            showAutocomplete(e.target.value);
-        });
-
-        document.addEventListener('click', function(e) {
-            if (e.target !== searchInput) {
-                autocompleteList.style.display = 'none';
-            }
-        });
-
-        // ===== GOOGLE DRIVE UPLOAD =====
-        const GOOGLE_DRIVE_UPLOAD_URL = "https://script.google.com/macros/s/AKfycbwFhDIHzJI8m7OTh6-Y3s9st8ES12fsYUYR-Va1lxfxjUWX4z71_WjUBzyxv07-pMYs/exec";
-
-        async function uploadToDrive(file, guestName) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = async function(e) {
-                    const base64Data = e.target.result.split(',')[1];
-                    const payload = {
-                        fileName: file.name,
-                        fileData: base64Data,
-                        mimeType: file.type,
-                        guestName: guestName
-                    };
-                    try {
-                        await fetch(GOOGLE_DRIVE_UPLOAD_URL, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        resolve(true);
-                    } catch(error) {
-                        console.error('Upload error:', error);
-                        reject(error);
-                    }
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // ===== LANGUAGE =====
-        let currentLang = 'en';
-
-        const translations = {
-            en: {
-                scrollHint: "👇 Scroll down for more",
-                greeting: "💕 Please enter your name to find your table 💕",
-                searchPlaceholder: "e.g., Ahmed Hassan",
-                findButton: "Find my table",
-                searchHint: "Start typing to see matching names",
-                tableLabel: "Your table",
-                notFoundMessage: "Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!",
-                uploadTitle: "📸 Share your photos",
-                uploadSubtitle: "Upload your photos from tonight",
-                uploadText: "Click here to upload photos",
-                uploadHint: "Select one or multiple photos",
-                uploadButton: "Choose photos",
-                tabProgram: "📋 Program",
-                tabMenu: "🍽️ Menu",
-                tabSongs: "🎶 Song list",
-                tabMap: "🗺️ Table map",
-                programTitle: "Wedding Program",
-                program1: "Guest arrival & welcome drinks",
-                program2: "Sunset ceremony",
-                program3: "Cocktail hour",
-                program4: "Dinner served",
-                program5: "First dance",
-                program6: "Cake & dancing",
-                program7: "Sparkler send-off",
-                songsTitle: "Song List",
-                mapTitle: "Table Layout",
-                mapHint: "Click map to enlarge",
-                albumTitle: "📸 Wedding Photo Album",
-                albumSubtitle: "View all photos shared by guests",
-                albumLink: "Open photo album",
-                footerMessage: "With great joy, we invite you to celebrate our wedding.",
-                countdown: "⏳ 17 days to go"
-            },
-            ar: {
-                scrollHint: "👇 اسحب للأسفل للمزيد",
-                greeting: "💕 من فضلك أدخل اسمك لتعرف طاولتك 💕",
-                searchPlaceholder: "مثال: أحمد حسن",
-                findButton: "ابحث عن طاولتي",
-                searchHint: "ابدأ الكتابة لرؤية الأسماء المتطابقة",
-                tableLabel: "طاولتك",
-                notFoundMessage: "مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورحاب! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!",
-                uploadTitle: "📸 شارك صورك",
-                uploadSubtitle: "حمّل صورك من الليلة",
-                uploadText: "اضغط هنا لرفع الصور",
-                uploadHint: "اختر صورة أو أكثر",
-                uploadButton: "اختر الصور",
-                tabProgram: "📋 البرنامج",
-                tabMenu: "🍽️ قائمة الطعام",
-                tabSongs: "🎶 قائمة الأغاني",
-                tabMap: "🗺️ خريطة الطاولات",
-                programTitle: "برنامج الزفاف",
-                program1: "وصول الضيوف ومشروبات الترحيب",
-                program2: "حفل غروب الشمس",
-                program3: "ساعة الكوكتيل",
-                program4: "تقديم العشاء",
-                program5: "الرقصة الأولى",
-                program6: "تقطيع الكيك والرقص",
-                program7: "وداع بالشماريخ",
-                songsTitle: "قائمة الأغاني",
-                mapTitle: "خريطة الطاولات",
-                mapHint: "اضغط على الخريطة للتكبير",
-                albumTitle: "📸 ألبوم صور الزفاف",
-                albumSubtitle: "شاهد جميع الصور التي شاركها الضيوف",
-                albumLink: "افتح الألبوم",
-                footerMessage: "بكل سرور، ندعوكم للاحتفال بحفل زفافنا",
-                countdown: "⏳ 17 يوم متبقي"
-            }
-        };
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
-            
-            document.getElementById('btnEnglish').classList.toggle('active', lang === 'en');
-            document.getElementById('btnArabic').classList.toggle('active', lang === 'ar');
-            
-            const t = translations[lang];
-            document.getElementById('scrollHint').textContent = t.scrollHint;
-            document.getElementById('greetingText').textContent = t.greeting;
-            searchInput.placeholder = t.searchPlaceholder;
-            document.getElementById('findTableBtn').textContent = t.findButton;
-            document.getElementById('searchHint').textContent = t.searchHint;
-            document.getElementById('tableLabel').textContent = t.tableLabel;
-            document.getElementById('uploadTitle').textContent = t.uploadTitle;
-            document.getElementById('uploadSubtitle').textContent = t.uploadSubtitle;
-            document.getElementById('uploadText').textContent = t.uploadText;
-            document.getElementById('uploadHint').textContent = t.uploadHint;
-            document.getElementById('uploadButton').textContent = t.uploadButton;
-            document.getElementById('tabProgram').textContent = t.tabProgram;
-            document.getElementById('tabMenu').textContent = t.tabMenu;
-            document.getElementById('tabSongs').textContent = t.tabSongs;
-            document.getElementById('tabMap').textContent = t.tabMap;
-            document.getElementById('programTitle').textContent = t.programTitle;
-            document.getElementById('program1').textContent = t.program1;
-            document.getElementById('program2').textContent = t.program2;
-            document.getElementById('program3').textContent = t.program3;
-            document.getElementById('program4').textContent = t.program4;
-            document.getElementById('program5').textContent = t.program5;
-            document.getElementById('program6').textContent = t.program6;
-            document.getElementById('program7').textContent = t.program7;
-            document.getElementById('songsTitle').textContent = t.songsTitle;
-            document.getElementById('mapTitle').textContent = t.mapTitle;
-            document.getElementById('mapHint').textContent = t.mapHint;
-            document.getElementById('albumTitle').textContent = t.albumTitle;
-            document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
-            document.getElementById('albumLink').textContent = t.albumLink;
-            document.getElementById('footerMessage').textContent = t.footerMessage;
-            document.getElementById('countdown').textContent = t.countdown;
-            
-            // Update menu based on language
-            renderMenu(lang);
-            
-            findGuestTable();
-        }
-
-        // ===== FIND GUEST FUNCTION =====
-        function findGuestTable() {
-            const input = searchInput;
-            const name = input.value.trim().toLowerCase();
-            
-            let guest = guestDatabase[name];
-            
-            if (!guest) {
-                for (const [key, value] of Object.entries(guestDatabase)) {
-                    if (value.displayName.toLowerCase() === name || 
-                        (value.arabicName && value.arabicName.toLowerCase() === name)) {
-                        guest = value;
-                        break;
-                    }
-                }
-            }
-            
-            const t = translations[currentLang];
-            
-            const welcomeEl = document.getElementById('welcomeMessage');
-            const groupEl = document.getElementById('groupName');
-            const tableEl = document.getElementById('tableNumber');
-            const descEl = document.getElementById('tableDescription');
-            const noteEl = document.getElementById('familyNote');
-            
-            if (guest) {
-                const displayName = currentLang === 'ar' && guest.arabicName ? guest.arabicName : guest.displayName;
-                welcomeEl.textContent = `Welcome, ${displayName}! 💖`;
-                groupEl.textContent = guest.group;
-                tableEl.textContent = guest.table;
-                descEl.textContent = guest.groupName;
-                
-                const otherMembers = guest.members.filter(m => m.toLowerCase() !== name && m !== guest.displayName);
-                if (otherMembers.length > 0) {
-                    let membersText = otherMembers.join(', ');
-                    let relation = guest.group === 'Soulmate' ? 'soulmate' : guest.group === 'Partner' ? 'partner' : guest.group === 'Friend' ? 'friend' : 'family';
-                    noteEl.textContent = `✨ Your ${relation} (${membersText}) sits with you at Table ${guest.table} ✨`;
-                } else {
-                    let relation = guest.group === 'Soulmate' ? 'soulmate' : guest.group === 'Partner' ? 'partner' : guest.group === 'Friend' ? 'friends' : 'family';
-                    noteEl.textContent = `✨ You're at Table ${guest.table} with your ${relation} ✨`;
-                }
-            } else {
-                const displayName = input.value.trim() || (currentLang === 'ar' ? 'ضيفنا العزيز' : 'Guest');
-                welcomeEl.textContent = `Welcome, ${displayName}! 💖`;
-                groupEl.textContent = currentLang === 'ar' ? 'مرحباً بك' : 'Welcome';
-                tableEl.textContent = '?';
-                descEl.textContent = currentLang === 'ar' ? 'طاولة العائلة' : 'Family Table';
-                noteEl.textContent = t.notFoundMessage;
-            }
-        }
-
-        // ===== TAB SWITCHING =====
-        function showInfoTab(tabName) {
-            document.querySelectorAll('.info-pane').forEach(pane => pane.classList.remove('active'));
-            document.getElementById(tabName + '-pane').classList.add('active');
-            document.querySelectorAll('.info-tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // ===== PHOTO UPLOAD SETUP =====
-        function setupPhotoUpload() {
-            const fileInput = document.getElementById('fileInput');
-            const uploadStatus = document.getElementById('uploadStatus');
-            const photoGallery = document.getElementById('photoGallery');
-            
-            fileInput.addEventListener('change', async function(e) {
-                const files = e.target.files;
-                if (files.length === 0) return;
-                
-                const guestName = searchInput.value.trim() || 'Guest';
-                
-                uploadStatus.className = 'upload-status success';
-                uploadStatus.textContent = `✨ Uploading ${files.length} photo(s)... ✨`;
-                
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const img = document.createElement('img');
-                        img.src = event.target.result;
-                        img.className = 'gallery-image';
-                        photoGallery.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                    
-                    try {
-                        await uploadToDrive(file, guestName);
-                    } catch(error) {
-                        console.log('Upload note:', error);
-                    }
-                }
-                
-                uploadStatus.textContent = `✅ Added ${files.length} photo(s) to album!`;
-                fileInput.value = '';
-                setTimeout(() => {
-                    uploadStatus.style.display = 'none';
-                    uploadStatus.className = 'upload-status';
-                }, 3000);
-            });
-        }
-
-        function scrollToMain() {
-            document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        window.onload = function() {
-            setupPhotoUpload();
-            renderMenu('en');
-            document.getElementById('heartBtn').addEventListener('click', scrollToMain);
-            document.getElementById('heroSection').addEventListener('click', scrollToMain);
-        };
-
-        document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') findGuestTable();
-        });
-    </script>
+function showInfoTab(tabName){document.querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));document.getElementById(tabName+'-pane').classList.add('active');document.querySelectorAll('.info-tab-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+function setupPhotoUpload(){const fi=document.getElementById('fileInput'),us=document.getElementById('uploadStatus'),pg=document.getElementById('photoGallery');fi.addEventListener('change',async e=>{const files=e.target.files;if(!files.length)return;const gn=searchInput.value.trim()||'Guest';us.className='upload-status success';us.textContent=`✨ Uploading ${files.length} photo(s)... ✨`;for(let f of files){const rd=new FileReader();rd.onload=ev=>{const img=document.createElement('img');img.src=ev.target.result;img.className='gallery-image';pg.appendChild(img)};rd.readAsDataURL(f);try{await uploadToDrive(f,gn)}catch(e){}}us.textContent=`✅ Added ${files.length} photo(s) to album!`;fi.value='';setTimeout(()=>{us.style.display='none';us.className='upload-status'},3000)});}
+function scrollToMain(){document.getElementById('mainContent').scrollIntoView({behavior:'smooth'});}
+window.onload=()=>{setupPhotoUpload();renderMenu('en');document.getElementById('heartBtn').addEventListener('click',scrollToMain);document.getElementById('heroSection').addEventListener('click',scrollToMain);};
+document.getElementById('findTableBtn').addEventListener('click',findGuestTable);
+searchInput.addEventListener('keypress',e=>{if(e.key==='Enter')findGuestTable()});
+</script>
 </body>
 </html>
