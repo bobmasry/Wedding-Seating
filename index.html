@@ -625,6 +625,74 @@
             cursor: pointer;
         }
 
+        /* ===== SEATING MAP STYLES ===== */
+        .seating-map-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .seating-map-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            border: 3px solid #d4af37;
+            cursor: pointer;
+        }
+
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .table-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            transform: translate(-50%, -50%);
+            background: rgba(212, 175, 55, 0.3);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .table-marker.highlight {
+            background: rgba(255, 215, 0, 0.6);
+            border: 3px solid #ffaa00;
+            box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
+            animation: pulse 0.8s ease-in-out 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+        }
+
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
         .photo-album-section {
             background: #f8fff5;
             border-radius: 40px;
@@ -669,6 +737,7 @@
             .language-switcher { margin-top: 15px; padding: 5px 12px; }
             .lang-btn { padding: 4px 12px; font-size: 0.8rem; }
             .menu-item { padding-left: 15px; font-size: 1rem; }
+            .table-marker { width: 25px; height: 25px; }
         }
     </style>
 </head>
@@ -748,6 +817,7 @@
                 <button class="info-tab-btn" onclick="showInfoTab('menu')" id="tabMenu">🍽️ Menu</button>
                 <button class="info-tab-btn" onclick="showInfoTab('songs')" id="tabSongs">🎶 Song list</button>
                 <button class="info-tab-btn" onclick="showInfoTab('map')" id="tabMap">🗺️ Table map</button>
+                <button class="info-tab-btn" onclick="showInfoTab('seating')" id="tabSeating">🪑 Seating Map</button>
             </div>
 
             <div class="info-content">
@@ -770,7 +840,6 @@
                     <h2 id="songsTitle">Song List</h2>
                     <div class="song-item">🎵 DJ MARK-Event Coverage </div>
                     <div class="song-item">🎵 DJ ALY KHALIFA- Guest Songs + Beats </div>
-                  
                 </div>
 
                 <div id="map-pane" class="info-pane">
@@ -778,6 +847,23 @@
                     <div class="table-map">
                         <img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)">
                         <p style="margin-top: 15px; color: #4a6a4a;" id="mapHint">Click map to enlarge</p>
+                    </div>
+                </div>
+
+                <!-- SEATING MAP PANE -->
+                <div id="seating-pane" class="info-pane">
+                    <h2 id="seatingTitle">Interactive Seating Map</h2>
+                    <p style="text-align: center; color: #4a6a4a; margin-bottom: 15px;" id="seatingHint">✨ Find your table above, then see it highlighted on the map ✨</p>
+                    
+                    <div class="seating-map-container" id="seatingMapContainer">
+                        <div class="map-wrapper" id="mapWrapper">
+                            <img src="Wedding seating plan.png" alt="Wedding Seating Plan" class="seating-map-image" id="seatingMapImage" onclick="window.open(this.src)">
+                            <!-- Table markers will be added here by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item"><div class="legend-color" style="background: rgba(212, 175, 55, 0.3); border: 2px solid #d4af37;"></div><span>Table Location</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: rgba(255, 215, 0, 0.6); border: 3px solid #ffaa00;"></div><span>Your Table (Highlighted)</span></div>
                     </div>
                 </div>
             </div>
@@ -924,6 +1010,118 @@
             });
             
             menuContainer.innerHTML = html;
+        }
+
+        // ============================================
+        // TABLE COORDINATES FOR SEATING MAP
+        // ============================================
+        const tableCoordinates = {
+            "1": { x: 495, y: 223 },
+            "2": { x: 250, y: 400 },
+            "3": { x: 733, y: 403 },
+            "4": { x: 340, y: 715 },
+            "5": { x: 255, y: 777 },
+            "6": { x: 230, y: 849 },
+            "7": { x: 308, y: 926 },
+            "8": { x: 350, y: 1017 },
+            "9": { x: 266, y: 1086 },
+            "10": { x: 250, y: 1173 },
+            "11": { x: 324, y: 1238 },
+            "12": { x: 333, y: 1322 },
+            "13": { x: 250, y: 1386 },
+            "14": { x: 630, y: 700 },
+            "15": { x: 699, y: 766 },
+            "16": { x: 746, y: 860 },
+            "17": { x: 666, y: 993 },
+            "18": { x: 628, y: 1004 },
+            "19": { x: 722, y: 1084 },
+            "20": { x: 755, y: 1122 },
+            "21": { x: 666, y: 1242 },
+            "22": { x: 642, y: 1309 },
+            "23": { x: 724, y: 1384 }
+        };
+
+        // ============================================
+        // CREATE TABLE MARKERS ON THE MAP
+        // ============================================
+        let currentHighlightedTable = null;
+        let markersCreated = false;
+
+        function createTableMarkers() {
+            const mapWrapper = document.getElementById('mapWrapper');
+            const mapImage = document.getElementById('seatingMapImage');
+            
+            if (!mapWrapper || !mapImage) return;
+            
+            // Remove existing markers if any
+            const existingMarkers = mapWrapper.querySelectorAll('.table-marker');
+            existingMarkers.forEach(marker => marker.remove());
+            
+            // Get the actual rendered size of the image
+            const imgRect = mapImage.getBoundingClientRect();
+            const naturalWidth = mapImage.naturalWidth;
+            const naturalHeight = mapImage.naturalHeight;
+            
+            if (naturalWidth === 0 || naturalHeight === 0) return;
+            
+            // Calculate scale factors
+            const scaleX = imgRect.width / naturalWidth;
+            const scaleY = imgRect.height / naturalHeight;
+            
+            // Create a marker for each table
+            for (const [tableNum, coords] of Object.entries(tableCoordinates)) {
+                const marker = document.createElement('div');
+                marker.className = 'table-marker';
+                marker.setAttribute('data-table', tableNum);
+                
+                // Calculate scaled position
+                const left = coords.x * scaleX;
+                const top = coords.y * scaleY;
+                
+                marker.style.left = `${left}px`;
+                marker.style.top = `${top}px`;
+                
+                mapWrapper.appendChild(marker);
+            }
+            markersCreated = true;
+        }
+
+        // ============================================
+        // HIGHLIGHT TABLE ON MAP
+        // ============================================
+        function highlightTableOnSeatingMap(tableNumber) {
+            // Remove previous highlight
+            if (currentHighlightedTable) {
+                currentHighlightedTable.classList.remove('highlight');
+            }
+            
+            // Find the marker for this table
+            const markers = document.querySelectorAll('.table-marker');
+            let targetMarker = null;
+            
+            for (const marker of markers) {
+                if (marker.getAttribute('data-table') === String(tableNumber)) {
+                    targetMarker = marker;
+                    break;
+                }
+            }
+            
+            if (targetMarker) {
+                targetMarker.classList.add('highlight');
+                currentHighlightedTable = targetMarker;
+                
+                // Scroll to make the highlighted table visible
+                setTimeout(() => {
+                    targetMarker.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                }, 100);
+            }
+        }
+        
+        function clearTableHighlight() {
+            if (currentHighlightedTable) {
+                currentHighlightedTable.classList.remove('highlight');
+                currentHighlightedTable = null;
+            }
         }
 
         // ============================================
@@ -1247,6 +1445,7 @@
                 tabMenu: "🍽️ Menu",
                 tabSongs: "🎶 Song list",
                 tabMap: "🗺️ Table map",
+                tabSeating: "🪑 Seating Map",
                 programTitle: "Wedding Program",
                 program1: "Guest arrival & welcome drinks",
                 program2: "Sunset ceremony",
@@ -1258,6 +1457,8 @@
                 songsTitle: "Song List",
                 mapTitle: "Table Layout",
                 mapHint: "Click map to enlarge",
+                seatingTitle: "Interactive Seating Map",
+                seatingHint: "✨ Find your table above, then see it highlighted on the map ✨",
                 albumTitle: "📸 Wedding Photo Album",
                 albumSubtitle: "View all photos shared by guests",
                 albumLink: "Open photo album",
@@ -1281,6 +1482,7 @@
                 tabMenu: "🍽️ قائمة الطعام",
                 tabSongs: "🎶 قائمة الأغاني",
                 tabMap: "🗺️ خريطة الطاولات",
+                tabSeating: "🪑 خريطة الجلوس",
                 programTitle: "برنامج الزفاف",
                 program1: "وصول الضيوف ومشروبات الترحيب",
                 program2: "حفل غروب الشمس",
@@ -1292,6 +1494,8 @@
                 songsTitle: "قائمة الأغاني",
                 mapTitle: "خريطة الطاولات",
                 mapHint: "اضغط على الخريطة للتكبير",
+                seatingTitle: "خريطة الجلوس التفاعلية",
+                seatingHint: "✨ ابحث عن طاولتك أعلاه، ثم شاهدها مضيئة على الخريطة ✨",
                 albumTitle: "📸 ألبوم صور الزفاف",
                 albumSubtitle: "شاهد جميع الصور التي شاركها الضيوف",
                 albumLink: "افتح الألبوم",
@@ -1323,6 +1527,7 @@
             document.getElementById('tabMenu').textContent = t.tabMenu;
             document.getElementById('tabSongs').textContent = t.tabSongs;
             document.getElementById('tabMap').textContent = t.tabMap;
+            document.getElementById('tabSeating').textContent = t.tabSeating;
             document.getElementById('programTitle').textContent = t.programTitle;
             document.getElementById('program1').textContent = t.program1;
             document.getElementById('program2').textContent = t.program2;
@@ -1334,6 +1539,8 @@
             document.getElementById('songsTitle').textContent = t.songsTitle;
             document.getElementById('mapTitle').textContent = t.mapTitle;
             document.getElementById('mapHint').textContent = t.mapHint;
+            document.getElementById('seatingTitle').textContent = t.seatingTitle;
+            document.getElementById('seatingHint').textContent = t.seatingHint;
             document.getElementById('albumTitle').textContent = t.albumTitle;
             document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
             document.getElementById('albumLink').textContent = t.albumLink;
@@ -1344,7 +1551,7 @@
             findGuestTable();
         }
 
-        // ===== FIND GUEST FUNCTION =====
+        // ===== FIND GUEST FUNCTION (with map highlight) =====
         function findGuestTable() {
             const input = searchInput;
             const name = input.value.trim().toLowerCase();
@@ -1385,6 +1592,10 @@
                     let relation = guest.group === 'Soulmate' ? 'soulmate' : guest.group === 'Partner' ? 'partner' : guest.group === 'Friend' ? 'friends' : 'family';
                     noteEl.textContent = `✨ You're at Table ${guest.table} with your ${relation} ✨`;
                 }
+                
+                // HIGHLIGHT THE TABLE ON THE SEATING MAP
+                highlightTableOnSeatingMap(guest.table);
+                
             } else {
                 const displayName = input.value.trim() || (currentLang === 'ar' ? 'ضيفنا العزيز' : 'Guest');
                 welcomeEl.textContent = `Welcome, ${displayName}! 💖`;
@@ -1392,6 +1603,9 @@
                 tableEl.textContent = '?';
                 descEl.textContent = currentLang === 'ar' ? 'طاولة العائلة' : 'Family Table';
                 noteEl.textContent = t.notFoundMessage;
+                
+                // Clear highlight if guest not found
+                clearTableHighlight();
             }
         }
 
@@ -1449,6 +1663,18 @@
         function scrollToMain() {
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // Initialize seating map after image loads
+        window.addEventListener('load', function() {
+            const mapImage = document.getElementById('seatingMapImage');
+            if (mapImage) {
+                if (mapImage.complete) {
+                    createTableMarkers();
+                } else {
+                    mapImage.addEventListener('load', createTableMarkers);
+                }
+            }
+        });
 
         window.onload = function() {
             setupPhotoUpload();
