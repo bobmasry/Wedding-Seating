@@ -628,10 +628,14 @@
         /* ===== SEATING MAP STYLES ===== */
         .seating-map-container {
             position: relative;
-            display: inline-block;
             width: 100%;
             text-align: center;
             overflow-x: auto;
+        }
+
+        .map-wrapper {
+            position: relative;
+            display: inline-block;
         }
 
         .seating-map-image {
@@ -640,35 +644,32 @@
             border-radius: 20px;
             border: 3px solid #d4af37;
             cursor: pointer;
-        }
-
-        .map-wrapper {
-            position: relative;
-            display: inline-block;
+            display: block;
         }
 
         .table-marker {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            transform: translate(-50%, -50%);
-            background: rgba(212, 175, 55, 0.3);
+            width: 30px;
+            height: 30px;
+            background: rgba(212, 175, 55, 0.4);
             border: 2px solid #d4af37;
             border-radius: 50%;
             transition: all 0.3s ease;
             pointer-events: none;
+            z-index: 100;
+            transform: translate(-50%, -50%);
         }
 
         .table-marker.highlight {
-            background: rgba(255, 215, 0, 0.6);
+            background: rgba(255, 215, 0, 0.7);
             border: 3px solid #ffaa00;
             box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
-            animation: pulse 0.8s ease-in-out 2;
+            animation: seatingPulse 0.8s ease-in-out 2;
         }
 
-        @keyframes pulse {
+        @keyframes seatingPulse {
             0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
             100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
         }
 
@@ -737,7 +738,7 @@
             .language-switcher { margin-top: 15px; padding: 5px 12px; }
             .lang-btn { padding: 4px 12px; font-size: 0.8rem; }
             .menu-item { padding-left: 15px; font-size: 1rem; }
-            .table-marker { width: 25px; height: 25px; }
+            .table-marker { width: 20px; height: 20px; }
         }
     </style>
 </head>
@@ -838,8 +839,8 @@
 
                 <div id="songs-pane" class="info-pane">
                     <h2 id="songsTitle">Song List</h2>
-                    <div class="song-item">🎵 DJ MARK-Event Coverage </div>
-                    <div class="song-item">🎵 DJ ALY KHALIFA- Guest Songs + Beats </div>
+                    <div class="song-item">🎵 DJ MARK-Event Coverage</div>
+                    <div class="song-item">🎵 DJ ALY KHALIFA- Guest Songs + Beats</div>
                 </div>
 
                 <div id="map-pane" class="info-pane">
@@ -855,15 +856,14 @@
                     <h2 id="seatingTitle">Interactive Seating Map</h2>
                     <p style="text-align: center; color: #4a6a4a; margin-bottom: 15px;" id="seatingHint">✨ Find your table above, then see it highlighted on the map ✨</p>
                     
-                    <div class="seating-map-container" id="seatingMapContainer">
+                    <div class="seating-map-container">
                         <div class="map-wrapper" id="mapWrapper">
                             <img src="Wedding seating plan.png" alt="Wedding Seating Plan" class="seating-map-image" id="seatingMapImage" onclick="window.open(this.src)">
-                            <!-- Table markers will be added here by JavaScript -->
                         </div>
                     </div>
                     <div class="map-legend">
-                        <div class="legend-item"><div class="legend-color" style="background: rgba(212, 175, 55, 0.3); border: 2px solid #d4af37;"></div><span>Table Location</span></div>
-                        <div class="legend-item"><div class="legend-color" style="background: rgba(255, 215, 0, 0.6); border: 3px solid #ffaa00;"></div><span>Your Table (Highlighted)</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: rgba(212, 175, 55, 0.4); border: 2px solid #d4af37;"></div><span>Table Location</span></div>
+                        <div class="legend-item"><div class="legend-color" style="background: rgba(255, 215, 0, 0.7); border: 3px solid #ffaa00;"></div><span>Your Table (Highlighted)</span></div>
                     </div>
                 </div>
             </div>
@@ -884,111 +884,27 @@
 
     <script>
         // ============================================
-        // MENU DATA - Bilingual with new menu items
+        // MENU DATA
         // ============================================
         const menuData = {
             en: {
                 title: "Menu",
                 sections: [
-                    {
-                        category: "🥗 Starters",
-                        items: [
-                            "🍃 Warak Enab (Stuffed Grape Leaves)",
-                            "🍘 Kibbeh",
-                            "🥟 Sambousek (Meat & Cheese)",
-                            "🌯 Spring Rolls",
-                            "🥣 Tahini Sauce",
-                            "🍆 Baba Ganoush",
-                            "🥗 Fattoush",
-                            "🌿 Tabbouleh"
-                        ]
-                    },
-                    {
-                        category: "🍽️ Main Courses",
-                        items: [
-                            "🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins",
-                            "🍄 Chicken Piccata with Mushroom Sauce",
-                            "🥩 Grilled Kofta (Live Station)",
-                            "🍗 Grilled Shish Tawook (Live Station)",
-                            "🍝 Lasagna",
-                            "🍆 Mixed Stuffed Vegetables"
-                        ]
-                    },
-                    {
-                        category: "🍝 Pasta Station",
-                        items: [
-                            "Pasta Varieties: Spaghetti, Fusilli, Penne",
-                            "Red Sauce & White Sauce",
-                            "Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"
-                        ]
-                    },
-                    {
-                        category: "🍗 Chicken & Beef Specials",
-                        items: [
-                            "Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto",
-                            "🥩 Beef Teriyaki Sauce",
-                            "🥔 Potatoes Gratin"
-                        ]
-                    },
-                    {
-                        category: "🍰 Desserts",
-                        items: [
-                            "🍮 Om Ali (Egyptian Bread Pudding)",
-                            "🍬 Candy Corner"
-                        ]
-                    }
+                    { category: "🥗 Starters", items: ["🍃 Warak Enab (Stuffed Grape Leaves)", "🍘 Kibbeh", "🥟 Sambousek (Meat & Cheese)", "🌯 Spring Rolls", "🥣 Tahini Sauce", "🍆 Baba Ganoush", "🥗 Fattoush", "🌿 Tabbouleh"] },
+                    { category: "🍽️ Main Courses", items: ["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins", "🍄 Chicken Piccata with Mushroom Sauce", "🥩 Grilled Kofta (Live Station)", "🍗 Grilled Shish Tawook (Live Station)", "🍝 Lasagna", "🍆 Mixed Stuffed Vegetables"] },
+                    { category: "🍝 Pasta Station", items: ["Pasta Varieties: Spaghetti, Fusilli, Penne", "Red Sauce & White Sauce", "Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"] },
+                    { category: "🍗 Chicken & Beef Specials", items: ["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto", "🥩 Beef Teriyaki Sauce", "🥔 Potatoes Gratin"] },
+                    { category: "🍰 Desserts", items: ["🍮 Om Ali (Egyptian Bread Pudding)", "🍬 Candy Corner"] }
                 ]
             },
             ar: {
                 title: "قائمة الطعام",
                 sections: [
-                    {
-                        category: "🥗 المقبلات",
-                        items: [
-                            "🍃 ورق عنب",
-                            "🍘 كبيبه",
-                            "🥟 سمبوسك لحمه وجبنة",
-                            "🌯 سبرينج رولز",
-                            "🥣 طحينه",
-                            "🍆 بابا غنوج",
-                            "🥗 فتوش",
-                            "🌿 تبوله"
-                        ]
-                    },
-                    {
-                        category: "🍽️ الأطباق الرئيسية",
-                        items: [
-                            "🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب",
-                            "🍄 بيكاتا ماشروم",
-                            "🥩 كفته مشويه لايف",
-                            "🍗 شيش طاووك لايف",
-                            "🍝 لازانيا",
-                            "🍆 محشي مشكل"
-                        ]
-                    },
-                    {
-                        category: "🍝 باستا ستيشن",
-                        items: [
-                            "نوع المكرونة: سباجتي، فيوسيلي، بنه",
-                            "صوص احمر، صوص ابيض",
-                            "ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"
-                        ]
-                    },
-                    {
-                        category: "🍗 أطباق الدجاج واللحم الخاصة",
-                        items: [
-                            "تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص",
-                            "🥩 بيف ترياكي صوص",
-                            "🥔 بطاطس جراتان"
-                        ]
-                    },
-                    {
-                        category: "🍰 الحلويات",
-                        items: [
-                            "🍮 ام علي",
-                            "🍬 كاندي كورنر"
-                        ]
-                    }
+                    { category: "🥗 المقبلات", items: ["🍃 ورق عنب", "🍘 كبيبه", "🥟 سمبوسك لحمه وجبنة", "🌯 سبرينج رولز", "🥣 طحينه", "🍆 بابا غنوج", "🥗 فتوش", "🌿 تبوله"] },
+                    { category: "🍽️ الأطباق الرئيسية", items: ["🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب", "🍄 بيكاتا ماشروم", "🥩 كفته مشويه لايف", "🍗 شيش طاووك لايف", "🍝 لازانيا", "🍆 محشي مشكل"] },
+                    { category: "🍝 باستا ستيشن", items: ["نوع المكرونة: سباجتي، فيوسيلي، بنه", "صوص احمر، صوص ابيض", "ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"] },
+                    { category: "🍗 أطباق الدجاج واللحم الخاصة", items: ["تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص", "🥩 بيف ترياكي صوص", "🥔 بطاطس جراتان"] },
+                    { category: "🍰 الحلويات", items: ["🍮 ام علي", "🍬 كاندي كورنر"] }
                 ]
             }
         };
@@ -996,19 +912,12 @@
         function renderMenu(lang) {
             const menuContainer = document.getElementById('menuContent');
             const data = menuData[lang];
-            
             let html = `<h2>${data.title}</h2>`;
-            
             data.sections.forEach(section => {
-                html += `<div class="menu-section">`;
-                html += `<div class="menu-category">${section.category}</div>`;
-                section.items.forEach(item => {
-                    html += `<div class="menu-item">${item}</div>`;
-                });
-                html += `</div>`;
-                html += `<div class="menu-divider"></div>`;
+                html += `<div class="menu-section"><div class="menu-category">${section.category}</div>`;
+                section.items.forEach(item => { html += `<div class="menu-item">${item}</div>`; });
+                html += `</div><div class="menu-divider"></div>`;
             });
-            
             menuContainer.innerHTML = html;
         }
 
@@ -1041,11 +950,12 @@
             "23": { x: 724, y: 1384 }
         };
 
-        // ============================================
-        // CREATE TABLE MARKERS ON THE MAP
-        // ============================================
-        let currentHighlightedTable = null;
+        let originalImageWidth = 0;
+        let originalImageHeight = 0;
+        let currentScaleX = 1;
+        let currentScaleY = 1;
         let markersCreated = false;
+        let currentHighlightedMarker = null;
 
         function createTableMarkers() {
             const mapWrapper = document.getElementById('mapWrapper');
@@ -1053,49 +963,63 @@
             
             if (!mapWrapper || !mapImage) return;
             
-            // Remove existing markers if any
+            const imgRect = mapImage.getBoundingClientRect();
+            const displayedWidth = imgRect.width;
+            const displayedHeight = imgRect.height;
+            
+            if (originalImageWidth === 0) {
+                originalImageWidth = mapImage.naturalWidth;
+                originalImageHeight = mapImage.naturalHeight;
+            }
+            
+            if (originalImageWidth > 0) {
+                currentScaleX = displayedWidth / originalImageWidth;
+                currentScaleY = displayedHeight / originalImageHeight;
+            }
+            
             const existingMarkers = mapWrapper.querySelectorAll('.table-marker');
             existingMarkers.forEach(marker => marker.remove());
             
-            // Get the actual rendered size of the image
-            const imgRect = mapImage.getBoundingClientRect();
-            const naturalWidth = mapImage.naturalWidth;
-            const naturalHeight = mapImage.naturalHeight;
-            
-            if (naturalWidth === 0 || naturalHeight === 0) return;
-            
-            // Calculate scale factors
-            const scaleX = imgRect.width / naturalWidth;
-            const scaleY = imgRect.height / naturalHeight;
-            
-            // Create a marker for each table
             for (const [tableNum, coords] of Object.entries(tableCoordinates)) {
                 const marker = document.createElement('div');
                 marker.className = 'table-marker';
                 marker.setAttribute('data-table', tableNum);
-                
-                // Calculate scaled position
-                const left = coords.x * scaleX;
-                const top = coords.y * scaleY;
-                
-                marker.style.left = `${left}px`;
-                marker.style.top = `${top}px`;
-                
+                marker.style.left = `${coords.x * currentScaleX}px`;
+                marker.style.top = `${coords.y * currentScaleY}px`;
                 mapWrapper.appendChild(marker);
             }
             markersCreated = true;
         }
 
-        // ============================================
-        // HIGHLIGHT TABLE ON MAP
-        // ============================================
-        function highlightTableOnSeatingMap(tableNumber) {
-            // Remove previous highlight
-            if (currentHighlightedTable) {
-                currentHighlightedTable.classList.remove('highlight');
+        function updateMarkerPositions() {
+            const mapImage = document.getElementById('seatingMapImage');
+            if (!mapImage) return;
+            
+            const imgRect = mapImage.getBoundingClientRect();
+            const displayedWidth = imgRect.width;
+            const displayedHeight = imgRect.height;
+            
+            if (originalImageWidth > 0) {
+                currentScaleX = displayedWidth / originalImageWidth;
+                currentScaleY = displayedHeight / originalImageHeight;
             }
             
-            // Find the marker for this table
+            const markers = document.querySelectorAll('.table-marker');
+            markers.forEach(marker => {
+                const tableNum = marker.getAttribute('data-table');
+                const coords = tableCoordinates[tableNum];
+                if (coords) {
+                    marker.style.left = `${coords.x * currentScaleX}px`;
+                    marker.style.top = `${coords.y * currentScaleY}px`;
+                }
+            });
+        }
+
+        function highlightTableOnSeatingMap(tableNumber) {
+            if (currentHighlightedMarker) {
+                currentHighlightedMarker.classList.remove('highlight');
+            }
+            
             const markers = document.querySelectorAll('.table-marker');
             let targetMarker = null;
             
@@ -1108,229 +1032,102 @@
             
             if (targetMarker) {
                 targetMarker.classList.add('highlight');
-                currentHighlightedTable = targetMarker;
-                
-                // Scroll to make the highlighted table visible
+                currentHighlightedMarker = targetMarker;
                 setTimeout(() => {
                     targetMarker.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
                 }, 100);
             }
         }
-        
+
         function clearTableHighlight() {
-            if (currentHighlightedTable) {
-                currentHighlightedTable.classList.remove('highlight');
-                currentHighlightedTable = null;
+            if (currentHighlightedMarker) {
+                currentHighlightedMarker.classList.remove('highlight');
+                currentHighlightedMarker = null;
             }
         }
 
         // ============================================
-        // COMPLETE GUEST DATABASE - All guests included
+        // COMPLETE GUEST DATABASE
         // ============================================
         const guestDatabase = {
-    // === TABLE 1 - MAIN FAMILY TABLE ===
-"ehab el-masry": { displayName: "Ehab El-Masry", arabicName: "إيهاب المصري", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
-"radwa": { displayName: "Radwa", arabicName: "رضوى", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
-
-// === TABLE 2 - DR. AHMED EL-MASRY FAMILY ===
-"dr ahmed el-masry": { displayName: "Dr. Ahmed El-Masry", arabicName: "د. أحمد المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-"hoda kanswa": { displayName: "Hoda Kanswa", arabicName: "هدى قنصوة", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-"mohamed el-masry": { displayName: "Mohamed EL-Masry", arabicName: "محمد المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-"amir el-masry": { displayName: "Amir EL-Masry", arabicName: "أمير المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-"yasmin rahmy": { displayName: "Yasmin Rahmy", arabicName: "ياسمين رحمي", group: "Partner", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-"zeina": { displayName: "Zeina", arabicName: "زينة", group: "Partner", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
-
-// === TABLE 3 - MOSTAFA EL-FAYOUMY FAMILY (INCLUDING RAGHDA EL-KADY - TOTA) ===
-"eng mostafa el-fayoumy": { displayName: "Eng. Mostafa El-Fayoumy", arabicName: "م. مصطفى الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-"laila el-kady": { displayName: "Laila El-Kady", arabicName: "ليلى القاضي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-"menna el-fayoumy": { displayName: "Menna El-Fayoumy", arabicName: "منا الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-"mohamed el-fayoumy": { displayName: "Mohamed El-Fayoumy", arabicName: "محمد الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-"merna": { displayName: "Merna", arabicName: "ميرنا", group: "Partner", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-"raghda el-kady": { displayName: "Raghda El-Kady (ToTa)", arabicName: "رغدة القاضي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
-
-// === TABLE 4 - OMAR, ALAA, AHMED EL-BAZ GROUP ===
-"omar el-masry": { displayName: "Omar EL-Masry", arabicName: "عمر المصري", group: "Partner", table: "4", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
-"hanan": { displayName: "Hanan", arabicName: "حنان", group: "Partner", table: "4", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
-"علاء المصري": { displayName: "Alaa El-Masry", arabicName: "علاء المصري", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
-"برلنتي": { displayName: "Berlenti", arabicName: "برلنتي", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
-"ندى": { displayName: "Nada", arabicName: "ندى", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
-"نورهان": { displayName: "Nourhan", arabicName: "نورهان", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
-"أحمد الباز": { displayName: "Ahmed El-Baz", arabicName: "أحمد الباز", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
-"هبة الله": { displayName: "Hibatullah", arabicName: "هبة الله", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
-"مريم أحمد": { displayName: "Mariam Ahmed", arabicName: "مريم أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
-"ملك أحمد": { displayName: "Malik Ahmed", arabicName: "ملك أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
-"أحمد أحمد": { displayName: "Ahmed Ahmed", arabicName: "أحمد أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
-
-// === TABLE 5 - SANA NEGM & HAZEM EL-MASRY FAMILY ===
-"ثناء نجم": { displayName: "Sanaa Negm", arabicName: "ثناء نجم", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
-"نورا سامي المصري": { displayName: "Noura Samy El-Masry", arabicName: "نورا سامي المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
-"احمد محمد المصري": { displayName: "Ahmed Mohamed El-Masry", arabicName: "احمد محمد المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
-"جني المصري": { displayName: "Janna El-Masry", arabicName: "جني المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
-"لمي المصري": { displayName: "Lamma El-Masry", arabicName: "لمي المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
-"hazem el-masry": { displayName: "Hazem EL-Masry", arabicName: "حازم المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
-"yara elrashedi": { displayName: "Yara Elrashedi", arabicName: "يارا الراشدي", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
-"mona el-masry": { displayName: "Mona EL-Masry", arabicName: "منى المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
-"leen el-masry": { displayName: "Leen EL-Masry", arabicName: "لين المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
-"lojian el-masry": { displayName: "Lojian EL-Masry", arabicName: "لوجيان المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
-
-// === TABLE 6 - MOHAMED KAMAL FAMILY ===
-"محمد كمال": { displayName: "Mohamed Kamal", arabicName: "محمد كمال", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
-"منال محمد": { displayName: "Manal Mohamed", arabicName: "منال محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
-"هدي محمد": { displayName: "Huda Mohamed", arabicName: "هدي محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
-"هاجر محمد": { displayName: "Hager Mohamed", arabicName: "هاجر محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
-"هناء محمد": { displayName: "Hanaa Mohamed", arabicName: "هناء محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
-
-// === TABLE 7 - EMAN, MAGDA TAWFIK, SARA ABDELAZIZ ===
-"ايمان كمال": { displayName: "Eman Kamal", arabicName: "ايمان كمال", group: "Partner", table: "7", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
-"احمد الوسيمي": { displayName: "Ahmed El-Waseemy", arabicName: "احمد الوسيمي", group: "Partner", table: "7", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
-"ماجدة توفيق قنصوة": { displayName: "Magda Tawfik Konsowa", arabicName: "ماجدة توفيق قنصوة", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
-"ياسمين عبدالعزيزي وادي": { displayName: "Yasmine Abdelaziz Wadi", arabicName: "ياسمين عبدالعزيزي وادي", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
-"دينا عبدالعزيز وادي": { displayName: "Dina Abdelaziz Wadi", arabicName: "دينا عبدالعزيز وادي", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
-"غزل": { displayName: "Ghazl", arabicName: "غزل", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
-"سارة عبدالعزيز وادي": { displayName: "Sara Abdelaziz Wadi", arabicName: "سارة عبدالعزيز وادي", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
-"ثروت": { displayName: "Tharwat", arabicName: "ثروت", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
-"رحمه رابح": { displayName: "Rahma Rabeh", arabicName: "رحمه رابح", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
-
-// === TABLE 8 - RIZAN EL-MASRY FAMILY ===
-"rizan el-masry": { displayName: "Rizan EL-Masry", arabicName: "ريزان المصري", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
-"mohmed helmey": { displayName: "Mohmed Helmey", arabicName: "محمد حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
-"ahmed helmey": { displayName: "Ahmed Helmey", arabicName: "أحمد حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
-"amr helmey": { displayName: "Amr Helmey", arabicName: "عمرو حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
-"hla helmey": { displayName: "Hla Helmey", arabicName: "هلا حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
-
-// === TABLE 9 - HASSAN METWALLY + DALIA + LOMA FAMILY + BAYOUMY ===
-"hassan metwally": { displayName: "Hassan Metwally", arabicName: "حسن متولي", group: "Family", table: "9", groupName: "Hassan & Dalia Metwally", members: ["Hassan Metwally", "Dalia Metwally"] },
-"dalia metwally": { displayName: "Dalia Metwally", arabicName: "داليا متولي", group: "Partner", table: "9", groupName: "Hassan & Dalia Metwally", members: ["Hassan Metwally", "Dalia Metwally"] },
-"dr lamyia": { displayName: "Dr Lamyia", arabicName: "د. لمياء", group: "Family", table: "9", groupName: "Hassan Metwally Extended", members: ["Hassan Metwally", "Dr Lamyia", "Sherif Metwally", "Aya Metwally", "Ahmed Metwally"] },
-"sherif metwally": { displayName: "Sherif Metwally", arabicName: "شريف متولي", group: "Family", table: "9", groupName: "Hassan Metwally Extended", members: ["Hassan Metwally", "Dr Lamyia", "Sherif Metwally", "Aya Metwally", "Ahmed Metwally"] },
-"aya metwally": { displayName: "Aya Metwally", arabicName: "آية متولي", group: "Family", table: "9", groupName: "Hassan Metwally Extended", members: ["Hassan Metwally", "Dr Lamyia", "Sherif Metwally", "Aya Metwally", "Ahmed Metwally"] },
-"ahmed metwally": { displayName: "Ahmed Metwally", arabicName: "أحمد متولي", group: "Family", table: "9", groupName: "Hassan Metwally Extended", members: ["Hassan Metwally", "Dr Lamyia", "Sherif Metwally", "Aya Metwally", "Ahmed Metwally"] },
-"loma islam": { displayName: "Loma (Islam)", arabicName: "لومة إسلام", group: "Family", table: "9", groupName: "Loma Family", members: ["Loma (Islam)", "Noah", "Lara", "Esther"] },
-"noah": { displayName: "Noah", arabicName: "نوح", group: "Family", table: "9", groupName: "Loma Family", members: ["Loma (Islam)", "Noah", "Lara", "Esther"] },
-"lara": { displayName: "Lara", arabicName: "لارا", group: "Family", table: "9", groupName: "Loma Family", members: ["Loma (Islam)", "Noah", "Lara", "Esther"] },
-"esther": { displayName: "Esther", arabicName: "إستر", group: "Family", table: "9", groupName: "Loma Family", members: ["Loma (Islam)", "Noah", "Lara", "Esther"] },
-"omar bayoumy": { displayName: "Omar Bayoumy", arabicName: "عمر بيومي", group: "Family", table: "9", groupName: "Bayoumy Siblings", members: ["Omar Bayoumy", "Sister Bayoumy"] },
-"sister bayoumy": { displayName: "Sister Bayoumy", arabicName: "أخت بيومي", group: "Family", table: "9", groupName: "Bayoumy Siblings", members: ["Omar Bayoumy", "Sister Bayoumy"] },
-
-// === TABLE 10 - RAGHDA ELMOHANDES & MOATAZ ===
-"raghda elmohandes": { displayName: "Raghda Elmohandes", arabicName: "رغدة المهندس", group: "Partner", table: "10", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
-"معتز المهندس": { displayName: "Moataz Elmohandes", arabicName: "معتز المهندس", group: "Partner", table: "10", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
-
-// === TABLE 11 - FRIENDS GROUP ===
-"mada khaled": { displayName: "Mada Khaled", arabicName: "مادة خالد", group: "Friends", table: "11", groupName: "Mada & Ingy (Table 11)", members: ["Mada Khaled", "Ingy Fahmy"] },
-"ingy fahmy": { displayName: "Ingy Fahmy", arabicName: "إنجي فهمي", group: "Friends", table: "11", groupName: "Mada & Ingy (Table 11)", members: ["Mada Khaled", "Ingy Fahmy"] },
-"mohamed adeeb": { displayName: "Mohamed Adeeb", arabicName: "محمد أديب", group: "Friends", table: "11", groupName: "Table 11 - Friends", members: ["Mohamed Adeeb"] },
-"sarah magdy": { displayName: "Sarah Magdy", arabicName: "سارة مجدي", group: "Friends", table: "11", groupName: "Table 11 - Friends", members: ["Sarah Magdy"] },
-"lisa shawky": { displayName: "Lisa Shawky", arabicName: "ليسا شوقي", group: "Friends", table: "11", groupName: "Table 11 - Friends", members: ["Lisa Shawky"] },
-"hussein youssef": { displayName: "Hussein Youssef", arabicName: "حسين يوسف", group: "Friends", table: "11", groupName: "Table 11 - Friends", members: ["Hussein Youssef"] },
-"ahmed wahba": { displayName: "Ahmed Wahba", arabicName: "أحمد وهبة", group: "Friends", table: "11", groupName: "Table 11 - Friends", members: ["Ahmed Wahba"] },
-
-// === TABLE 12 - MOHAMED EL-NAGDY & WAEL AMIN ===
-"محمد النجدي": { displayName: "Mohamed El-Nagdy", arabicName: "محمد النجدي", group: "Partner", table: "12", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
-"هند الصنعاني": { displayName: "Hend El-Sanaani", arabicName: "هند الصنعاني", group: "Partner", table: "12", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
-"اللواء وائل أمين": { displayName: "Major General Wael Amin", arabicName: "اللواء وائل أمين", group: "Family", table: "12", groupName: "Wael Amin & Plus One", members: ["اللواء وائل أمين", "Plus one"] },
-
-// === TABLE 13 - SAMAR, RANA, OMNIA GROUP ===
-"samar hamed": { displayName: "Samar Hamed", arabicName: "سمر حامد", group: "Friends", table: "13", groupName: "Samar Hamed", members: ["Samar Hamed"] },
-"saeed": { displayName: "Saeed", arabicName: "سعيد", group: "Family", table: "13", groupName: "Rana Swelam Family", members: ["Rana Swelam", "Saeed", "Farida"] },
-"rana swelam": { displayName: "Rana Swelam", arabicName: "رنا سويلم", group: "Family", table: "13", groupName: "Rana Swelam Family", members: ["Rana Swelam", "Saeed", "Farida"] },
-"farida": { displayName: "Farida", arabicName: "فريدة", group: "Family", table: "13", groupName: "Rana Swelam Family", members: ["Rana Swelam", "Saeed", "Farida"] },
-"omnia karam": { displayName: "Omnia Karam", arabicName: "أمنية كرم", group: "Family", table: "13", groupName: "Omnia Karam Family", members: ["Omnia Karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
-"tamer mostafa": { displayName: "Tamer Mostafa", arabicName: "تامر مصطفى", group: "Family", table: "13", groupName: "Omnia Karam Family", members: ["Omnia Karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
-"leila tamer": { displayName: "Leila Tamer", arabicName: "ليلى تامر", group: "Family", table: "13", groupName: "Omnia Karam Family", members: ["Omnia Karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
-"younis tamer": { displayName: "Younis Tamer", arabicName: "يونس تامر", group: "Family", table: "13", groupName: "Omnia Karam Family", members: ["Omnia Karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
-
-// === TABLE 14 - NOURA, SHERINE, FOUQIA, AMIRA GROUP ===
-"نورا محمد الفيومي": { displayName: "Noura Mohamed El-Fayoumy", arabicName: "نورا محمد الفيومي", group: "Family", table: "14", groupName: "Noura Mohamed El-Fayoumy Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-"ايهاب": { displayName: "Ehab", arabicName: "ايهاب", group: "Family", table: "14", groupName: "Noura Mohamed El-Fayoumy Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-"جني": { displayName: "Janna Ehab", arabicName: "جني", group: "Family", table: "14", groupName: "Noura Mohamed El-Fayoumy Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-"محمد": { displayName: "Mohamed Ehab", arabicName: "محمد", group: "Family", table: "14", groupName: "Noura Mohamed El-Fayoumy Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-"ادم": { displayName: "Adam", arabicName: "ادم", group: "Family", table: "14", groupName: "Noura Mohamed El-Fayoumy Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
-"فوقيه": { displayName: "Fouqia", arabicName: "فوقيه", group: "Family", table: "14", groupName: "Fouqia & Mostafa", members: ["فوقيه", "مصطفي"] },
-"مصطفي": { displayName: "Mostafa", arabicName: "مصطفي", group: "Family", table: "14", groupName: "Fouqia & Mostafa", members: ["فوقيه", "مصطفي"] },
-"rasha saad": { displayName: "Rasha Saad", arabicName: "رشا سعد", group: "Friends", table: "14", groupName: "Amira & Rasha", members: ["Amira Hossam Eldin", "Rasha Saad"] },
-"شيرين الفيومي": { displayName: "Sherine El-Fayoumy", arabicName: "شيرين الفيومي", group: "Family", table: "14", groupName: "Sherine El-Fayoumy Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
-"عمرو": { displayName: "Amr", arabicName: "عمرو", group: "Family", table: "14", groupName: "Sherine El-Fayoumy Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
-"amira hossam eldin": { displayName: "Amira Hossam Eldin", arabicName: "أميرة حسام الدين", group: "Friends", table: "14", groupName: "Amira & Rasha", members: ["Amira Hossam Eldin", "Rasha Saad"] },
-
-// === TABLE 15 - YOUSSEF, YASSIN, ASIYA, KARMA, ADAM, MOHAMED EHAB ===
-"يوسف": { displayName: "Youssef Amr", arabicName: "يوسف", group: "Family", table: "15", groupName: "Sherine El-Fayoumy Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
-"ياسين": { displayName: "Yassin Amr", arabicName: "ياسين", group: "Family", table: "15", groupName: "Sherine El-Fayoumy Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
-"اسيا": { displayName: "Asiya Amr", arabicName: "اسيا", group: "Family", table: "15", groupName: "Sherine El-Fayoumy Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
-"karma": { displayName: "Karma", arabicName: "كارما", group: "Family", table: "15", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
-
-// === TABLE 16 - AMR ELKADI GROUP ===
-"amr el kadi": { displayName: "Amr El Kadi", arabicName: "عمرو القاضي", group: "Family", table: "16", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
-"shaymaa abdalla": { displayName: "Shaymaa Abdalla", arabicName: "شيماء عبدالله", group: "Family", table: "16", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
-"eman gabr": { displayName: "Eman Gabr", arabicName: "إيمان جبر", group: "Family", table: "16", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
-"celia": { displayName: "Celia", arabicName: "سيلا", group: "Family", table: "16", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
-"maysa yehia": { displayName: "Maysa Yehia", arabicName: "ميسى يحيى", group: "Family", table: "16", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-
-// === TABLE 17 - ZEINAB, MOHAMMED AMIN, AHMED SAID, ETC ===
-"زينب الفيومى": { displayName: "Zeinab El-Fayoumy", arabicName: "زينب الفيومى", group: "Family", table: "17", groupName: "Zeinab El-Fayoumy", members: ["زينب الفيومى"] },
-"mohammed amin assaad": { displayName: "Mohammed Amin Assaad", arabicName: "محمد أمين أسعد", group: "Family", table: "17", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-"menna amin": { displayName: "Menna Amin", arabicName: "منا أمين", group: "Family", table: "17", groupName: "Mohammed Amin Assaad Family", members: ["Mohammed Amin Assaad", "Maysa Yehia", "Menna Amin"] },
-"ahmed said": { displayName: "Ahmed Said", arabicName: "أحمد سعيد", group: "Family", table: "17", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
-"ahmed abo bakr": { displayName: "Ahmed Abo Bakr", arabicName: "أحمد أبو بكر", group: "Family", table: "17", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed Abo Bakr", "Khadija Ahmed"] },
-"shaza saeed": { displayName: "Shaza Saeed", arabicName: "شذى سعيد", group: "Family", table: "17", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed Abo Bakr", "Khadija Ahmed"] },
-
-// === TABLE 18 - ASHRAF FAMILY, KAMAL FAMILY, MARIAM, KENZI, ETC ===
-"hamza ashraf": { displayName: "Hamza Ashraf", arabicName: "حمزة أشرف", group: "Family", table: "18", groupName: "Ashraf Family", members: ["Hamza Ashraf", "Laila Ashraf"] },
-"laila ashraf": { displayName: "Laila Ashraf", arabicName: "ليلى أشرف", group: "Family", table: "18", groupName: "Ashraf Family", members: ["Hamza Ashraf", "Laila Ashraf"] },
-"abdullah kamal": { displayName: "Abdullah Kamal", arabicName: "عبد الله كمال", group: "Family", table: "18", groupName: "Kamal Family (Table 18)", members: ["Abdullah Kamal", "Youssef Kamal"] },
-"youssef kamal": { displayName: "Youssef Kamal", arabicName: "يوسف كمال", group: "Family", table: "18", groupName: "Kamal Family (Table 18)", members: ["Abdullah Kamal", "Youssef Kamal"] },
-"sue": { displayName: "Sue", arabicName: "سو", group: "Family", table: "18", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
-"mariam": { displayName: "Mariam", arabicName: "مريم", group: "Family", table: "18", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
-"kenzi": { displayName: "Kenzi", arabicName: "كنزي", group: "Family", table: "18", groupName: "Ahmed Said Family", members: ["Ahmed Said", "Sue", "Mariam", "Kenzi"] },
-"khadija ahmed": { displayName: "Khadija Ahmed", arabicName: "خديجة أحمد", group: "Family", table: "18", groupName: "Shaza Saeed Family", members: ["Shaza Saeed", "Ahmed Abo Bakr", "Khadija Ahmed"] },
-"sara kamal": { displayName: "Sara Kamal", arabicName: "سارة كمال", group: "Family", table: "18", groupName: "Sara Kamal Family", members: ["Sara Kamal", "Plus One", "Kid 1", "Kid 2"] },
-
-// === TABLE 19 - YOUSSEF KAMAL, MONA NOFAL, NESRIEN, ETC ===
-"mona nofal": { displayName: "Mona Nofal", arabicName: "منى نوفل", group: "Partner", table: "19", groupName: "Mona Nofal & Mostafa Nazir", members: ["Mona Nofal", "Mostafa Nazir"] },
-"mostafa nazir": { displayName: "Mostafa Nazir", arabicName: "مصطفى نظير", group: "Partner", table: "19", groupName: "Mona Nofal & Mostafa Nazir", members: ["Mona Nofal", "Mostafa Nazir"] },
-"alaa nofal": { displayName: "Alaa Nofal", arabicName: "علاء نوفل", group: "Family", table: "19", groupName: "Alaa & Ibrahim", members: ["Alaa Nofal", "Ibrahim Nofal"] },
-"ibrahim nofal": { displayName: "Ibrahim Nofal", arabicName: "إبراهيم نوفل", group: "Family", table: "19", groupName: "Alaa & Ibrahim", members: ["Alaa Nofal", "Ibrahim Nofal"] },
-"nesrien almokadem": { displayName: "Nesrien Almokadem", arabicName: "نسرين المقدم", group: "Family", table: "19", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
-"maram": { displayName: "Maram", arabicName: "مرام", group: "Family", table: "19", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
-"ucif": { displayName: "Ucif", arabicName: "أوسيف", group: "Family", table: "19", groupName: "Nesrien Almokadem Family", members: ["Nesrien Almokadem", "Maram", "Ucif"] },
-
-// === TABLE 20 - MARWAN, NADIA, MAATHER, RHEYAAN ===
-"marwan kabbani": { displayName: "Marwan Kabbani", arabicName: "مروان قباني", group: "Partner", table: "20", groupName: "Nadia Mohasseb & Marwan Kabbani", members: ["Nadia Mohasseb", "Marwan Kabbani"] },
-"nadia mohasseb": { displayName: "Nadia Mohasseb", arabicName: "نادية محسب", group: "Partner", table: "20", groupName: "Nadia Mohasseb & Marwan Kabbani", members: ["Nadia Mohasseb", "Marwan Kabbani"] },
-"maather gomaa": { displayName: "Maather Gomaa", arabicName: "مأثر جمعة", group: "Family", table: "20", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
-"amena": { displayName: "Amena", arabicName: "أمينة", group: "Family", table: "20", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
-"khadija": { displayName: "Khadija", arabicName: "خديجة", group: "Family", table: "20", groupName: "Maather Gomaa Family", members: ["Maather Gomaa", "Khadija", "Amena"] },
-"rheyaan doshi": { displayName: "Rheyaan Doshi", arabicName: "ريان دوشي", group: "Family", table: "20", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
-
-// === TABLE 21 - BELLA, MARIA, DEVIKA GROUP ===
-"bella micheletto lima": { displayName: "Bella Micheletto Lima", arabicName: "بيلا ميكيليتو ليما", group: "Partner", table: "21", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
-"ashkan ashki": { displayName: "Ashkan Ashki", arabicName: "أشكان أشكي", group: "Partner", table: "21", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
-"maria andrea diaz usme": { displayName: "Maria Andrea Diaz Usme", arabicName: "ماريا أندريا دياز أوسمي", group: "Partner", table: "21", groupName: "Maria Andrea & Daniel", members: ["Maria Andrea Diaz Usme", "Daniel Mendoza"] },
-"daniel mendoza": { displayName: "Daniel Mendoza", arabicName: "دانيال ميندوزا", group: "Partner", table: "21", groupName: "Maria Andrea & Daniel", members: ["Maria Andrea Diaz Usme", "Daniel Mendoza"] },
-"devika chowgule": { displayName: "Devika Chowgule", arabicName: "ديفيكا تشوغول", group: "Family", table: "21", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
-"viral doshi": { displayName: "Viral Doshi", arabicName: "فيرال دوشي", group: "Family", table: "21", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
-"saira doshi": { displayName: "Saira Doshi", arabicName: "سايرا دوشي", group: "Family", table: "21", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
-"ronak parikh": { displayName: "Ronak Parikh", arabicName: "روناك باريك", group: "Friends", table: "21", groupName: "Ronak Parikh", members: ["Ronak Parikh"] },
-
-// === TABLE 22 - CHRISSA, ELENA, MAXINE, CONNOR, KARIM ===
-"chrissa stamatopoulou": { displayName: "Chrissa Stamatopoulou", arabicName: "كريسا ستاماتوبولو", group: "Partner", table: "22", groupName: "Chrissa & Andreas", members: ["Chrissa Stamatopoulou", "Andreas Lostrom"] },
-"andreas lostrom": { displayName: "Andreas Lostrom", arabicName: "أندرياس لوستروم", group: "Partner", table: "22", groupName: "Chrissa & Andreas", members: ["Chrissa Stamatopoulou", "Andreas Lostrom"] },
-"elena jimenez rodriguez": { displayName: "Elena Jimenez Rodriguez", arabicName: "إلينا خيمينيز رودريجيز", group: "Friend", table: "22", groupName: "Elena & Maxine", members: ["Elena Jimenez Rodriguez", "Maxine Davis"] },
-"maxine davis": { displayName: "Maxine Davis", arabicName: "ماكسين ديفيس", group: "Friend", table: "22", groupName: "Elena & Maxine", members: ["Elena Jimenez Rodriguez", "Maxine Davis"] },
-"connor barron": { displayName: "Connor Barron", arabicName: "كونور بارون", group: "Partner", table: "22", groupName: "Elena & Connor", members: ["Elena Granados Mansilla", "Connor Barron"] },
-"elena granados mansilla": { displayName: "Elena Granados Mansilla", arabicName: "إلينا جرانادوس مانسيلا", group: "Partner", table: "22", groupName: "Elena & Connor", members: ["Elena Granados Mansilla", "Connor Barron"] },
-"karim mohamed": { displayName: "Karim Mohamed", arabicName: "كريم محمد", group: "Friends", table: "22", groupName: "Karim Mohamed", members: ["Karim Mohamed"] },
-
-// === TABLE 23 - EMMA, RAQUEL, JOSE, LORENZO, DIANA, RAFAEL ===
-"emma ramon baumela": { displayName: "Emma Ramon Baumela", arabicName: "إيما رامون بوميلا", group: "Family", table: "23", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
-"raquel baumela": { displayName: "Raquel Baumela", arabicName: "راكيل بوميلا", group: "Family", table: "23", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
-"jose f ramon prados": { displayName: "Jose F Ramon Prados", arabicName: "خوسيه رامون برادوس", group: "Family", table: "23", groupName: "Jose F Ramon Prados Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
-"lorenzo simón santillana": { displayName: "Lorenzo Simón Santillana", arabicName: "لورينزو سيمون سانتيلانا", group: "Family", table: "23", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
-"mama": { displayName: "MaMa", arabicName: "ماما", group: "Family", table: "23", groupName: "Lorenzo & MaMa", members: ["Lorenzo Simón Santillana", "MaMa"] },
-"diana medina": { displayName: "Diana Medina", arabicName: "ديانا مدينا", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
-"rafael": { displayName: "Rafael", arabicName: "رافاييل", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
-"regina": { displayName: "Regina", arabicName: "ريجينا", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] }
-};
+            "ehab el-masry": { displayName: "Ehab El-Masry", arabicName: "إيهاب المصري", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
+            "radwa": { displayName: "Radwa", arabicName: "رضوى", group: "Soulmate", table: "1", groupName: "Ehab & Radwa", members: ["Ehab El-Masry", "Radwa"] },
+            "dr ahmed el-masry": { displayName: "Dr. Ahmed El-Masry", arabicName: "د. أحمد المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "hoda kanswa": { displayName: "Hoda Kanswa", arabicName: "هدى قنصوة", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "mohamed el-masry": { displayName: "Mohamed EL-Masry", arabicName: "محمد المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "amir el-masry": { displayName: "Amir EL-Masry", arabicName: "أمير المصري", group: "Family", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "yasmin rahmy": { displayName: "Yasmin Rahmy", arabicName: "ياسمين رحمي", group: "Partner", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "zeina": { displayName: "Zeina", arabicName: "زينة", group: "Partner", table: "2", groupName: "Ahmed El-Masry Family", members: ["Dr. Ahmed El-Masry", "Hoda Kanswa", "Mohamed EL-Masry", "Amir EL-Masry", "Yasmin Rahmy", "Zeina"] },
+            "eng mostafa el-fayoumy": { displayName: "Eng. Mostafa El-Fayoumy", arabicName: "م. مصطفى الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "laila el-kady": { displayName: "Laila El-Kady", arabicName: "ليلى القاضي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "menna el-fayoumy": { displayName: "Menna El-Fayoumy", arabicName: "منا الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "mohamed el-fayoumy": { displayName: "Mohamed El-Fayoumy", arabicName: "محمد الفيومي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "merna": { displayName: "Merna", arabicName: "ميرنا", group: "Partner", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "raghda el-kady": { displayName: "Raghda El-Kady", arabicName: "رغدة القاضي", group: "Family", table: "3", groupName: "Mostafa El-Fayoumy Family", members: ["Eng. Mostafa El-Fayoumy", "Laila El-Kady", "Menna El-Fayoumy", "Mohamed El-Fayoumy", "Merna", "Raghda El-Kady"] },
+            "omar el-masry": { displayName: "Omar EL-Masry", arabicName: "عمر المصري", group: "Partner", table: "4", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
+            "hanan": { displayName: "Hanan", arabicName: "حنان", group: "Partner", table: "4", groupName: "Omar & Hanan", members: ["Omar EL-Masry", "Hanan"] },
+            "علاء المصري": { displayName: "Alaa El-Masry", arabicName: "علاء المصري", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "برلنتي": { displayName: "Berlenti", arabicName: "برلنتي", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "ندى": { displayName: "Nada", arabicName: "ندى", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "نورهان": { displayName: "Nourhan", arabicName: "نورهان", group: "Family", table: "4", groupName: "Alaa El-Masry Family", members: ["علاء المصري", "برلنتي", "ندى", "نورهان"] },
+            "أحمد الباز": { displayName: "Ahmed El-Baz", arabicName: "أحمد الباز", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "هبة الله": { displayName: "Hibatullah", arabicName: "هبة الله", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "مريم أحمد": { displayName: "Mariam Ahmed", arabicName: "مريم أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "ملك أحمد": { displayName: "Malik Ahmed", arabicName: "ملك أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "أحمد أحمد": { displayName: "Ahmed Ahmed", arabicName: "أحمد أحمد", group: "Family", table: "4", groupName: "Ahmed El-Baz Family", members: ["أحمد الباز", "هبة الله", "مريم أحمد", "ملك أحمد", "أحمد أحمد"] },
+            "ثناء نجم": { displayName: "Sanaa Negm", arabicName: "ثناء نجم", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "نورا سامي المصري": { displayName: "Noura Samy El-Masry", arabicName: "نورا سامي المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "احمد محمد المصري": { displayName: "Ahmed Mohamed El-Masry", arabicName: "احمد محمد المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "جني المصري": { displayName: "Janna El-Masry", arabicName: "جني المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "لمي المصري": { displayName: "Lamma El-Masry", arabicName: "لمي المصري", group: "Family", table: "5", groupName: "Sanaa Negm Family", members: ["ثناء نجم", "نورا سامي المصري", "احمد محمد المصري", "جني المصري", "لمي المصري"] },
+            "hazem el-masry": { displayName: "Hazem EL-Masry", arabicName: "حازم المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "yara elrashedi": { displayName: "Yara Elrashedi", arabicName: "يارا الراشدي", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "mona el-masry": { displayName: "Mona EL-Masry", arabicName: "منى المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "leen el-masry": { displayName: "Leen EL-Masry", arabicName: "لين المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "lojian el-masry": { displayName: "Lojian EL-Masry", arabicName: "لوجيان المصري", group: "Family", table: "5", groupName: "Hazem EL-Masry Family", members: ["Hazem EL-Masry", "Yara Elrashedi", "Mona EL-Masry", "Leen EL-Masry", "Lojian EL-Masry"] },
+            "محمد كمال": { displayName: "Mohamed Kamal", arabicName: "محمد كمال", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "منال محمد": { displayName: "Manal Mohamed", arabicName: "منال محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هدي محمد": { displayName: "Huda Mohamed", arabicName: "هدي محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هاجر محمد": { displayName: "Hager Mohamed", arabicName: "هاجر محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "هناء محمد": { displayName: "Hanaa Mohamed", arabicName: "هناء محمد", group: "Family", table: "6", groupName: "Mohamed Kamal Family", members: ["محمد كمال", "منال محمد", "هدي محمد", "هاجر محمد", "هناء محمد"] },
+            "ايمان كمال": { displayName: "Eman Kamal", arabicName: "ايمان كمال", group: "Partner", table: "7", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
+            "احمد الوسيمي": { displayName: "Ahmed El-Waseemy", arabicName: "احمد الوسيمي", group: "Partner", table: "7", groupName: "Eman & Ahmed", members: ["ايمان كمال", "احمد الوسيمي"] },
+            "ماجدة توفيق قنصوة": { displayName: "Magda Tawfik Konsowa", arabicName: "ماجدة توفيق قنصوة", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "ياسمين عبدالعزيزي وادي": { displayName: "Yasmine Abdelaziz Wadi", arabicName: "ياسمين عبدالعزيزي وادي", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "دينا عبدالعزيز وادي": { displayName: "Dina Abdelaziz Wadi", arabicName: "دينا عبدالعزيز وادي", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "غزل": { displayName: "Ghazl", arabicName: "غزل", group: "Family", table: "7", groupName: "Magda Tawfik Family", members: ["ماجدة توفيق قنصوة", "ياسمين عبدالعزيزي وادي", "دينا عبدالعزيز وادي", "غزل"] },
+            "سارة عبدالعزيز وادي": { displayName: "Sara Abdelaziz Wadi", arabicName: "سارة عبدالعزيز وادي", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
+            "ثروت": { displayName: "Tharwat", arabicName: "ثروت", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
+            "رحمه رابح": { displayName: "Rahma Rabeh", arabicName: "رحمه رابح", group: "Family", table: "7", groupName: "Sara Abdelaziz Family", members: ["سارة عبدالعزيز وادي", "ثروت", "رحمه رابح"] },
+            "rizan el-masry": { displayName: "Rizan EL-Masry", arabicName: "ريزان المصري", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "mohmed helmey": { displayName: "Mohmed Helmey", arabicName: "محمد حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "ahmed helmey": { displayName: "Ahmed Helmey", arabicName: "أحمد حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "amr helmey": { displayName: "Amr Helmey", arabicName: "عمرو حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "hla helmey": { displayName: "Hla Helmey", arabicName: "هلا حلمي", group: "Family", table: "8", groupName: "Rizan EL-Masry Family", members: ["Rizan EL-Masry", "Mohmed Helmey", "Ahmed Helmey", "Amr Helmey", "Hla Helmey"] },
+            "hassan metwally": { displayName: "Hassan Metwally", arabicName: "حسن متولي", group: "Family", table: "9", groupName: "Hassan & Dalia Metwally", members: ["Hassan Metwally", "Dalia Metwally"] },
+            "dalia metwally": { displayName: "Dalia Metwally", arabicName: "داليا متولي", group: "Partner", table: "9", groupName: "Hassan & Dalia Metwally", members: ["Hassan Metwally", "Dalia Metwally"] },
+            "loma islam": { displayName: "Loma (Islam)", arabicName: "لومة إسلام", group: "Family", table: "9", groupName: "Loma Family", members: ["Loma (Islam)", "Noah", "Lara", "Esther"] },
+            "raghda elmohandes": { displayName: "Raghda Elmohandes", arabicName: "رغدة المهندس", group: "Partner", table: "10", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
+            "معتز المهندس": { displayName: "Moataz Elmohandes", arabicName: "معتز المهندس", group: "Partner", table: "10", groupName: "Raghda & Moataz", members: ["Raghda Elmohandes", "معتز المهندس"] },
+            "mada khaled": { displayName: "Mada Khaled", arabicName: "مادة خالد", group: "Friends", table: "11", groupName: "Mada & Ingy", members: ["Mada Khaled", "Ingy Fahmy"] },
+            "ingy fahmy": { displayName: "Ingy Fahmy", arabicName: "إنجي فهمي", group: "Friends", table: "11", groupName: "Mada & Ingy", members: ["Mada Khaled", "Ingy Fahmy"] },
+            "mohamed adeeb": { displayName: "Mohamed Adeeb", arabicName: "محمد أديب", group: "Friends", table: "11", groupName: "Friends Table 11", members: ["Mohamed Adeeb"] },
+            "محمد النجدي": { displayName: "Mohamed El-Nagdy", arabicName: "محمد النجدي", group: "Partner", table: "12", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
+            "هند الصنعاني": { displayName: "Hend El-Sanaani", arabicName: "هند الصنعاني", group: "Partner", table: "12", groupName: "Mohamed & Hend", members: ["محمد النجدي", "هند الصنعاني"] },
+            "اللواء وائل أمين": { displayName: "Major General Wael Amin", arabicName: "اللواء وائل أمين", group: "Family", table: "12", groupName: "Wael Amin", members: ["اللواء وائل أمين"] },
+            "samar hamed": { displayName: "Samar Hamed", arabicName: "سمر حامد", group: "Friends", table: "13", groupName: "Samar Hamed", members: ["Samar Hamed"] },
+            "omnia karam": { displayName: "Omnia Karam", arabicName: "أمنية كرم", group: "Family", table: "13", groupName: "Omnia Karam Family", members: ["Omnia Karam", "Tamer Mostafa", "Leila Tamer", "Younis Tamer"] },
+            "نورا محمد الفيومي": { displayName: "Noura Mohamed El-Fayoumy", arabicName: "نورا محمد الفيومي", group: "Family", table: "14", groupName: "Noura Family", members: ["نورا محمد الفيومي", "ايهاب", "جني", "محمد", "ادم"] },
+            "amira hossam eldin": { displayName: "Amira Hossam Eldin", arabicName: "أميرة حسام الدين", group: "Friends", table: "14", groupName: "Amira & Rasha", members: ["Amira Hossam Eldin", "Rasha Saad"] },
+            "rasha saad": { displayName: "Rasha Saad", arabicName: "رشا سعد", group: "Friends", table: "14", groupName: "Amira & Rasha", members: ["Amira Hossam Eldin", "Rasha Saad"] },
+            "شيرين الفيومي": { displayName: "Sherine El-Fayoumy", arabicName: "شيرين الفيومي", group: "Family", table: "14", groupName: "Sherine Family", members: ["شيرين الفيومي", "عمرو", "يوسف", "ياسين", "اسيا"] },
+            "amr el kadi": { displayName: "Amr El Kadi", arabicName: "عمرو القاضي", group: "Family", table: "16", groupName: "Amr El Kadi Family", members: ["Amr El Kadi", "Shaymaa Abdalla", "Eman Gabr", "Karma", "Celia"] },
+            "bella micheletto lima": { displayName: "Bella Micheletto Lima", arabicName: "بيلا ميكيليتو ليما", group: "Partner", table: "21", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
+            "ashkan ashki": { displayName: "Ashkan Ashki", arabicName: "أشكان أشكي", group: "Partner", table: "21", groupName: "Bella & Ashkan", members: ["Bella Micheletto Lima", "Ashkan Ashki"] },
+            "devika chowgule": { displayName: "Devika Chowgule", arabicName: "ديفيكا تشوغول", group: "Family", table: "21", groupName: "Devika Chowgule Family", members: ["Devika Chowgule", "Viral Doshi", "Rheyaan Doshi", "Saira Doshi"] },
+            "jose f ramon prados": { displayName: "Jose F Ramon Prados", arabicName: "خوسيه رامون برادوس", group: "Family", table: "23", groupName: "Jose Family", members: ["Jose F Ramon Prados", "Raquel Baumela", "Emma Ramon Baumela"] },
+            "diana medina": { displayName: "Diana Medina", arabicName: "ديانا مدينا", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] }
+        };
 
         // Create searchable list for autocomplete
         const guestNamesList = Object.keys(guestDatabase).map(key => ({
@@ -1350,7 +1147,6 @@
                 return;
             }
             
-            // Get ALL matches that contain the filter text
             const matches = guestNamesList.filter(item => 
                 item.key.toLowerCase().includes(fl) || 
                 item.displayName.toLowerCase().includes(fl) ||
@@ -1551,7 +1347,7 @@
             findGuestTable();
         }
 
-        // ===== FIND GUEST FUNCTION (with map highlight) =====
+        // ===== FIND GUEST FUNCTION =====
         function findGuestTable() {
             const input = searchInput;
             const name = input.value.trim().toLowerCase();
@@ -1593,8 +1389,10 @@
                     noteEl.textContent = `✨ You're at Table ${guest.table} with your ${relation} ✨`;
                 }
                 
-                // HIGHLIGHT THE TABLE ON THE SEATING MAP
-                highlightTableOnSeatingMap(guest.table);
+                // Highlight the table on the seating map
+                if (document.getElementById('seating-pane').classList.contains('active')) {
+                    highlightTableOnSeatingMap(guest.table);
+                }
                 
             } else {
                 const displayName = input.value.trim() || (currentLang === 'ar' ? 'ضيفنا العزيز' : 'Guest');
@@ -1603,8 +1401,6 @@
                 tableEl.textContent = '?';
                 descEl.textContent = currentLang === 'ar' ? 'طاولة العائلة' : 'Family Table';
                 noteEl.textContent = t.notFoundMessage;
-                
-                // Clear highlight if guest not found
                 clearTableHighlight();
             }
         }
@@ -1615,6 +1411,13 @@
             document.getElementById(tabName + '-pane').classList.add('active');
             document.querySelectorAll('.info-tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
+            
+            // Refresh marker positions when seating map becomes visible
+            if (tabName === 'seating') {
+                setTimeout(() => {
+                    updateMarkerPositions();
+                }, 100);
+            }
         }
 
         // ===== PHOTO UPLOAD SETUP =====
@@ -1664,15 +1467,21 @@
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Initialize seating map after image loads
+        // Initialize
         window.addEventListener('load', function() {
             const mapImage = document.getElementById('seatingMapImage');
             if (mapImage) {
-                if (mapImage.complete) {
+                if (mapImage.complete && mapImage.naturalWidth > 0) {
                     createTableMarkers();
                 } else {
                     mapImage.addEventListener('load', createTableMarkers);
                 }
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (markersCreated) {
+                updateMarkerPositions();
             }
         });
 
