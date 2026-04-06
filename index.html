@@ -817,7 +817,6 @@
                 <button class="info-tab-btn active" onclick="showInfoTab('program')" id="tabProgram">📋 Program</button>
                 <button class="info-tab-btn" onclick="showInfoTab('menu')" id="tabMenu">🍽️ Menu</button>
                 <button class="info-tab-btn" onclick="showInfoTab('songs')" id="tabSongs">🎶 Song list</button>
-                <button class="info-tab-btn" onclick="showInfoTab('map')" id="tabMap">🗺️ Table map</button>
                 <button class="info-tab-btn" onclick="showInfoTab('seating')" id="tabSeating">🪑 Seating Map</button>
             </div>
 
@@ -843,14 +842,6 @@
                     <div class="song-item">🎵 DJ ALY KHALIFA- Guest Songs + Beats</div>
                 </div>
 
-                <div id="map-pane" class="info-pane">
-                    <h2 id="mapTitle">Table Layout</h2>
-                    <div class="table-map">
-                        <img src="images/table-map.jpg" alt="Table layout" class="map-image" onclick="window.open(this.src)">
-                        <p style="margin-top: 15px; color: #4a6a4a;" id="mapHint">Click map to enlarge</p>
-                    </div>
-                </div>
-
                 <!-- SEATING MAP PANE -->
                 <div id="seating-pane" class="info-pane">
                     <h2 id="seatingTitle">Interactive Seating Map</h2>
@@ -858,7 +849,7 @@
                     
                     <div class="seating-map-container">
                         <div class="map-wrapper" id="mapWrapper">
-                            <img src="Wedding seating plan.png" alt="Wedding Seating Plan" class="seating-map-image" id="seatingMapImage" onclick="window.open(this.src)">
+                            <img src="images/table-map.jpg" alt="Wedding Seating Plan" class="seating-map-image" id="seatingMapImage" onclick="window.open(this.src)">
                         </div>
                     </div>
                     <div class="map-legend">
@@ -1349,7 +1340,6 @@
                 tabProgram: "📋 Program",
                 tabMenu: "🍽️ Menu",
                 tabSongs: "🎶 Song list",
-                tabMap: "🗺️ Table map",
                 tabSeating: "🪑 Seating Map",
                 programTitle: "Wedding Program",
                 program1: "Guest arrival & welcome drinks",
@@ -1368,7 +1358,7 @@
                 albumSubtitle: "View all photos shared by guests",
                 albumLink: "Open photo album",
                 footerMessage: "With great joy, we invite you to celebrate our wedding.",
-                countdown: "⏳ 17 days to go"
+                countdown: "⏳ 4 days to go"
             },
             ar: {
                 scrollHint: "👇 اسحب للأسفل للمزيد",
@@ -1386,7 +1376,6 @@
                 tabProgram: "📋 البرنامج",
                 tabMenu: "🍽️ قائمة الطعام",
                 tabSongs: "🎶 قائمة الأغاني",
-                tabMap: "🗺️ خريطة الطاولات",
                 tabSeating: "🪑 خريطة الجلوس",
                 programTitle: "برنامج الزفاف",
                 program1: "وصول الضيوف ومشروبات الترحيب",
@@ -1431,7 +1420,6 @@
             document.getElementById('tabProgram').textContent = t.tabProgram;
             document.getElementById('tabMenu').textContent = t.tabMenu;
             document.getElementById('tabSongs').textContent = t.tabSongs;
-            document.getElementById('tabMap').textContent = t.tabMap;
             document.getElementById('tabSeating').textContent = t.tabSeating;
             document.getElementById('programTitle').textContent = t.programTitle;
             document.getElementById('program1').textContent = t.program1;
@@ -1442,8 +1430,6 @@
             document.getElementById('program6').textContent = t.program6;
             document.getElementById('program7').textContent = t.program7;
             document.getElementById('songsTitle').textContent = t.songsTitle;
-            document.getElementById('mapTitle').textContent = t.mapTitle;
-            document.getElementById('mapHint').textContent = t.mapHint;
             document.getElementById('seatingTitle').textContent = t.seatingTitle;
             document.getElementById('seatingHint').textContent = t.seatingHint;
             document.getElementById('albumTitle').textContent = t.albumTitle;
@@ -1499,7 +1485,6 @@
                 }
                 
                 // Highlight the table on the seating map
-                if (document.getElementById('seating-pane').classList.contains('active')) {
                     highlightTableOnSeatingMap(guest.table);
                 }
                 
