@@ -220,12 +220,31 @@
     </div>
 
     <script>
-        // ============================================
+          // ============================================
         // MENU DATA
         // ============================================
-        const menuData={en:{title:"Menu",sections:[{category:"🥗 Starters",items:["🍃 Warak Enab (Stuffed Grape Leaves)","🍘 Kibbeh","🥟 Sambousek (Meat & Cheese)","🌯 Spring Rolls","🥣 Tahini Sauce","🍆 Baba Ganoush","🥗 Fattoush","🌿 Tabbouleh"]},{category:"🍽️ Main Courses",items:["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins","🍄 Chicken Piccata with Mushroom Sauce","🥩 Grilled Kofta (Live Station)","🍗 Grilled Shish Tawook (Live Station)","🍝 Lasagna","🍆 Mixed Stuffed Vegetables"]},{category:"🍝 Pasta Station",items:["Pasta Varieties: Spaghetti, Fusilli, Penne","Red Sauce & White Sauce","Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"]},{category:"🍗 Chicken & Beef Specials",items:["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto","🥩 Beef Teriyaki Sauce","🥔 Potatoes Gratin"]},{category:"🍰 Desserts",items:["🍮 Om Ali (Egyptian Bread Pudding)","🍬 Candy Corner"]}]},ar:{title:"قائمة الطعام",sections:[{category:"🥗 المقبلات",items:["🍃 ورق عنب","🍘 كبيبه","🥟 سمبوسك لحمه وجبنة","🌯 سبرينج رولز","🥣 طحينه","🍆 بابا غنوج","🥗 فتوش","🌿 تبوله"]},{category:"🍽️ الأطباق الرئيسية",items:["🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب","🍄 بيكاتا ماشروم","🥩 كفته مشويه لايف","🍗 شيش طاووك لايف","🍝 لازانيا","🍆 محشي مشكل"]},{category:"🍝 باستا ستيشن",items:["نوع المكرونة: سباجتي، فيوسيلي، بنه","صوص احمر، صوص ابيض","ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"]},{category:"🍗 أطباق الدجاج واللحم الخاصة",items:["تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص","🥩 بيف ترياكي صوص","🥔 بطاطس جراتان"]},{category:"🍰 الحلويات",items:["🍮 ام علي","🍬 كاندي كورنر"]}]}};
-        function renderMenu(lang){const c=document.getElementById('menuContent'),d=menuData[lang];let h=`<h2>${d.title}</h2>`;d.sections.forEach(s=>{h+=`<div class="menu-section"><div class="menu-category">${s.category}</div>`;s.items.forEach(i=>{h+=`<div class="menu-item">${i}</div>`});h+=`</div><div class="menu-divider"></div>`});c.innerHTML=h}
-
+        const menuData = {
+            en: {
+                title: "Menu",
+                sections: [
+                    { category: "🥗 Starters", items: ["🍃 Warak Enab (Stuffed Grape Leaves)", "🍘 Kibbeh", "🥟 Sambousek (Meat & Cheese)", "🌯 Spring Rolls", "🥣 Tahini Sauce", "🍆 Baba Ganoush", "🥗 Fattoush", "🌿 Tabbouleh"] },
+                    { category: "🍽️ Main Courses", items: ["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins", "🍄 Chicken Piccata with Mushroom Sauce", "🥩 Grilled Kofta (Live Station)", "🍗 Grilled Shish Tawook (Live Station)", "🍝 Lasagna", "🍆 Mixed Stuffed Vegetables"] },
+                    { category: "🍝 Pasta Station", items: ["Pasta Varieties: Spaghetti, Fusilli, Penne", "Red Sauce & White Sauce", "Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"] },
+                    { category: "🍗 Chicken & Beef Specials", items: ["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto", "🥩 Beef Teriyaki Sauce", "🥔 Potatoes Gratin"] },
+                    { category: "🍰 Desserts", items: ["🍮 Om Ali (Egyptian Bread Pudding)", "🍬 Candy Corner"] }
+                ]
+            },
+            ar: {
+                title: "قائمة الطعام",
+                sections: [
+                    { category: "🥗 المقبلات", items: ["🍃 ورق عنب", "🍘 كبيبه", "🥟 سمبوسك لحمه وجبنة", "🌯 سبرينج رولز", "🥣 طحينه", "🍆 بابا غنوج", "🥗 فتوش", "🌿 تبوله"] },
+                    { category: "🍽️ الأطباق الرئيسية", items: ["🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب", "🍄 بيكاتا ماشروم", "🥩 كفته مشويه لايف", "🍗 شيش طاووك لايف", "🍝 لازانيا", "🍆 محشي مشكل"] },
+                    { category: "🍝 باستا ستيشن", items: ["نوع المكرونة: سباجتي، فيوسيلي، بنه", "صوص احمر، صوص ابيض", "ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"] },
+                    { category: "🍗 أطباق الدجاج واللحم الخاصة", items: ["تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص", "🥩 بيف ترياكي صوص", "🥔 بطاطس جراتان"] },
+                    { category: "🍰 الحلويات", items: ["🍮 ام علي", "🍬 كاندي كورنر"] }
+                ]
+            }
+        };
         // ============================================
         // TABLE COORDINATES FOR SEATING MAP
         // ============================================
