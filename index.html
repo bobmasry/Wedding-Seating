@@ -174,7 +174,6 @@
                     <div id="menuContent"></div>
                 </div>
                 <div id="songs-pane" class="info-pane">
-                    <h2 id="songsTitle">Song List</h2>
                     <div id="songsList"></div>
                 </div>
             </div>
@@ -232,7 +231,7 @@
             }
         };
 
-        // SONGS DATA (ENGLISH + ARABIC) - EXACTLY AS YOUR ORIGINAL
+        // SONGS DATA (ENGLISH + ARABIC)
         const songsData = {
             en: {
                 title: "Song List",
@@ -268,7 +267,7 @@
             container.innerHTML = html;
         }
 
-        // TABLE COORDINATES (YOUR ORIGINAL)
+        // TABLE COORDINATES
         const tableCoordinates = {
             "1":{x:495,y:223},"2":{x:250,y:400},"3":{x:733,y:403},"4":{x:340,y:715},"5":{x:255,y:777},"6":{x:230,y:849},"7":{x:308,y:926},"8":{x:350,y:1017},"9":{x:266,y:1086},"10":{x:250,y:1173},"11":{x:324,y:1238},"12":{x:333,y:1322},"13":{x:250,y:1386},"14":{x:630,y:700},"15":{x:699,y:766},"16":{x:746,y:860},"17":{x:666,y:993},"18":{x:628,y:1004},"19":{x:722,y:1084},"20":{x:755,y:1122},"21":{x:666,y:1242},"22":{x:642,y:1309},"23":{x:724,y:1384}
         };
@@ -314,7 +313,7 @@
         }
         function clearHighlight() { if(currentMarker) { currentMarker.classList.remove('highlight'); currentMarker = null; } }
 
-           // ============================================
+              // ============================================
         // COMPLETE GUEST DATABASE (161 guests, 23 tables)
         // ============================================
         const guestDatabase = {
@@ -505,9 +504,9 @@
             "rafael": { displayName: "Rafael", arabicName: "رافاييل", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] },
             "regina": { displayName: "Regina", arabicName: "ريجينا", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] }
         };
-
         const guestNamesList = Object.keys(guestDatabase).map(k=>({key:k, displayName:guestDatabase[k].displayName, arabicName:guestDatabase[k].arabicName}));
         const searchInput = document.getElementById('guestName'), autoList = document.getElementById('autocompleteList');
+        
         function showAutocomplete(f) {
             const fl = f.toLowerCase().trim();
             if(fl.length<2) { autoList.style.display='none'; return; }
@@ -523,10 +522,10 @@
             });
             autoList.style.display = 'block';
         }
+        
         searchInput.addEventListener('input', e=>showAutocomplete(e.target.value));
         document.addEventListener('click', e=>{ if(e.target!==searchInput) autoList.style.display='none'; });
 
-        // UPLOAD FUNCTION (unchanged)
         const UPLOAD_URL = "https://script.google.com/macros/s/AKfycbwFhDIHzJI8m7OTh6-Y3s9st8ES12fsYUYR-Va1lxfxjUWX4z71_WjUBzyxv07-pMYs/exec";
         async function uploadToDrive(file,guestName) {
             return new Promise((r,j)=>{
@@ -578,13 +577,7 @@
             document.getElementById('program6').textContent = t.program6;
             document.getElementById('program7').textContent = t.program7;
             document.getElementById('program8').textContent = t.program8;
-            document.getElementById('songsTitle').textContent = t.songsTitle;
-            document.getElementById('seatingTitle').textContent = t.seatingTitle;
-            document.getElementById('seatingHint').textContent = t.seatingHint;
-            document.getElementById('albumTitle').textContent = t.albumTitle;
-            document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
-            document.getElementById('albumLink').textContent = t.albumLink;
-            document.getElementById('footerMessage').textContent = t.footerMessage;
+            // Update Menu and Songs with translations
             renderMenu(lang);
             renderSongs(lang);
             findGuestTable();
@@ -659,6 +652,7 @@
             if(img) { if(img.complete && img.naturalWidth>0) createMarkers(); else img.addEventListener('load', createMarkers); }
         });
         window.addEventListener('resize', function() { if(markersCreated) updateMarkers(); });
+        
         window.onload = function() {
             setupPhotoUpload();
             renderMenu('en');
@@ -666,6 +660,7 @@
             document.getElementById('heartBtn').addEventListener('click', scrollToMain);
             document.getElementById('heroSection').addEventListener('click', scrollToMain);
         };
+        
         document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
         searchInput.addEventListener('keypress', e=>{ if(e.key==='Enter') findGuestTable(); });
     </script>
