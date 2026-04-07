@@ -9,7 +9,7 @@
         body{background:#fff;min-height:100vh}
         .hero{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;cursor:pointer}
         .hero-image{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:1}
-        .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(0,0,0,0.2),rgba(0,0,0,0.1))F;z-index:2}
+        .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(0,0,0,0.2),rgba(0,0,0,0.1));z-index:2}
         .hero-text{position:absolute;top:15%;left:0;width:100%;text-align:center;z-index:15;pointer-events:none}
         .couple-names{font-family:Georgia,'Times New Roman','Playfair Display',serif;font-size:3.5rem;font-weight:400;color:#000;letter-spacing:4px;text-shadow:2px 2px 4px rgba(255,255,255,0.5);margin-bottom:10px}
         .wedding-date-top{font-family:Georgia,'Times New Roman','Playfair Display',serif;font-size:1.5rem;font-weight:300;color:#000;letter-spacing:2px;text-shadow:1px 1px 2px rgba(255,255,255,0.5)}
@@ -88,7 +88,6 @@
         .photo-album-section{background:#f8fff5;border-radius:40px;padding:40px;margin:30px;text-align:center;border:2px solid #d4af37;box-shadow:0 8px 0 #c5a031}
         .photo-album-link{display:inline-block;padding:14px 45px;background:#2a5a2a;color:#fff;border-radius:60px;text-decoration:none;margin:20px 0;border:2px solid #d4af37;box-shadow:0 4px 0 #1a3a1a}
         .footer{text-align:center;padding:40px 20px 50px;color:#4a6a4a;border-top:2px solid #d4af37;background:#fff}
-        .countdown-note{margin-top:15px;color:#d4af37;font-size:1.1rem}
         @media(max-width:700px){.couple-header h1{font-size:2.8rem}.couple-header h1 span{font-size:2.2rem}.table-number{font-size:5rem}.table-description{font-size:1.4rem}.language-switcher{margin-top:15px;padding:5px 12px}.lang-btn{padding:4px 12px;font-size:0.8rem}.menu-item{padding-left:15px;font-size:1rem}.table-marker{width:20px;height:20px}}
     </style>
 </head>
@@ -139,7 +138,6 @@
                 <div class="family-note" id="familyNote"></div>
             </div>
 
-            <!-- TABS IN NEW ORDER: Seating Map → Program → Menu → Songs -->
             <div class="info-tabs">
                 <button class="info-tab-btn active" onclick="showInfoTab('seating')" id="tabSeating">🪑 Seating Map</button>
                 <button class="info-tab-btn" onclick="showInfoTab('program')" id="tabProgram">📋 Program</button>
@@ -148,7 +146,6 @@
             </div>
 
             <div class="info-content">
-                <!-- SEATING MAP PANE (Active by default) -->
                 <div id="seating-pane" class="info-pane active">
                     <h2 id="seatingTitle">Interactive Seating Map</h2>
                     <p style="text-align: center; color: #4a6a4a; margin-bottom: 15px;" id="seatingHint">✨ Find your table above, then see it highlighted on the map ✨</p>
@@ -162,8 +159,6 @@
                         <div class="legend-item"><div class="legend-color" style="background: rgba(255, 215, 0, 0.8); border: 3px solid #ffaa00;"></div><span>Your Table (Highlighted)</span></div>
                     </div>
                 </div>
-
-                <!-- PROGRAM PANE -->
                 <div id="program-pane" class="info-pane">
                     <h2 id="programTitle">Wedding Program</h2>
                     <div class="program-item"><span class="program-time">3:00 PM</span> <span id="program1">Guest arrival</span></div>
@@ -175,21 +170,15 @@
                     <div class="program-item"><span class="program-time">8:30 PM</span> <span id="program7">Dance Floor Music</span></div>
                     <div class="program-item"><span class="program-time">10:00 PM</span> <span id="program8">Sparkler send-off</span></div>
                 </div>
-
-                <!-- MENU PANE -->
                 <div id="menu-pane" class="info-pane">
                     <div id="menuContent"></div>
                 </div>
-
-                <!-- SONGS PANE -->
                 <div id="songs-pane" class="info-pane">
                     <h2 id="songsTitle">Song List</h2>
-                    <div class="song-item">🎵 DJ MARK-Event Coverage</div>
-                    <div class="song-item">🎵 DJ ALY KHALIFA- Guest Songs + Beats</div>
+                    <div id="songsList"></div>
                 </div>
             </div>
 
-            <!-- PHOTO UPLOAD SECTION (Moved after tabs) -->
             <div class="photo-upload-section">
                 <h2 id="uploadTitle">📸 Share your photos</h2>
                 <p style="color:#2a5a2a;margin-bottom:15px" id="uploadSubtitle">Upload your photos from tonight</p>
@@ -204,7 +193,6 @@
                 <div id="photoGallery" class="photo-gallery"></div>
             </div>
 
-            <!-- PHOTO ALBUM SECTION -->
             <div class="photo-album-section">
                 <h2 id="albumTitle">📸 Wedding Photo Album</h2>
                 <p style="color:#2a5a2a" id="albumSubtitle">View all photos shared by guests</p>
@@ -220,24 +208,113 @@
     </div>
 
     <script>
-        // ============================================
-        // MENU DATA
-        // ============================================
-        const menuData={en:{title:"Menu",sections:[{category:"🥗 Starters",items:["🍃 Warak Enab (Stuffed Grape Leaves)","🍘 Kibbeh","🥟 Sambousek (Meat & Cheese)","🌯 Spring Rolls","🥣 Tahini Sauce","🍆 Baba Ganoush","🥗 Fattoush","🌿 Tabbouleh"]},{category:"🍽️ Main Courses",items:["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins","🍄 Chicken Piccata with Mushroom Sauce","🥩 Grilled Kofta (Live Station)","🍗 Grilled Shish Tawook (Live Station)","🍝 Lasagna","🍆 Mixed Stuffed Vegetables"]},{category:"🍝 Pasta Station",items:["Pasta Varieties: Spaghetti, Fusilli, Penne","Red Sauce & White Sauce","Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"]},{category:"🍗 Chicken & Beef Specials",items:["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto","🥩 Beef Teriyaki Sauce","🥔 Potatoes Gratin"]},{category:"🍰 Desserts",items:["🍮 Om Ali (Egyptian Bread Pudding)","🍬 Candy Corner"]}]},ar:{title:"قائمة الطعام",sections:[{category:"🥗 المقبلات",items:["🍃 ورق عنب","🍘 كبيبه","🥟 سمبوسك لحمه وجبنة","🌯 سبرينج رولز","🥣 طحينه","🍆 بابا غنوج","🥗 فتوش","🌿 تبوله"]},{category:"🍽️ الأطباق الرئيسية",items:["🦃 ديوك رومي كامل مع رز اصفر بسمتي باللوز والزبيب","🍄 بيكاتا ماشروم","🥩 كفته مشويه لايف","🍗 شيش طاووك لايف","🍝 لازانيا","🍆 محشي مشكل"]},{category:"🍝 باستا ستيشن",items:["نوع المكرونة: سباجتي، فيوسيلي، بنه","صوص احمر، صوص ابيض","ثوم، بصل، اوريجانو، زيت زيتون، زبدة، جبنة برميزان، فلفل حار، فلفل الوان، مشروم فرش، تشكن / سوسيس"]},{category:"🍗 أطباق الدجاج واللحم الخاصة",items:["تشكن ليمون صوص / كاري صوص / تشكن تندوري / تشكن بيستو صوص","🥩 بيف ترياكي صوص","🥔 بطاطس جراتان"]},{category:"🍰 الحلويات",items:["🍮 ام علي","🍬 كاندي كورنر"]}]}};
-        function renderMenu(lang){const c=document.getElementById('menuContent'),d=menuData[lang];let h=`<h2>${d.title}</h2>`;d.sections.forEach(s=>{h+=`<div class="menu-section"><div class="menu-category">${s.category}</div>`;s.items.forEach(i=>{h+=`<div class="menu-item">${i}</div>`});h+=`</div><div class="menu-divider"></div>`});c.innerHTML=h}
+        // MENU DATA (ENGLISH + ARABIC)
+        const menuData = {
+            en: {
+                title: "Menu",
+                sections: [
+                    {category: "🥗 Starters", items: ["🍃 Warak Enab (Stuffed Grape Leaves)","🍘 Kibbeh","🥟 Sambousek (Meat & Cheese)","🌯 Spring Rolls","🥣 Tahini Sauce","🍆 Baba Ganoush","🥗 Fattoush","🌿 Tabbouleh"]},
+                    {category: "🍽️ Main Courses", items: ["🦃 Roasted Turkey with Yellow Basmati Rice, Almonds & Raisins","🍄 Chicken Piccata with Mushroom Sauce","🥩 Grilled Kofta (Live Station)","🍗 Grilled Shish Tawook (Live Station)","🍝 Lasagna","🍆 Mixed Stuffed Vegetables"]},
+                    {category: "🍝 Pasta Station", items: ["Pasta Varieties: Spaghetti, Fusilli, Penne","Red Sauce & White Sauce","Garlic, Onion, Oregano, Olive Oil, Butter, Parmesan Cheese, Chili, Bell Peppers, Fresh Mushrooms, Chicken/Sausage"]},
+                    {category: "🍗 Chicken & Beef Specials", items: ["Lemon Chicken / Curry Chicken / Chicken Tandoori / Chicken Pesto","🥩 Beef Teriyaki Sauce","🥔 Potatoes Gratin"]},
+                    {category: "🍰 Desserts", items: ["🍮 Om Ali (Egyptian Bread Pudding)","🍬 Candy Corner"]}
+                ]
+            },
+            ar: {
+                title: "قائمة الطعام",
+                sections: [
+                    {category: "🥗 المقبلات", items: ["🍃 ورق عنب","🍘 كبيبة","🥟 سمبوسك لحم وجبنة","🌯 سبرينج رولز","🥣 طحينة","🍆 بابا غنوج","🥗 فتوش","🌿 تبولة"]},
+                    {category: "🍽️ الأطباق الرئيسية", items: ["🦃 ديك رومي مشوي مع أرز بسمتي أصفر باللوز والزبيب","🍄 بيكاتا دجاج بصلصة المشروم","🥩 كفتة مشوية (لايف ستيشن)","🍗 شيش طاووق مشوي (لايف ستيشن)","🍝 لازانيا","🍆 محشي مشكل"]},
+                    {category: "🍝 ركن الباستا", items: ["أصناف المكرونة: سباجتي، فيوسيلي، بني","صلصة حمراء وصلصة بيضاء","ثوم، بصل، أوريجانو، زيت زيتون، زبدة، جبنة بارميزان، فلفل حار، فلفل ألوان، مشروم طازج، دجاج/سجق"]},
+                    {category: "🍗 أطباق الدجاج واللحم الخاصة", items: ["دجاج بالليمون / دجاج بالكاري / دجاج تندوري / دجاج بيستو","🥩 لحم بصلصة تيرياكي","🥔 بطاطس جراتان"]},
+                    {category: "🍰 الحلويات", items: ["🍮 أم علي","🍬 ركن الحلوى"]}
+                ]
+            }
+        };
 
-        // ============================================
-        // TABLE COORDINATES FOR SEATING MAP
-        // ============================================
-        const tableCoordinates={"1":{x:495,y:223},"2":{x:250,y:400},"3":{x:733,y:403},"4":{x:340,y:715},"5":{x:255,y:777},"6":{x:230,y:849},"7":{x:308,y:926},"8":{x:350,y:1017},"9":{x:266,y:1086},"10":{x:250,y:1173},"11":{x:324,y:1238},"12":{x:333,y:1322},"13":{x:250,y:1386},"14":{x:630,y:700},"15":{x:699,y:766},"16":{x:746,y:860},"17":{x:666,y:993},"18":{x:628,y:1004},"19":{x:722,y:1084},"20":{x:755,y:1122},"21":{x:666,y:1242},"22":{x:642,y:1309},"23":{x:724,y:1384}};
-        let origW=0,origH=0,scaleX=1,scaleY=1,markersCreated=false,currentMarker=null;
-        function createMarkers(){const wrap=document.getElementById('mapWrapper'),img=document.getElementById('seatingMapImage');if(!wrap||!img)return;const rect=img.getBoundingClientRect(),dispW=rect.width,dispH=rect.height;if(origW===0){origW=img.naturalWidth;origH=img.naturalHeight}if(origW>0){scaleX=dispW/origW;scaleY=dispH/origH}document.querySelectorAll('.table-marker').forEach(m=>m.remove());for(const[t,c]of Object.entries(tableCoordinates)){const m=document.createElement('div');m.className='table-marker';m.setAttribute('data-table',t);m.style.left=`${c.x*scaleX}px`;m.style.top=`${c.y*scaleY}px`;wrap.appendChild(m)}markersCreated=true}
-        function updateMarkers(){const img=document.getElementById('seatingMapImage');if(!img)return;const rect=img.getBoundingClientRect();if(origW>0){scaleX=rect.width/origW;scaleY=rect.height/origH}document.querySelectorAll('.table-marker').forEach(m=>{const t=m.getAttribute('data-table'),c=tableCoordinates[t];if(c){m.style.left=`${c.x*scaleX}px`;m.style.top=`${c.y*scaleY}px`}})}
-        function highlightTableOnMap(tableNum){if(currentMarker)currentMarker.classList.remove('highlight');const marker=document.querySelector(`.table-marker[data-table="${tableNum}"]`);if(marker){marker.classList.add('highlight');currentMarker=marker;setTimeout(()=>{marker.scrollIntoView({behavior:'smooth',block:'center',inline:'center'})},100)}}
-        function clearHighlight(){if(currentMarker){currentMarker.classList.remove('highlight');currentMarker=null}}
+        // SONGS DATA (ENGLISH + ARABIC) - EXACTLY AS YOUR ORIGINAL
+        const songsData = {
+            en: {
+                title: "Song List",
+                tracks: ["🎵 DJ MARK-Event Coverage", "🎵 DJ ALY KHALIFA- Guest Songs + Beats"]
+            },
+            ar: {
+                title: "قائمة الأغاني",
+                tracks: ["🎵 DJ MARK-تغطية الحدث", "🎵 DJ ALY KHALIFA- أغاني الضيوف + إيقاعات"]
+            }
+        };
 
-            
-        // ============================================
+        function renderMenu(lang) {
+            const container = document.getElementById('menuContent');
+            const data = menuData[lang];
+            let html = `<h2>${data.title}</h2>`;
+            data.sections.forEach(section => {
+                html += `<div class="menu-section"><div class="menu-category">${section.category}</div>`;
+                section.items.forEach(item => {
+                    html += `<div class="menu-item">${item}</div>`;
+                });
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderSongs(lang) {
+            const container = document.getElementById('songsList');
+            const data = songsData[lang];
+            let html = `<h2>${data.title}</h2>`;
+            data.tracks.forEach(track => {
+                html += `<div class="song-item">${track}</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // TABLE COORDINATES (YOUR ORIGINAL)
+        const tableCoordinates = {
+            "1":{x:495,y:223},"2":{x:250,y:400},"3":{x:733,y:403},"4":{x:340,y:715},"5":{x:255,y:777},"6":{x:230,y:849},"7":{x:308,y:926},"8":{x:350,y:1017},"9":{x:266,y:1086},"10":{x:250,y:1173},"11":{x:324,y:1238},"12":{x:333,y:1322},"13":{x:250,y:1386},"14":{x:630,y:700},"15":{x:699,y:766},"16":{x:746,y:860},"17":{x:666,y:993},"18":{x:628,y:1004},"19":{x:722,y:1084},"20":{x:755,y:1122},"21":{x:666,y:1242},"22":{x:642,y:1309},"23":{x:724,y:1384}
+        };
+        let origW=0, origH=0, scaleX=1, scaleY=1, markersCreated=false, currentMarker=null;
+
+        function createMarkers() {
+            const wrap = document.getElementById('mapWrapper'), img = document.getElementById('seatingMapImage');
+            if(!wrap || !img) return;
+            const rect = img.getBoundingClientRect();
+            if(origW===0) { origW = img.naturalWidth; origH = img.naturalHeight; }
+            if(origW>0) { scaleX = rect.width/origW; scaleY = rect.height/origH; }
+            document.querySelectorAll('.table-marker').forEach(m=>m.remove());
+            for(const [t,c] of Object.entries(tableCoordinates)) {
+                const m = document.createElement('div');
+                m.className = 'table-marker';
+                m.setAttribute('data-table', t);
+                m.style.left = `${c.x * scaleX}px`;
+                m.style.top = `${c.y * scaleY}px`;
+                wrap.appendChild(m);
+            }
+            markersCreated = true;
+        }
+
+        function updateMarkers() {
+            const img = document.getElementById('seatingMapImage');
+            if(!img) return;
+            const rect = img.getBoundingClientRect();
+            if(origW>0) { scaleX = rect.width/origW; scaleY = rect.height/origH; }
+            document.querySelectorAll('.table-marker').forEach(m => {
+                const t = m.getAttribute('data-table'), c = tableCoordinates[t];
+                if(c) { m.style.left = `${c.x * scaleX}px`; m.style.top = `${c.y * scaleY}px`; }
+            });
+        }
+
+        function highlightTableOnMap(tableNum) {
+            if(currentMarker) currentMarker.classList.remove('highlight');
+            const marker = document.querySelector(`.table-marker[data-table="${tableNum}"]`);
+            if(marker) {
+                marker.classList.add('highlight');
+                currentMarker = marker;
+                setTimeout(() => marker.scrollIntoView({behavior:'smooth', block:'center', inline:'center'}), 100);
+            }
+        }
+        function clearHighlight() { if(currentMarker) { currentMarker.classList.remove('highlight'); currentMarker = null; } }
+
+           // ============================================
         // COMPLETE GUEST DATABASE (161 guests, 23 tables)
         // ============================================
         const guestDatabase = {
@@ -429,32 +506,168 @@
             "regina": { displayName: "Regina", arabicName: "ريجينا", group: "Family", table: "23", groupName: "Diana Medina Family", members: ["Diana Medina", "Rafael", "Regina"] }
         };
 
-        const guestNamesList=Object.keys(guestDatabase).map(k=>({key:k,displayName:guestDatabase[k].displayName,arabicName:guestDatabase[k].arabicName}));
-        const searchInput=document.getElementById('guestName'),autoList=document.getElementById('autocompleteList');
-        function showAutocomplete(f){const fl=f.toLowerCase().trim();if(fl.length<2){autoList.style.display='none';return}const matches=guestNamesList.filter(i=>i.key.toLowerCase().includes(fl)||i.displayName.toLowerCase().includes(fl)||(i.arabicName&&i.arabicName.includes(fl))).slice(0,12);if(!matches.length){autoList.style.display='none';return}autoList.innerHTML='';matches.forEach(m=>{const d=document.createElement('div');d.className='autocomplete-item';d.textContent=m.arabicName&&m.arabicName!==m.displayName?`${m.displayName} / ${m.arabicName}`:m.displayName;d.onclick=()=>{searchInput.value=m.key;autoList.style.display='none';findGuestTable()};autoList.appendChild(d)});autoList.style.display='block'}
-        searchInput.addEventListener('input',e=>showAutocomplete(e.target.value));document.addEventListener('click',e=>{if(e.target!==searchInput)autoList.style.display='none'});
-        
-        const UPLOAD_URL="https://script.google.com/macros/s/AKfycbwFhDIHzJI8m7OTh6-Y3s9st8ES12fsYUYR-Va1lxfxjUWX4z71_WjUBzyxv07-pMYs/exec";
-        async function uploadToDrive(file,guestName){return new Promise((r,j)=>{const rd=new FileReader();rd.onload=async e=>{const b64=e.target.result.split(',')[1];try{await fetch(UPLOAD_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({fileName:file.name,fileData:b64,mimeType:file.type,guestName})});r()}catch(e){j(e)}};rd.readAsDataURL(file)})}
-        
-        let currentLang='en';
-        const trans={en:{scrollHint:"👇 Scroll down for more",greeting:"💕 Please enter your name to find your table 💕",searchPlaceholder:"e.g., Ahmed Hassan",findButton:"Find my table",searchHint:"Start typing to see matching names",tableLabel:"Your table",notFoundMessage:"Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!",uploadTitle:"📸 Share your photos",uploadSubtitle:"Upload your photos from tonight",uploadText:"Click here to upload photos",uploadHint:"Select one or multiple photos",uploadButton:"Choose photos",tabProgram:"📋 Program",tabMenu:"🍽️ Menu",tabSongs:"🎶 Song list",tabSeating:"🪑 Seating Map",programTitle:"Wedding Program",program1:"Guest arrival & welcome drinks",program2:"Sunset ceremony",program3:"Cocktail hour",program4:"Dinner served",program5:"First dance",program6:"Cake & dancing",program7:"Sparkler send-off",songsTitle:"Song List",seatingTitle:"Interactive Seating Map",seatingHint:"✨ Find your table above, then see it highlighted on the map ✨",albumTitle:"📸 Wedding Photo Album",albumSubtitle:"View all photos shared by guests",albumLink:"Open photo album",footerMessage:"With great joy, we invite you to celebrate our wedding.",countdown:"⏳ 4 days to go"},ar:{scrollHint:"👇 اسحب للأسفل للمزيد",greeting:"💕 من فضلك أدخل اسمك لتعرف طاولتك 💕",searchPlaceholder:"مثال: أحمد حسن",findButton:"ابحث عن طاولتي",searchHint:"ابدأ الكتابة لرؤية الأسماء المتطابقة",tableLabel:"طاولتك",notFoundMessage:"مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورضوى! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!",uploadTitle:"📸 شارك صورك",uploadSubtitle:"حمّل صورك من الليلة",uploadText:"اضغط هنا لرفع الصور",uploadHint:"اختر صورة أو أكثر",uploadButton:"اختر الصور",tabProgram:"📋 البرنامج",tabMenu:"🍽️ قائمة الطعام",tabSongs:"🎶 قائمة الأغاني",tabSeating:"🪑 خريطة الجلوس",programTitle:"برنامج الزفاف",program1:"وصول الضيوف",program2:"بداية الحفل",program3:"الرقصة الأولى",program4:"جلسة التصوير",program5:"تقديم العشاء",program6:"تقطيع الكيك",program7:"وداع بالشماريخ",songsTitle:"قائمة الأغاني",seatingTitle:"خريطة الجلوس التفاعلية",seatingHint:"✨ ابحث عن طاولتك أعلاه، ثم شاهدها مضيئة على الخريطة ✨",albumTitle:"📸 ألبوم صور الزفاف",albumSubtitle:"شاهد جميع الصور التي شاركها الضيوف",albumLink:"افتح الألبوم",footerMessage:"بكل سرور، ندعوكم للاحتفال بحفل زفافنا",countdown:"⏳ 17 يوم متبقي"}};
-        
-        function setLanguage(lang){currentLang=lang;document.documentElement.lang=lang==='ar'?'ar':'en';document.getElementById('btnEnglish').classList.toggle('active',lang==='en');document.getElementById('btnArabic').classList.toggle('active',lang==='ar');const t=trans[lang];document.getElementById('scrollHint').textContent=t.scrollHint;document.getElementById('greetingText').textContent=t.greeting;searchInput.placeholder=t.searchPlaceholder;document.getElementById('findTableBtn').textContent=t.findButton;document.getElementById('searchHint').textContent=t.searchHint;document.getElementById('tableLabel').textContent=t.tableLabel;document.getElementById('uploadTitle').textContent=t.uploadTitle;document.getElementById('uploadSubtitle').textContent=t.uploadSubtitle;document.getElementById('uploadText').textContent=t.uploadText;document.getElementById('uploadHint').textContent=t.uploadHint;document.getElementById('uploadButton').textContent=t.uploadButton;document.getElementById('tabProgram').textContent=t.tabProgram;document.getElementById('tabMenu').textContent=t.tabMenu;document.getElementById('tabSongs').textContent=t.tabSongs;document.getElementById('tabSeating').textContent=t.tabSeating;document.getElementById('programTitle').textContent=t.programTitle;document.getElementById('program1').textContent=t.program1;document.getElementById('program2').textContent=t.program2;document.getElementById('program3').textContent=t.program3;document.getElementById('program4').textContent=t.program4;document.getElementById('program5').textContent=t.program5;document.getElementById('program6').textContent=t.program6;document.getElementById('program7').textContent=t.program7;document.getElementById('songsTitle').textContent=t.songsTitle;document.getElementById('seatingTitle').textContent=t.seatingTitle;document.getElementById('seatingHint').textContent=t.seatingHint;document.getElementById('albumTitle').textContent=t.albumTitle;document.getElementById('albumSubtitle').textContent=t.albumSubtitle;document.getElementById('albumLink').textContent=t.albumLink;document.getElementById('footerMessage').textContent=t.footerMessage;document.getElementById('countdown').textContent=t.countdown;renderMenu(lang);findGuestTable()}
-        
-        function findGuestTable(){const name=searchInput.value.trim().toLowerCase();let guest=guestDatabase[name];if(!guest){for(const[k,v]of Object.entries(guestDatabase))if(v.displayName.toLowerCase()===name||(v.arabicName&&v.arabicName.toLowerCase()===name)){guest=v;break}}const t=trans[currentLang];const welcome=document.getElementById('welcomeMessage'),group=document.getElementById('groupName'),table=document.getElementById('tableNumber'),desc=document.getElementById('tableDescription'),note=document.getElementById('familyNote');if(guest){const displayName=currentLang==='ar'&&guest.arabicName?guest.arabicName:guest.displayName;welcome.textContent=`Welcome, ${displayName}! 💖`;group.textContent=guest.group;table.textContent=guest.table;desc.textContent=guest.groupName;const others=guest.members.filter(m=>m.toLowerCase()!==name&&m!==guest.displayName);const rel=guest.group==='Soulmate'?'soulmate':guest.group==='Partner'?'partner':guest.group==='Friend'?'friend':'family';note.textContent=others.length?`✨ Your ${rel} (${others.join(', ')}) sits with you at Table ${guest.table} ✨`:`✨ You're at Table ${guest.table} with your ${rel} ✨`;highlightTableOnMap(guest.table)}else{const displayName=searchInput.value.trim()||(currentLang==='ar'?'ضيفنا العزيز':'Guest');welcome.textContent=`Welcome, ${displayName}! 💖`;group.textContent=currentLang==='ar'?'مرحباً بك':'Welcome';table.textContent='?';desc.textContent=currentLang==='ar'?'طاولة العائلة':'Family Table';note.textContent=t.notFoundMessage;clearHighlight()}}
-        
-        function showInfoTab(tabName){document.querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));document.getElementById(tabName+'-pane').classList.add('active');document.querySelectorAll('.info-tab-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');if(tabName==='seating')setTimeout(()=>updateMarkers(),100)}
-        
-        function setupPhotoUpload(){const fi=document.getElementById('fileInput'),us=document.getElementById('uploadStatus'),pg=document.getElementById('photoGallery');fi.addEventListener('change',async e=>{const files=e.target.files;if(!files.length)return;const gn=searchInput.value.trim()||'Guest';us.className='upload-status success';us.textContent=`✨ Uploading ${files.length} photo(s)... ✨`;for(let f of files){const rd=new FileReader();rd.onload=ev=>{const img=document.createElement('img');img.src=ev.target.result;img.className='gallery-image';pg.appendChild(img)};rd.readAsDataURL(f);try{await uploadToDrive(f,gn)}catch(e){}}us.textContent=`✅ Added ${files.length} photo(s) to album!`;fi.value='';setTimeout(()=>{us.style.display='none';us.className='upload-status'},3000)})}
-        
-        function scrollToMain(){document.getElementById('mainContent').scrollIntoView({behavior:'smooth'})}
-        
-        window.addEventListener('load',function(){const img=document.getElementById('seatingMapImage');if(img){if(img.complete&&img.naturalWidth>0)createMarkers();else img.addEventListener('load',createMarkers)}});
-        window.addEventListener('resize',function(){if(markersCreated)updateMarkers()});
-        window.onload=function(){setupPhotoUpload();renderMenu('en');document.getElementById('heartBtn').addEventListener('click',scrollToMain);document.getElementById('heroSection').addEventListener('click',scrollToMain)};
-        document.getElementById('findTableBtn').addEventListener('click',findGuestTable);
-        searchInput.addEventListener('keypress',e=>{if(e.key==='Enter')findGuestTable()});
+        const guestNamesList = Object.keys(guestDatabase).map(k=>({key:k, displayName:guestDatabase[k].displayName, arabicName:guestDatabase[k].arabicName}));
+        const searchInput = document.getElementById('guestName'), autoList = document.getElementById('autocompleteList');
+        function showAutocomplete(f) {
+            const fl = f.toLowerCase().trim();
+            if(fl.length<2) { autoList.style.display='none'; return; }
+            const matches = guestNamesList.filter(i=>i.key.toLowerCase().includes(fl)||i.displayName.toLowerCase().includes(fl)||(i.arabicName&&i.arabicName.includes(fl))).slice(0,12);
+            if(!matches.length) { autoList.style.display='none'; return; }
+            autoList.innerHTML = '';
+            matches.forEach(m=>{
+                const d = document.createElement('div');
+                d.className = 'autocomplete-item';
+                d.textContent = (m.arabicName && m.arabicName!==m.displayName) ? `${m.displayName} / ${m.arabicName}` : m.displayName;
+                d.onclick = () => { searchInput.value = m.key; autoList.style.display='none'; findGuestTable(); };
+                autoList.appendChild(d);
+            });
+            autoList.style.display = 'block';
+        }
+        searchInput.addEventListener('input', e=>showAutocomplete(e.target.value));
+        document.addEventListener('click', e=>{ if(e.target!==searchInput) autoList.style.display='none'; });
+
+        // UPLOAD FUNCTION (unchanged)
+        const UPLOAD_URL = "https://script.google.com/macros/s/AKfycbwFhDIHzJI8m7OTh6-Y3s9st8ES12fsYUYR-Va1lxfxjUWX4z71_WjUBzyxv07-pMYs/exec";
+        async function uploadToDrive(file,guestName) {
+            return new Promise((r,j)=>{
+                const rd = new FileReader();
+                rd.onload = async e => {
+                    const b64 = e.target.result.split(',')[1];
+                    try {
+                        await fetch(UPLOAD_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({fileName:file.name, fileData:b64, mimeType:file.type, guestName})});
+                        r();
+                    } catch(e) { j(e); }
+                };
+                rd.readAsDataURL(file);
+            });
+        }
+
+        let currentLang = 'en';
+        const trans = {
+            en: { scrollHint:"👇 Scroll down for more", greeting:"💕 Please enter your name to find your table 💕", searchPlaceholder:"e.g., Ahmed Hassan", findButton:"Find my table", searchHint:"Start typing to see matching names", tableLabel:"Your table", notFoundMessage:"Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!", uploadTitle:"📸 Share your photos", uploadSubtitle:"Upload your photos from tonight", uploadText:"Click here to upload photos", uploadHint:"Select one or multiple photos", uploadButton:"Choose photos", tabProgram:"📋 Program", tabMenu:"🍽️ Menu", tabSongs:"🎶 Song list", tabSeating:"🪑 Seating Map", programTitle:"Wedding Program", program1:"Guest arrival", program2:"Ceremony Begins", program3:"First dance", program4:"Photo session", program5:"Dinner served", program6:"Cake Cutting", program7:"Dance Floor Music", program8:"Sparkler send-off", songsTitle:"Song List", seatingTitle:"Interactive Seating Map", seatingHint:"✨ Find your table above, then see it highlighted on the map ✨", albumTitle:"📸 Wedding Photo Album", albumSubtitle:"View all photos shared by guests", albumLink:"Open photo album", footerMessage:"With great joy, we welcome you to celebrate our wedding." },
+            ar: { scrollHint:"👇 اسحب للأسفل للمزيد", greeting:"💕 من فضلك أدخل اسمك لتعرف طاولتك 💕", searchPlaceholder:"مثال: أحمد حسن", findButton:"ابحث عن طاولتي", searchHint:"ابدأ الكتابة لرؤية الأسماء المتطابقة", tableLabel:"طاولتك", notFoundMessage:"مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورضوى! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!", uploadTitle:"📸 شارك صورك", uploadSubtitle:"حمّل صورك من الليلة", uploadText:"اضغط هنا لرفع الصور", uploadHint:"اختر صورة أو أكثر", uploadButton:"اختر الصور", tabProgram:"📋 البرنامج", tabMenu:"🍽️ قائمة الطعام", tabSongs:"🎶 قائمة الأغاني", tabSeating:"🪑 خريطة الجلوس", programTitle:"برنامج الزفاف", program1:"وصول الضيوف", program2:"بداية الحفل", program3:"الرقصة الأولى", program4:"جلسة التصوير", program5:"تقديم العشاء", program6:"تقطيع الكيك", program7:"رقص على الموسيقى", program8:"وداع بالشماريخ", songsTitle:"قائمة الأغاني", seatingTitle:"خريطة الجلوس التفاعلية", seatingHint:"✨ ابحث عن طاولتك أعلاه، ثم شاهدها مضيئة على الخريطة ✨", albumTitle:"📸 ألبوم صور الزفاف", albumSubtitle:"شاهد جميع الصور التي شاركها الضيوف", albumLink:"افتح الألبوم", footerMessage:"بكل سرور، ندعوكم للاحتفال بحفل زفافنا" }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang==='ar'?'ar':'en';
+            document.getElementById('btnEnglish').classList.toggle('active', lang==='en');
+            document.getElementById('btnArabic').classList.toggle('active', lang==='ar');
+            const t = trans[lang];
+            document.getElementById('scrollHint').textContent = t.scrollHint;
+            document.getElementById('greetingText').textContent = t.greeting;
+            searchInput.placeholder = t.searchPlaceholder;
+            document.getElementById('findTableBtn').textContent = t.findButton;
+            document.getElementById('searchHint').textContent = t.searchHint;
+            document.getElementById('tableLabel').textContent = t.tableLabel;
+            document.getElementById('uploadTitle').textContent = t.uploadTitle;
+            document.getElementById('uploadSubtitle').textContent = t.uploadSubtitle;
+            document.getElementById('uploadText').textContent = t.uploadText;
+            document.getElementById('uploadHint').textContent = t.uploadHint;
+            document.getElementById('uploadButton').textContent = t.uploadButton;
+            document.getElementById('tabProgram').textContent = t.tabProgram;
+            document.getElementById('tabMenu').textContent = t.tabMenu;
+            document.getElementById('tabSongs').textContent = t.tabSongs;
+            document.getElementById('tabSeating').textContent = t.tabSeating;
+            document.getElementById('programTitle').textContent = t.programTitle;
+            document.getElementById('program1').textContent = t.program1;
+            document.getElementById('program2').textContent = t.program2;
+            document.getElementById('program3').textContent = t.program3;
+            document.getElementById('program4').textContent = t.program4;
+            document.getElementById('program5').textContent = t.program5;
+            document.getElementById('program6').textContent = t.program6;
+            document.getElementById('program7').textContent = t.program7;
+            document.getElementById('program8').textContent = t.program8;
+            document.getElementById('songsTitle').textContent = t.songsTitle;
+            document.getElementById('seatingTitle').textContent = t.seatingTitle;
+            document.getElementById('seatingHint').textContent = t.seatingHint;
+            document.getElementById('albumTitle').textContent = t.albumTitle;
+            document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
+            document.getElementById('albumLink').textContent = t.albumLink;
+            document.getElementById('footerMessage').textContent = t.footerMessage;
+            renderMenu(lang);
+            renderSongs(lang);
+            findGuestTable();
+        }
+
+        function findGuestTable() {
+            const name = searchInput.value.trim().toLowerCase();
+            let guest = guestDatabase[name];
+            if(!guest) {
+                for(const [k,v] of Object.entries(guestDatabase))
+                    if(v.displayName.toLowerCase()===name || (v.arabicName && v.arabicName.toLowerCase()===name)) { guest=v; break; }
+            }
+            const t = trans[currentLang];
+            const welcome = document.getElementById('welcomeMessage'), group = document.getElementById('groupName'), table = document.getElementById('tableNumber'), desc = document.getElementById('tableDescription'), note = document.getElementById('familyNote');
+            if(guest) {
+                const displayName = (currentLang==='ar' && guest.arabicName) ? guest.arabicName : guest.displayName;
+                welcome.textContent = `Welcome, ${displayName}! 💖`;
+                group.textContent = guest.group;
+                table.textContent = guest.table;
+                desc.textContent = guest.groupName;
+                const others = guest.members.filter(m => m.toLowerCase()!==name && m!==guest.displayName);
+                const rel = guest.group==='Soulmate'?'soulmate':guest.group==='Partner'?'partner':guest.group==='Friend'?'friend':'family';
+                note.textContent = others.length ? `✨ Your ${rel} (${others.join(', ')}) sits with you at Table ${guest.table} ✨` : `✨ You're at Table ${guest.table} with your ${rel} ✨`;
+                highlightTableOnMap(guest.table);
+            } else {
+                welcome.textContent = `Welcome, ${searchInput.value.trim() || (currentLang==='ar'?'ضيفنا العزيز':'Guest')}! 💖`;
+                group.textContent = currentLang==='ar'?'مرحباً بك':'Welcome';
+                table.textContent = '?';
+                desc.textContent = currentLang==='ar'?'طاولة العائلة':'Family Table';
+                note.textContent = t.notFoundMessage;
+                clearHighlight();
+            }
+        }
+
+        function showInfoTab(tabName) {
+            document.querySelectorAll('.info-pane').forEach(p=>p.classList.remove('active'));
+            document.getElementById(tabName+'-pane').classList.add('active');
+            document.querySelectorAll('.info-tab-btn').forEach(b=>b.classList.remove('active'));
+            event.target.classList.add('active');
+            if(tabName==='seating') setTimeout(()=>updateMarkers(),100);
+        }
+
+        function setupPhotoUpload() {
+            const fi = document.getElementById('fileInput'), us = document.getElementById('uploadStatus'), pg = document.getElementById('photoGallery');
+            fi.addEventListener('change', async e => {
+                const files = e.target.files;
+                if(!files.length) return;
+                const gn = searchInput.value.trim() || 'Guest';
+                us.className = 'upload-status success';
+                us.textContent = `✨ Uploading ${files.length} photo(s)... ✨`;
+                for(let f of files) {
+                    const rd = new FileReader();
+                    rd.onload = ev => {
+                        const img = document.createElement('img');
+                        img.src = ev.target.result;
+                        img.className = 'gallery-image';
+                        pg.appendChild(img);
+                    };
+                    rd.readAsDataURL(f);
+                    try { await uploadToDrive(f, gn); } catch(e) {}
+                }
+                us.textContent = `✅ Added ${files.length} photo(s) to album!`;
+                fi.value = '';
+                setTimeout(()=>{ us.style.display='none'; us.className='upload-status'; }, 3000);
+            });
+        }
+
+        function scrollToMain() { document.getElementById('mainContent').scrollIntoView({behavior:'smooth'}); }
+
+        window.addEventListener('load', function() {
+            const img = document.getElementById('seatingMapImage');
+            if(img) { if(img.complete && img.naturalWidth>0) createMarkers(); else img.addEventListener('load', createMarkers); }
+        });
+        window.addEventListener('resize', function() { if(markersCreated) updateMarkers(); });
+        window.onload = function() {
+            setupPhotoUpload();
+            renderMenu('en');
+            renderSongs('en');
+            document.getElementById('heartBtn').addEventListener('click', scrollToMain);
+            document.getElementById('heroSection').addEventListener('click', scrollToMain);
+        };
+        document.getElementById('findTableBtn').addEventListener('click', findGuestTable);
+        searchInput.addEventListener('keypress', e=>{ if(e.key==='Enter') findGuestTable(); });
     </script>
 </body>
 </html>
