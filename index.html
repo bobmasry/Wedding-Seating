@@ -577,7 +577,10 @@
             document.getElementById('program6').textContent = t.program6;
             document.getElementById('program7').textContent = t.program7;
             document.getElementById('program8').textContent = t.program8;
-            // Update Menu and Songs with translations
+            document.getElementById('albumTitle').textContent = t.albumTitle;
+            document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
+            document.getElementById('albumLink').textContent = t.albumLink;
+            document.getElementById('footerMessage').textContent = t.footerMessage;
             renderMenu(lang);
             renderSongs(lang);
             findGuestTable();
