@@ -160,16 +160,19 @@
                     </div>
                 </div>
                 <div id="program-pane" class="info-pane">
-                    <h2 id="programTitle">Wedding Program</h2>
-                    <div class="program-item"><span class="program-time">3:00 PM</span> <span id="program1">Guest arrival</span></div>
-                    <div class="program-item"><span class="program-time">4:00 PM</span> <span id="program2">Ceremony Begins</span></div>
-                    <div class="program-item"><span class="program-time">4:30 PM</span> <span id="program3">First dance</span></div>
-                    <div class="program-item"><span class="program-time">5:30 PM</span> <span id="program4">Photo session</span></div>
-                    <div class="program-item"><span class="program-time">6:30 PM</span> <span id="program5">Dinner served</span></div>
-                    <div class="program-item"><span class="program-time">8:00 PM</span> <span id="program6">Cake Cutting</span></div>
-                    <div class="program-item"><span class="program-time">8:30 PM</span> <span id="program7">Dance Floor Music</span></div>
-                    <div class="program-item"><span class="program-time">10:00 PM</span> <span id="program8">Sparkler send-off</span></div>
-                </div>
+    <h2 id="programTitle">Wedding Program</h2>
+    <div class="program-item"><span class="program-time">3:00 PM - 4:00 PM</span> <span id="program1">Guest arrival</span></div>
+    <div class="program-item"><span class="program-time">4:30 PM</span> <span id="program2">Entrance & Zaffa</span></div>
+    <div class="program-item"><span class="program-time">4:30 PM - 5:00 PM</span> <span id="program3">Zaffa</span></div>
+    <div class="program-item"><span class="program-time">5:00 PM</span> <span id="program4">First Dance</span></div>
+    <div class="program-item"><span class="program-time">5:40 PM</span> <span id="program5">Photo Session (Family & Friends)</span></div>
+    <div class="program-item"><span class="program-time">7:30 PM</span> <span id="program6">Catering</span></div>
+    <div class="program-item"><span class="program-time">8:45 PM</span> <span id="program7">Cake Cutting</span></div>
+    <div class="program-item"><span class="program-time">9:00 PM</span> <span id="program8">Fireworks</span></div>
+    <div class="program-item"><span class="program-time">9:20 PM</span> <span id="program9">Bouquet Toss</span></div>
+    <div class="program-item"><span class="program-time">9:30 PM</span> <span id="program10">Dance Floor Music</span></div>
+    <div class="program-item"><span class="program-time">10:30 PM</span> <span id="program11">Sparkler Send-Off</span></div>
+</div>
                 <div id="menu-pane" class="info-pane">
                     <div id="menuContent"></div>
                 </div>
@@ -550,7 +553,7 @@
                     try {
                         await fetch(UPLOAD_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({fileName:file.name, fileData:b64, mimeType:file.type, guestName})});
                         r();
-                    } catch(e) { j(e); }
+                     } catch(e) { j(e); }
                 };
                 rd.readAsDataURL(file);
             });
@@ -558,8 +561,8 @@
 
         let currentLang = 'en';
         const trans = {
-            en: { scrollHint:"👇 Scroll down for more", greeting:"💕 Please enter your name to find your table 💕", searchPlaceholder:"e.g., Ahmed Hassan", findButton:"Find my table", searchHint:"Start typing to see matching names", tableLabel:"Your table", notFoundMessage:"Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!", uploadTitle:"📸 Share your photos", uploadSubtitle:"Upload your photos from tonight", uploadText:"Click here to upload photos", uploadHint:"Select one or multiple photos", uploadButton:"Choose photos", tabProgram:"📋 Program", tabMenu:"🍽️ Menu", tabSongs:"🎶 Song list", tabSeating:"🪑 Seating Map", programTitle:"Wedding Program", program1:"Guest arrival", program2:"Ceremony Begins", program3:"First dance", program4:"Photo session", program5:"Dinner served", program6:"Cake Cutting", program7:"Dance Floor Music", program8:"Sparkler send-off", songsTitle:"Song List", seatingTitle:"Interactive Seating Map", seatingHint:"✨ Find your table above, then see it highlighted on the map ✨", albumTitle:"📸 Wedding Photo Album", albumSubtitle:"View all photos shared by guests", albumLink:"Open photo album", footerMessage:"With great joy, we welcome you to celebrate our wedding." },
-            ar: { scrollHint:"👇 اسحب للأسفل للمزيد", greeting:"💕 من فضلك أدخل اسمك لتعرف طاولتك 💕", searchPlaceholder:"مثال: أحمد حسن", findButton:"ابحث عن طاولتي", searchHint:"ابدأ الكتابة لرؤية الأسماء المتطابقة", tableLabel:"طاولتك", notFoundMessage:"مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورضوى! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!", uploadTitle:"📸 شارك صورك", uploadSubtitle:"حمّل صورك من الليلة", uploadText:"اضغط هنا لرفع الصور", uploadHint:"اختر صورة أو أكثر", uploadButton:"اختر الصور", tabProgram:"📋 البرنامج", tabMenu:"🍽️ قائمة الطعام", tabSongs:"🎶 قائمة الأغاني", tabSeating:"🪑 خريطة الجلوس", programTitle:"برنامج الزفاف", program1:"وصول الضيوف", program2:"بداية الحفل", program3:"الرقصة الأولى", program4:"جلسة التصوير", program5:"تقديم العشاء", program6:"تقطيع الكيك", program7:"رقص على الموسيقى", program8:"وداع بالشماريخ", songsTitle:"قائمة الأغاني", seatingTitle:"خريطة الجلوس التفاعلية", seatingHint:"✨ ابحث عن طاولتك أعلاه، ثم شاهدها مضيئة على الخريطة ✨", albumTitle:"📸 ألبوم صور الزفاف", albumSubtitle:"شاهد جميع الصور التي شاركها الضيوف", albumLink:"افتح الألبوم", footerMessage:"بكل سرور، ندعوكم للاحتفال بحفل زفافنا" }
+            en: { scrollHint:"👇 Scroll down for more", greeting:"💕 Please enter your name to find your table 💕", searchPlaceholder:"e.g., Ahmed Hassan", findButton:"Find my table", searchHint:"Start typing to see matching names", tableLabel:"Your table", notFoundMessage:"Hey there! 🌸 Welcome to Ehab & Radwa's wedding! Please head to the Family Table - our lovely assistant will help get you seated right away. We're so happy you're here!", uploadTitle:"📸 Share your photos", uploadSubtitle:"Upload your photos from tonight", uploadText:"Click here to upload photos", uploadHint:"Select one or multiple photos", uploadButton:"Choose photos", tabProgram:"📋 Program", tabMenu:"🍽️ Menu", tabSongs:"🎶 Song list", tabSeating:"🪑 Seating Map", programTitle:"Wedding Program", program1:"Guest arrival", program2:"Entrance & Zaffa", program3:"Zaffa", program4:"First Dance", program5:"Photo Session (Family & Friends)", program6:"Catering", program7:"Cake Cutting", program8:"Fireworks", program9:"Bouquet Toss", program10:"Dance Floor Music", program11:"Sparkler Send-Off", songsTitle:"Song List", seatingTitle:"Interactive Seating Map", seatingHint:"✨ Find your table above, then see it highlighted on the map ✨", albumTitle:"📸 Wedding Photo Album", albumSubtitle:"View all photos shared by guests", albumLink:"Open photo album", footerMessage:"With great joy, we welcome you to celebrate our wedding." },
+            ar: { scrollHint:"👇 اسحب للأسفل للمزيد", greeting:"💕 من فضلك أدخل اسمك لتعرف طاولتك 💕", searchPlaceholder:"مثال: أحمد حسن", findButton:"ابحث عن طاولتي", searchHint:"ابدأ الكتابة لرؤية الأسماء المتطابقة", tableLabel:"طاولتك", notFoundMessage:"مرحباً! 🌸 أهلاً وسهلاً في حفل زفاف إيهاب ورضوى! من فضلك توجه إلى طاولة العائلة - مساعدتنا اللطيفة ستساعدك في الجلوس. نحن سعداء جداً بوجودك معنا!", uploadTitle:"📸 شارك صورك", uploadSubtitle:"حمّل صورك من الليلة", uploadText:"اضغط هنا لرفع الصور", uploadHint:"اختر صورة أو أكثر", uploadButton:"اختر الصور", tabProgram:"📋 البرنامج", tabMenu:"🍽️ قائمة الطعام", tabSongs:"🎶 قائمة الأغاني", tabSeating:"🪑 خريطة الجلوس", programTitle:"برنامج الزفاف", program1:"وصول الضيوف", program2:"الدخول والزفة", program3:"الزفة", program4:"الرقصة الأولى", program5:"جلسة التصوير (العائلة والأصدقاء)", program6:"تقديم الطعام", program7:"تقطيع الكيك", program8:"الألعاب النارية", program9:"رمي باقة الزهور", program10:"رقص على الموسيقى", program11:"وداع بالشماريخ", songsTitle:"قائمة الأغاني", seatingTitle:"خريطة الجلوس التفاعلية", seatingHint:"✨ ابحث عن طاولتك أعلاه، ثم شاهدها مضيئة على الخريطة ✨", albumTitle:"📸 ألبوم صور الزفاف", albumSubtitle:"شاهد جميع الصور التي شاركها الضيوف", albumLink:"افتح الألبوم", footerMessage:"بكل سرور، ندعوكم للاحتفال بحفل زفافنا" }
         };
 
         function setLanguage(lang) {
@@ -592,6 +595,9 @@
             document.getElementById('program6').textContent = t.program6;
             document.getElementById('program7').textContent = t.program7;
             document.getElementById('program8').textContent = t.program8;
+            document.getElementById('program9').textContent = t.program9;
+            document.getElementById('program10').textContent = t.program10;
+            document.getElementById('program11').textContent = t.program11;
             document.getElementById('albumTitle').textContent = t.albumTitle;
             document.getElementById('albumSubtitle').textContent = t.albumSubtitle;
             document.getElementById('albumLink').textContent = t.albumLink;
